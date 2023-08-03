@@ -1,6 +1,6 @@
 import "./Searchresult.css";
 
-export const SearchResult = ({ result }) => {
+const SearchResult = ({ result }) => {
   return (
     <div
       className="search-result"
@@ -10,3 +10,5 @@ export const SearchResult = ({ result }) => {
     </div>
   );
 };
+
+export default SearchResult
