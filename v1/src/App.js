@@ -7,7 +7,6 @@ import HomePage from './pages/Dashboard';
 import PatientInfo from './pages/PatientInfo';
 import Appointment from './pages/Appointment';
 import PatientDiag from './pages/PatientDiag';
-import Setting from './pages/Settting';
 import UserInfo from './pages/UserInfo';
 
 //Components import
@@ -24,7 +23,6 @@ export default function App() {
                 <Route path="/patientinfo" element={<PatientInfo />} />
                 <Route path="/appointment" element={<Appointment />} />
                 <Route path="/patientdiag" element={<PatientDiag/>} />
-                <Route path="/setting" element={<Setting/>} />
                 <Route path="/userinfo" element={<UserInfo/>} />
 
 

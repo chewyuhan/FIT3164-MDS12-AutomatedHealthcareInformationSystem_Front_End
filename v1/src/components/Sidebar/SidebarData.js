@@ -33,12 +33,6 @@ export const SidebarData = [
     cName: 'nav-text'
   },
   {
-    title: 'Setting',
-    path: '/setting',
-    icon: <AiIcons.AiFillSetting />,
-    cName: 'nav-text'
-  },
-  {
     title: 'User Info',
     path: '/userinfo',
     icon: <BiIcons.BiUser />,
