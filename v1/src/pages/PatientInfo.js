@@ -6,6 +6,7 @@ import SearchBar from '../components/SearchBar/Searchbar';
 import SearchResultsList from '../components/SearchBar/Searchresultlist';
 function PatientInfo() {
   const [results, setResults] = useState([]);
+  
 
   return (
     <div className='patientinfo'>
