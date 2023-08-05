@@ -1,11 +1,16 @@
 .results-list {
-    width: 100%;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0px 0px 8px #ddd;
-    border-radius: 10px;
-    margin-top: 0.5rem;
-    max-height: 300px;
-    overflow-y: auto;
-  }
+  width: 21%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 8px #ddd;
+  border-radius: 10px;
+  margin-top: 0.5rem; /* Add margin-top to create space between search bar and result list */
+  max-height: 300px;
+  overflow-y: auto;
+  
+  /* Adjust the positioning */
+  position: absolute;
+  top: 0px; /* Position it below the search bar */
+  left: 69%; /* Align it with the left side of the search bar */
+}
