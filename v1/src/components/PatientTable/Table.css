@@ -66,15 +66,15 @@
     color: white;
   }
   
-  .label-stable {
+  .label-Stable {
     background-color: #777;
   }
   
-  .label-healthy {
+  .label-Healthy {
     background-color: #42a942;
   }
   
-  .label-critical {
+  .label-Critical {
     background-color: #d9534f;
   }
   
