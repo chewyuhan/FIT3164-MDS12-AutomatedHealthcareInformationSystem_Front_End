@@ -1,0 +1,36 @@
+/* Custom styling for the calendar */
+.calendar {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .react-calendar__tile--active {
+    background: #007bff;
+    color: white;
+  }
+  
+  /* Center the calendar */
+  .calendar-container {
+    display: flex;
+    justify-content: center;
+  }
+
+/* Center-align headers and button */
+.appointment-form {
+    text-align: center;
+  }
+  
+  /* Center-align headers */
+  .appointment-form h2 {
+    text-align: center;
+  }
+  
+/* Center-align button */
+.book-button {
+    display: block;
+    margin: 20px auto; /* Add margin to create space below the button */
+  }

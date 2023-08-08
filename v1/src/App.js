@@ -25,8 +25,6 @@ export default function App() {
                 <Route path="/patientdiag" element={<PatientDiag/>} />
                 <Route path="/userinfo" element={<UserInfo/>} />
 
-
-
             </Routes>
         </Router>
     );
