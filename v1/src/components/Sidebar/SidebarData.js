@@ -4,7 +4,6 @@ import * as SlIcons from 'react-icons/sl';
 import * as RxIcons from 'react-icons/rx';
 import * as MdIcons from 'react-icons/md';
 import * as BsIcons from 'react-icons/bs';
-import * as AiIcons from 'react-icons/ai';
 import * as FiIcons from 'react-icons/fi';
 
 export const SidebarData = [

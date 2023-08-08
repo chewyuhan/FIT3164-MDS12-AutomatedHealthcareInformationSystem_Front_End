@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import AppointmentForm from "../components/Appointment/AppointmentForm";
 import Sidebar from '../components/Sidebar/Sidebar';
+import Calendar from "react-calendar";
+import 'react-calendar/dist/Calendar.css';
 
 const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
@@ -8,6 +10,7 @@ const Appointment = () => {
   const [appointmentDate, setAppointmentDate] = useState(new Date());
   const [appointmentTime, setAppointmentTime] = useState("");
   const [selectedDoctorId, setSelectedDoctorId] = useState(null);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   useEffect(() => {
     setDoctors([
@@ -38,6 +41,17 @@ const Appointment = () => {
     setAppointments([...appointments, appointment]);
   };
 
+  const handleCalendarClick = (value) => {
+    const formattedDate = value.toISOString().split('T')[0];
+    const appointment = appointments.find(appointment => appointment.date.toISOString().split('T')[0] === formattedDate);
+    setSelectedAppointment(appointment);
+  };
+
+  const getDoctorNameById = (doctorId) => {
+    const doctor = doctors.find(d => d.id === doctorId);
+    return doctor ? doctor.name : "Unknown Doctor";
+  };
+  
   return (
     <div className="appointment-page">
       <Sidebar />
@@ -55,6 +69,29 @@ const Appointment = () => {
         <table className="appointments-table">
           {/* ... Your appointments table rendering */}
         </table>
+      </div>
+      <div className="calendar-container">
+        <Calendar
+          value={appointmentDate}
+          onChange={(date) => setAppointmentDate(date)}
+          onClickDay={handleCalendarClick}
+          tileContent={({ date, view }) => {
+            if (view === 'month') {
+              const formattedDate = date.toISOString().split('T')[0];
+              const hasAppointment = appointments.some(appointment => appointment.date.toISOString().split('T')[0] === formattedDate);
+              return hasAppointment ? <span className="appointment-indicator">📅</span> : null;
+            }
+            return null;
+          }}
+        />
+        {selectedAppointment && (
+          <div className="selected-appointment-details">
+            <h2>Selected Appointment Details</h2>
+            <p>Doctor: {getDoctorNameById(selectedAppointment.doctorId)}</p>
+            <p>Date: {selectedAppointment.date.toDateString()}</p>
+            <p>Time: {selectedAppointment.time}</p>
+          </div>
+        )}
       </div>
     </div>
   );
