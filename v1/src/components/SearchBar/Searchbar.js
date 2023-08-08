@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./Searchresultlist.css";
-import SearchResult from "./Searchresult";
 
 import "./Searchbar.css";
 
