@@ -3,6 +3,7 @@ import AppointmentForm from "../components/Appointment/AppointmentForm";
 import Sidebar from '../components/Sidebar/Sidebar';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
+import doctorsData from "../database/DoctorsData";
 
 const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
@@ -13,23 +14,7 @@ const Appointment = () => {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   useEffect(() => {
-    setDoctors([
-      {
-        id:'1',
-        name: "Dr. Smith",
-        specialty: "General Practitioner",
-      },
-      {
-        id: '2',
-        name: "Dr. Jones",
-        specialty: "Pediatrician",
-      },
-      {
-        id: '3',
-        name: "Dr. Brown",
-        specialty: "Orthopedic Surgeon",
-      },
-    ]);
+    setDoctors(doctorsData);
   }, []);
 
   const handleSelectAppointmentTime = () => {
@@ -55,21 +40,8 @@ const Appointment = () => {
   return (
     <div className="appointment-page">
       <Sidebar />
-      <div className="appointment-content">
-        <AppointmentForm
-          doctors={doctors}
-          appointmentDate={appointmentDate}
-          setAppointmentDate={setAppointmentDate}
-          appointmentTime={appointmentTime}
-          setAppointmentTime={setAppointmentTime}
-          selectedDoctorId={selectedDoctorId}
-          setSelectedDoctorId={setSelectedDoctorId}
-          handleSelectAppointmentTime={handleSelectAppointmentTime}
-        />
-        <table className="appointments-table">
-          {/* ... Your appointments table rendering */}
-        </table>
-      </div>
+      <h1>Book an Appointment</h1>
+      <h2>Select a Date</h2>
       <div className="calendar-container">
         <Calendar
           value={appointmentDate}
@@ -90,9 +62,23 @@ const Appointment = () => {
             return null;
           }}
         />
-       {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
-          <div className="selected-appointment-details">
-            <h2>Appointments for {selectedAppointment[0]?.date.toDateString()}</h2>
+      </div>
+      <div className="appointment-content">
+        <AppointmentForm
+          doctors={doctors}
+          appointmentDate={appointmentDate}
+          setAppointmentDate={setAppointmentDate}
+          appointmentTime={appointmentTime}
+          setAppointmentTime={setAppointmentTime}
+          selectedDoctorId={selectedDoctorId}
+          setSelectedDoctorId={setSelectedDoctorId}
+          handleSelectAppointmentTime={handleSelectAppointmentTime}
+        />
+      </div>
+      {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
+        <div className="selected-appointment-details">
+          <h2>Appointments for {selectedAppointment[0]?.date.toDateString()}</h2>
+          <div className="centered-list">
             <ul>
               {selectedAppointment.map(appointment => (
                 <li key={appointment.time}>
@@ -102,8 +88,8 @@ const Appointment = () => {
               ))}
             </ul>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

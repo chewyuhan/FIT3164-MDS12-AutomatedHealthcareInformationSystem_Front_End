@@ -1,0 +1,19 @@
+/* Home.css */
+.dashboard-container {
+    display: flex;
+    gap: 20px; /* Adjust the gap between the two dashboards */
+  }
+  
+  .dashboard-column {
+    flex: 1;
+  }
+  
+  .appointment-page {
+    text-align: center;
+  }
+
+  .centered-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
