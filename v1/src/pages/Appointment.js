@@ -15,17 +15,17 @@ const Appointment = () => {
   useEffect(() => {
     setDoctors([
       {
-        id: 1,
+        id:'1',
         name: "Dr. Smith",
         specialty: "General Practitioner",
       },
       {
-        id: 2,
+        id: '2',
         name: "Dr. Jones",
         specialty: "Pediatrician",
       },
       {
-        id: 3,
+        id: '3',
         name: "Dr. Brown",
         specialty: "Orthopedic Surgeon",
       },
@@ -43,8 +43,8 @@ const Appointment = () => {
 
   const handleCalendarClick = (value) => {
     const formattedDate = value.toISOString().split('T')[0];
-    const appointment = appointments.find(appointment => appointment.date.toISOString().split('T')[0] === formattedDate);
-    setSelectedAppointment(appointment);
+    const appointmentsForDay = appointments.filter(appointment => appointment.date.toISOString().split('T')[0] === formattedDate);
+    setSelectedAppointment(appointmentsForDay);
   };
 
   const getDoctorNameById = (doctorId) => {
@@ -78,18 +78,29 @@ const Appointment = () => {
           tileContent={({ date, view }) => {
             if (view === 'month') {
               const formattedDate = date.toISOString().split('T')[0];
-              const hasAppointment = appointments.some(appointment => appointment.date.toISOString().split('T')[0] === formattedDate);
-              return hasAppointment ? <span className="appointment-indicator">📅</span> : null;
+              const appointmentsForDay = appointments.filter(appointment => appointment.date.toISOString().split('T')[0] === formattedDate);
+              const appointmentCount = appointmentsForDay.length;
+              return (
+                <div className="appointment-tile-content">
+                  {appointmentCount >= 0 && <span className="appointment-indicator">📅</span>}
+                  <span className="appointment-count">{appointmentCount}</span>
+                </div>
+              );
             }
             return null;
           }}
         />
-        {selectedAppointment && (
+       {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
           <div className="selected-appointment-details">
-            <h2>Selected Appointment Details</h2>
-            <p>Doctor: {getDoctorNameById(selectedAppointment.doctorId)}</p>
-            <p>Date: {selectedAppointment.date.toDateString()}</p>
-            <p>Time: {selectedAppointment.time}</p>
+            <h2>Appointments for {selectedAppointment[0]?.date.toDateString()}</h2>
+            <ul>
+              {selectedAppointment.map(appointment => (
+                <li key={appointment.time}>
+                  <p>Doctor: {getDoctorNameById(appointment.doctorId)}</p>
+                  <p>Time: {appointment.time}</p>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>
