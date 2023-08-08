@@ -11,6 +11,7 @@ export const Table = ({ rows, deleteRow, editRow }) => {
         <thead>
           <tr>
             <th>Patient Name</th>
+            <th>Contact Info</th>
             <th className="expand">Description</th>
             <th>Status</th>
             <th>Actions</th>
@@ -23,7 +24,8 @@ export const Table = ({ rows, deleteRow, editRow }) => {
 
             return (
               <tr key={idx}>
-                <td>{row.page}</td>
+                <td>{row.patientName}</td>
+                <td>{row.contactInfo}</td>
                 <td className="expand">{row.description}</td>
                 <td>
                   <span className={`label label-${row.status}`}>

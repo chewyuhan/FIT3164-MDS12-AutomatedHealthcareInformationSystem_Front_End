@@ -5,15 +5,16 @@ import "./Modal.css";
 export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   const [formState, setFormState] = useState(
     defaultValue || {
-      page: "",
+      patientName: "",
+      contactInfo: "",
       description: "",
-      status: "live",
+      status: "Stable",
     }
   );
   const [errors, setErrors] = useState("");
 
   const validateForm = () => {
-    if (formState.page && formState.description && formState.status) {
+    if (formState.patientName && formState.description && formState.description && formState.status) {
       setErrors("");
       return true;
     } else {
@@ -37,9 +38,13 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
 
     if (!validateForm()) return;
 
-    onSubmit(formState);
+    if (!isNaN(formState.contactInfo)) {
+      onSubmit(formState);
 
-    closeModal();
+      closeModal();
+    } else {
+      setErrors("Please enter a valid numeric value for contact info.");
+    }
   };
 
   return (

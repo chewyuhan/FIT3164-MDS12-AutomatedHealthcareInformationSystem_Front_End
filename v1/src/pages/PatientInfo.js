@@ -13,17 +13,20 @@ function PatientInfo() {
 
   const [rows, setRows] = useState([
     {
-      page: "Adam",
+      patientName: "Adam",
+      contactInfo: "0123456787",
       description: "Man",
       status: "Healthy",
     },
     {
-      page: "Eve",
+      patientName: "Eve",
+      contactInfo: "0123456788",
       description: "Woman",
       status: "Stable",
     },
     {
-      page: "Zeus",
+      patientName: "Zeus",
+      contactInfo: "0123456780",
       description: "Child",
       status: "Critical",
     },
