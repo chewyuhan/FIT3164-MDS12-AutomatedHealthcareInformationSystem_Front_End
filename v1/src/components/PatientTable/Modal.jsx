@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css'
 
 import "./Modal.css";
 
@@ -6,6 +8,8 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   const [formState, setFormState] = useState(
     defaultValue || {
       patientName: "",
+      dob:"",
+      gender: "",
       contactInfo: "",
       description: "",
       status: "Stable",
@@ -32,6 +36,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   const handleChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault(); //wont refresh page
@@ -47,7 +52,12 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     }
   };
 
+  const [selectesDate, setSelectedDate]= useState('');
+
   return (
+
+    
+
     <div
       className="modal-container"
       onClick={(e) => {
@@ -59,6 +69,33 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           <div className="form-group">
             <label htmlFor="patientName">Patient Name</label>
             <input name="patientName" onChange={handleChange} value={formState.patientName} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="dob">Data of Birth</label>
+            <DatePicker selected={ selectesDate}
+            onChange={ date=>setSelectedDate(date)}
+            
+            dateFormat="dd-MM-yyyy"
+            //minDate={ new Date()}
+            //maxDate={ new Date()}
+            //filterDate={ date=>date.getDay()!=6 && date.getDay()!=0}
+           // isClearable
+            showYearDropdown
+            //value = {formState.dob}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="gender">Gender</label>
+            <select
+              name="gender"
+              onChange={handleChange}
+              value={formState.gender}
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="contactInfo">Contact</label>

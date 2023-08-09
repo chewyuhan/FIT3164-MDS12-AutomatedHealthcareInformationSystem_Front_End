@@ -11,6 +11,7 @@ export const Table = ({ rows, deleteRow, editRow }) => {
         <thead>
           <tr>
             <th>Patient Name</th>
+            <th>Date of Birth</th>
             <th>Contact Info</th>
             <th className="expand">Description</th>
             <th>Status</th>
@@ -25,6 +26,7 @@ export const Table = ({ rows, deleteRow, editRow }) => {
             return (
               <tr key={idx}>
                 <td>{row.patientName}</td>
+                <td>{row.dob}</td>
                 <td>{row.contactInfo}</td>
                 <td className="expand">{row.description}</td>
                 <td>
