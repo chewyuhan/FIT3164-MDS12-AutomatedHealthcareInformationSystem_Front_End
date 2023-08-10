@@ -1,36 +1,42 @@
 /* Custom styling for the calendar */
-.calendar {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-family: Arial, sans-serif;
-  }
-  
   .react-calendar__tile--active {
     background: #007bff;
     color: white;
   }
-  
-  /* Center the calendar */
-  .calendar-container {
+  .appointment-container {
     display: flex;
-    justify-content: center;
   }
 
-/* Center-align headers and button */
-.appointment-form {
-    text-align: center;
+  .calendar-container {
+    /* Define calendar container styles here */
+    width: 30%;
+    padding: 20px;
   }
   
-  /* Center-align headers */
-  .appointment-form h2 {
-    text-align: center;
+  .appointment-content {
+    /* Define appointment content styles here */
+    flex: 1;
   }
+  
+  .selected-appointment-details {
+    /* Define appointment content styles here */
+    flex: 1;
+  }
+
+/* Style for h1 and h2 within calendar-container */
+.calendar-container h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.calendar-container h2 {
+  font-size: 18px;
+  margin-top: 10px;
+}
   
 /* Center-align button */
 .book-button {
     display: block;
-    margin: 20px auto; /* Add margin to create space below the button */
+    margin-top: 10px; /* Add margin to create space below the button */
   }
+
