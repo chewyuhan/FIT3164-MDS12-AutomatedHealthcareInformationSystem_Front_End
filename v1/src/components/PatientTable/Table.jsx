@@ -1,5 +1,5 @@
 import React from "react";
-
+import moment from 'moment';
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 
 import "./Table.css";
@@ -26,7 +26,7 @@ export const Table = ({ rows, deleteRow, editRow }) => {
             return (
               <tr key={idx}>
                 <td>{row.patientName}</td>
-                <td>{row.dob}</td>
+                <td>{moment(row.dob).format("MM/DD/YYYY")}</td>
                 <td>{row.contactInfo}</td>
                 <td className="expand">{row.description}</td>
                 <td>

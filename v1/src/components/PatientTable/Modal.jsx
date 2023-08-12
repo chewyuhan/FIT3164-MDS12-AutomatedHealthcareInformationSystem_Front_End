@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'
+//import DatePicker from 'react-datepicker';
+//import 'react-datepicker/dist/react-datepicker.css'
 
 import "./Modal.css";
 
@@ -52,8 +52,6 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     }
   };
 
-  const [selectesDate, setSelectedDate]= useState('');
-
   return (
 
     
@@ -71,20 +69,9 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
             <input name="patientName" onChange={handleChange} value={formState.patientName} />
           </div>
           <div className="form-group">
-            <label htmlFor="dob">Data of Birth</label>
-            <DatePicker selected={ selectesDate}
-            onChange={ date=>setSelectedDate(date)}
-            
-            dateFormat="dd-MM-yyyy"
-            //minDate={ new Date()}
-            //maxDate={ new Date()}
-            //filterDate={ date=>date.getDay()!=6 && date.getDay()!=0}
-           // isClearable
-            showYearDropdown
-            //value = {formState.dob}
-            />
+            <label htmlFor="dob">Date of Birth</label>
+            <input name="dob" type = "date" onChange={handleChange} value={formState.dob} />
           </div>
-
           <div className="form-group">
             <label htmlFor="gender">Gender</label>
             <select
