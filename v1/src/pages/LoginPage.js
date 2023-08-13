@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 
-import "./styles.css";
+import "./login.css";
 
 const LoginPage = () => {
   // React States
