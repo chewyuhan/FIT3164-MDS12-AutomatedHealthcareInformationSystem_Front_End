@@ -5,6 +5,11 @@ import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import "./Table.css";
 
 export const Table = ({ rows, deleteRow, editRow }) => {
+  const handleContactInfoClick = (phoneNo) => {
+    const whatsappLink = `https://wa.me/${phoneNo}`;
+    window.open(whatsappLink, '_blank');
+  };
+
   return (
     <div className="table-wrapper">
       <table className="table">
@@ -31,7 +36,19 @@ export const Table = ({ rows, deleteRow, editRow }) => {
                 <td>{row.firstName + " " +  row.lastName }</td>
                 <td>{moment(row.dob).format("MM/DD/YYYY")}</td>
                 <td>{row.gender}</td>
-                <td>{row.phoneNo}</td>
+                <td data-href={`https://wa.me/${row.phoneNo}`}>
+                  <a
+                    href={`https://wa.me/${row.phoneNo}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleContactInfoClick(row.phoneNo);
+                    }}
+                  >
+                    {row.phoneNo}
+                  </a>
+                </td>
                 <td className="expand">{row.remarks}</td>
                 <td>
                   <span className={`label label-${row.status}`}>
