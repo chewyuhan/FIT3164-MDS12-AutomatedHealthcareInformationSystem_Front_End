@@ -7,18 +7,19 @@ import "./Modal.css";
 export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   const [formState, setFormState] = useState(
     defaultValue || {
-      patientName: "",
+      firstName:"",
+      lastName: "",
       dob:"",
       gender: "",
-      contactInfo: "",
-      description: "",
-      status: "Stable",
+      phoneNo: "",
+      remarks: "",
+      status: "",
     }
   );
   const [errors, setErrors] = useState("");
 
   const validateForm = () => {
-    if (formState.patientName && formState.description && formState.description && formState.status) {
+    if (formState.firstName && formState.lastName && formState.dob && formState.gender) {
       setErrors("");
       return true;
     } else {
@@ -43,7 +44,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
 
     if (!validateForm()) return;
 
-    if (!isNaN(formState.contactInfo)) {
+    if (!isNaN(formState.phoneNo)) {
       onSubmit(formState);
 
       closeModal();
@@ -65,8 +66,12 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
       <div className="modal">
         <form>
           <div className="form-group">
-            <label htmlFor="patientName">Patient Name</label>
-            <input name="patientName" onChange={handleChange} value={formState.patientName} />
+            <label htmlFor="firstName">First Name</label>
+            <input name="firstName" onChange={handleChange} value={formState.firstName} placeholder="Patient first name"/>
+          </div>
+          <div className="form-group">
+            <label htmlFor="lastName">Last Name</label>
+            <input name="lastName" onChange={handleChange} value={formState.lastName} placeholder="Patient last name"/>
           </div>
           <div className="form-group">
             <label htmlFor="dob">Date of Birth</label>
@@ -76,24 +81,26 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
             <label htmlFor="gender">Gender</label>
             <select
               name="gender"
-              onChange={handleChange}
               value={formState.gender}
-            >
+              onChange={handleChange}
+              
+            > 
+              <option value= "" disabled> Select gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="contactInfo">Contact</label>
-            <input name="contactInfo" onChange={handleChange} value={formState.contactInfo} />
+            <label htmlFor="phoneNo">Phone Number</label>
+            <input name="phoneNo" onChange={handleChange} value={formState.phoneNo} placeholder="Phone number"/>
           </div>
           <div className="form-group">
-            <label htmlFor="description">Description</label>
+            <label htmlFor="remarks">Remarks</label>
             <textarea
-              name="description"
+              name="remarks" placeholder="Optional remarks"
               onChange={handleChange}
-              value={formState.description}
+              value={formState.remarks}
             />
           </div>
           <div className="form-group">
@@ -103,6 +110,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
               onChange={handleChange}
               value={formState.status}
             >
+              <option value= "" disabled> Select status</option>
               <option value="Healthy">Healthy</option>
               <option value="Stable">Stable</option>
               <option value="Critical">Critical</option>

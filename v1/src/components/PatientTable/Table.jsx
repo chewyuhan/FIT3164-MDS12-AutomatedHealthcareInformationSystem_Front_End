@@ -10,10 +10,12 @@ export const Table = ({ rows, deleteRow, editRow }) => {
       <table className="table">
         <thead>
           <tr>
+            <th>Patient ID</th>
             <th>Patient Name</th>
+            <th>Gender</th>
             <th>Date of Birth</th>
             <th>Contact Info</th>
-            <th className="expand">Description</th>
+            <th className="expand">Remarks</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
@@ -25,10 +27,12 @@ export const Table = ({ rows, deleteRow, editRow }) => {
 
             return (
               <tr key={idx}>
-                <td>{row.patientName}</td>
+                <td>{row.patientID}</td>
+                <td>{row.firstName + " " +  row.lastName }</td>
                 <td>{moment(row.dob).format("MM/DD/YYYY")}</td>
-                <td>{row.contactInfo}</td>
-                <td className="expand">{row.description}</td>
+                <td>{row.gender}</td>
+                <td>{row.phoneNo}</td>
+                <td className="expand">{row.remarks}</td>
                 <td>
                   <span className={`label label-${row.status}`}>
                     {statusText}
