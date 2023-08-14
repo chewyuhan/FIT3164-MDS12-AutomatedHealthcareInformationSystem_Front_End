@@ -1,14 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from 'moment';
-import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
-
+import { BsFillTrashFill, BsFillPencilFill, BsEyeFill } from "react-icons/bs";
+import {Modal, Button} from "react-bootstrap";
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Table.css";
+import "./patientModal.css";
+
+
+
+
+
 
 export const Table = ({ rows, deleteRow, editRow }) => {
   const handleContactInfoClick = (phoneNo) => {
     const whatsappLink = `https://wa.me/${phoneNo}`;
     window.open(whatsappLink, '_blank');
   };
+
+  //To display additional patient information
+  const[modalInfo,setModalInfo] = useState([]);
+  const[showModal,setShowModal] = useState(false);
+
+  // for the modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleRowClick = (row) => {
+    console.log(row);
+    setModalInfo(row)
+    toggleTrueFalse()
+  };
+
+  const toggleTrueFalse = () =>{
+    setShowModal(handleShow);
+  }
+  
+  const ModalContent = () =>{
+    return (
+      <Modal className="patient-modal" show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+      <Modal.Title>View Patient Details</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>Patient ID: {modalInfo.patientID}</p>
+        <p>Created At: {modalInfo.creratedAT}</p>
+        <p>Updated At: {modalInfo.updatedAt}</p>
+        <p>IC: {modalInfo.ic}</p>
+        <p>First Name: {modalInfo.firstName}</p>
+        <p>Last Name: {modalInfo.lastName}</p>
+        <p>Phone No: {modalInfo.phoneNo}</p>
+        <p>Gender: {modalInfo.gender}</p>
+        <p>Description: {modalInfo.description}</p>
+        <p>Status: {modalInfo.status}</p>
+        <p>Date of Birth: {moment(modalInfo.dob).format("MM/DD/YYYY")}</p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleClose}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
+    )
+
+  }
 
   return (
     <div className="table-wrapper">
@@ -65,6 +123,10 @@ export const Table = ({ rows, deleteRow, editRow }) => {
                       className="edit-btn"
                       onClick={() => editRow(idx)}
                     />
+                     <BsEyeFill
+                      className="view-btn"
+                      onClick={() => handleRowClick(row)}
+                    />
                   </span>
                 </td>
               </tr>
@@ -72,6 +134,7 @@ export const Table = ({ rows, deleteRow, editRow }) => {
           })}
         </tbody>
       </table>
+      {show ? <ModalContent/> : null}
     </div>
   );
 };
