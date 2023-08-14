@@ -51,7 +51,7 @@ export const Table = ({ rows, deleteRow, editRow }) => {
         <p>Last Name: {modalInfo.lastName}</p>
         <p>Phone No: {modalInfo.phoneNo}</p>
         <p>Gender: {modalInfo.gender}</p>
-        <p>Description: {modalInfo.description}</p>
+        <p>Remarks: {modalInfo.remarks}</p>
         <p>Status: {modalInfo.status}</p>
         <p>Date of Birth: {moment(modalInfo.dob).format("MM/DD/YYYY")}</p>
       </Modal.Body>
