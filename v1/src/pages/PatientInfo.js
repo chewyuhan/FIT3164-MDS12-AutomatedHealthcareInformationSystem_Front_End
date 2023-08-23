@@ -37,11 +37,41 @@ function PatientInfo() {
         );
   };
 
-  const [file, setFile] = useState();
-  function handleChange(e) {
-      console.log(e.target.files);
-      setFile(URL.createObjectURL(e.target.files[0]));
+
+  //For uploading and viewing Image
+  const [file, setFile] = useState(); // State for the uploaded image file
+  const [imagePreview, setImagePreview] = useState(null); // State for image preview
+
+  function handleImageChange(e) {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setImagePreview(URL.createObjectURL(selectedFile));
+    }
   }
+
+    // Handle dropped image files
+    function handleDrop(e) {
+      e.preventDefault();
+      const selectedFile = e.dataTransfer.files[0];
+      if (selectedFile && selectedFile.type.startsWith('image/')) {
+        setFile(selectedFile);
+        setImagePreview(URL.createObjectURL(selectedFile));
+      }
+    }
+  
+    function handleDragOver(e) {
+      e.preventDefault();
+    }
+
+      // Handle image selection using the hidden input
+    function handleImageChange(e) {
+      const selectedFile = e.target.files[0];
+      if (selectedFile && selectedFile.type.startsWith('image/')) {
+        setFile(selectedFile);
+        setImagePreview(URL.createObjectURL(selectedFile));
+      }
+    }
 
 
   return (
@@ -59,9 +89,30 @@ function PatientInfo() {
       <button onClick={() => setModalOpen(true)} className="button">
         Add New Patient
       </button>
-            <button onClick={() => setModalOpen(true)} className="button">
-        Upload Image
-      </button>
+      <label htmlFor="image-upload" className="button">
+          Upload Image
+        </label>
+        <input
+          type="file"
+          id="image-upload"
+          accept="image/*"
+          onChange={handleImageChange}
+          style={{ display: 'none' }} // Hide the input
+        />
+        {imagePreview && (
+          <div className="image-preview">
+            <button
+              className="close-button"
+              onClick={() => {
+                setFile(null);
+                setImagePreview(null);
+              }}
+            >
+              Close
+            </button>
+            <img src={imagePreview} alt="Uploaded" />
+          </div>
+        )}
       <Table rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} />
       {modalOpen && (
         <Modal
