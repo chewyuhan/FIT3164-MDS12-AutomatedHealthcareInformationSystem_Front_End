@@ -37,6 +37,13 @@ function PatientInfo() {
         );
   };
 
+  const [file, setFile] = useState();
+  function handleChange(e) {
+      console.log(e.target.files);
+      setFile(URL.createObjectURL(e.target.files[0]));
+  }
+
+
   return (
     <div className='patientinfo'>
       <div className="header">
@@ -51,6 +58,9 @@ function PatientInfo() {
       <div className="App">
       <button onClick={() => setModalOpen(true)} className="button">
         Add New Patient
+      </button>
+            <button onClick={() => setModalOpen(true)} className="button">
+        Upload Image
       </button>
       <Table rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} />
       {modalOpen && (
