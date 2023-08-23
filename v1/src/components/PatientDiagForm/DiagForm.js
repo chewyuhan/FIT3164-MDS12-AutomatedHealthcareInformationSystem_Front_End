@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import patientsData from "../database/PatientsData";
+import patientsData from "../../database/PatientsData";
 
 const PatientDiagnosisForm = () => {
   const [selectedPatient, setSelectedPatient] = useState(null);

@@ -56,24 +56,7 @@ const patientsData = [
       emergencyRemarks: "Child",
       remarks: "Overweight",
       status: "Critical",
-    },
-    {
-        patientID: "AA0004",
-        creratedAT: "2001-02-03", // Format: YYYY-MM-dd
-        updatedAt: "2001-02-03",   // Format: YYYY-MM-dd
-        ic: "011101110111",
-        firstName: "Harry",
-        lastName: "Potter",
-        dob: "2023-02-18", // Format: YYYY-MM-dd
-        gender: "Male",
-        nationality: "Malaysian",
-        phoneNo: "0123456780",
-        email: "Child",
-        emergencyNo: "Child",
-        emergencyRemarks: "Child",
-        remarks: "Overweight",
-        status: "Critical",
-      },
+    }
   ];
   
   

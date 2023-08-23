@@ -7,7 +7,7 @@ function PatientDiag() {
     <div className='patientdiag'>
       <Sidebar />
       <h1>PatientDiag</h1>
-      {/* <PatientDiagnosisForm /> Insert the PatientDiagnosisForm component here */}
+      <PatientDiagnosisForm />
     </div>
   );
 }
