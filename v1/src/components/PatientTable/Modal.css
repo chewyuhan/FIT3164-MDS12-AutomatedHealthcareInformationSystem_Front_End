@@ -58,3 +58,12 @@
     border-radius: 0.3rem;
     margin-bottom: 1rem;
   }
+
+  .modal-body {
+    max-height: 60vh; /* Set the maximum height for the modal body */
+    overflow-y: auto; /* Add vertical scroll if content exceeds max height */
+  }
+  
+  .scrollable {
+    overflow-y: auto; /* Add vertical scroll to the content */
+  }
