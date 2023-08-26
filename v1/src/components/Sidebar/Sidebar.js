@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import './sidebar.css';
 import { IconContext } from 'react-icons';
+import axios from "axios";
 
 function Sidebar() {
   const [sidebar, setSidebar] = useState(false);
-
+  const [userData, setUserData] = useState(null);
   const showSidebar = () => setSidebar(!sidebar);
+
+  useEffect(() => {
+    // Retrieve the access token from sessionStorage
+    const accessToken =  sessionStorage.getItem("accessToken");
+    // If the access token exists, you can use it for authenticated API calls
+    if (accessToken) {
+      // Make an authenticated API call using the access token
+      axios.get("http://localhost:3333/employees/myinfo", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      .then((response) => {
+        // Handle the response and update the user data state
+        console.log("API call response:", response.data)
+        setUserData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -18,8 +41,11 @@ function Sidebar() {
           <Link to='#' className='menu-bars'>
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
-          <div className='navbar-title'>
-            <h1>Clinic Ah Huat</h1>
+          <div className='navbar-user'>
+
+            
+          <h1>Hi, Dr {userData?.firstName} </h1>
+          {/* <h1>Hi, {`${userData.firstName}`}</h1> */}
           </div>
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
