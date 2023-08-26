@@ -2,7 +2,7 @@
 //Change phone number to +60 if want to whatsapp 
 const patientsData = [
     { patientID: "AA0001",
-      creratedAT: "2001-02-03", // Format: YYYY-MM-dd
+      createdAt: "2001-02-03", // Format: YYYY-MM-dd
       updatedAt: "2001-02-03",   // Format: YYYY-MM-dd
       ic: "011101110111",
       firstName: "Lebron",
@@ -14,7 +14,7 @@ const patientsData = [
       dob: "2023-02-19",
     },
     { patientID: "AA0002",
-      creratedAT: "2001-02-03", // Format: YYYY-MM-dd
+      createdAt: "2001-02-03", // Format: YYYY-MM-dd
       updatedAt: "2001-02-03",   // Format: YYYY-MM-dd
       ic: "011101110111",
       firstName: "Sam",
@@ -26,7 +26,7 @@ const patientsData = [
       dob: "2023-02-20",
     },
     { patientID: "AA0003",
-      creratedAT: "2001-02-03", // Format: YYYY-MM-dd
+      createdAt: "2001-02-03", // Format: YYYY-MM-dd
       updatedAt: "2001-02-03",   // Format: YYYY-MM-dd
       ic: "011101110111",
       firstName: "Luka",
@@ -44,7 +44,7 @@ const patientsData = [
     },
     {
       patientID: "AA0004",
-      creratedAT: "2001-02-03", // Format: YYYY-MM-dd
+      createdAt: "2001-02-03", // Format: YYYY-MM-dd
       updatedAt: "2001-02-03",   // Format: YYYY-MM-dd
       ic: "011101110111",
       firstName: "Harry",
