@@ -1,70 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
-
 import "./login.css";
+import { postLogin } from "../api/auth";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginPage = () => {
   // React States
-  const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false); // New state for login success
 
-  // User Login info
-  const database = [
-    {
-      username: "user1",
-      password: "pass1"
-    },
-    {
-      username: "user2",
-      password: "pass2"
-    }
-  ];
-
-  const errors = {
-    uname: "invalid username",
-    pass: "invalid password"
-  };
 
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const { uname, pass } = event.target.elements;
-    const userData = database.find((user) => user.username === uname.value);
 
-    if (userData) {
-      if (userData.password !== pass.value) {
-        setErrorMessages({ name: "pass", message: errors.pass });
-      } else {
-        setIsSubmitted(true);
-        // Navigate to HomePage after successful login and pass the username as a parameter
-        navigate("/home", { state: { username: uname.value } });
-      }
+    if (uname.value !== "" && pass.value !== "") {
+      setIsSubmitted(true);
+      // Call the getLogin function
+      postLogin({
+        email: uname.value,
+        password: pass.value
+      })
+        .then((response) => {
+          console.log('show me the response', response.data);
+          if (response.data.access_token) {
+            sessionStorage.setItem("accessToken", response.data.access_token);
+            toast.success('Login Success !', {
+              position: toast.POSITION.TOP_RIGHT
+            });
+            navigate("/home")
+          } else {
+            toast.error('Unsuccessful Login !', {
+              position: toast.POSITION.TOP_RIGHT
+            });
+          }
+        })
     } else {
-      setErrorMessages({ name: "uname", message: errors.uname });
+      toast.error('Unsuccessful Login !', {
+        position: toast.POSITION.TOP_RIGHT
+      });
     }
   };
 
+  useEffect(() => {
+    if (loginSuccess) {
+      setTimeout(() => {
+        navigate("/home"); // Navigate to home page after a delay
+      }, 1500); // You can adjust the delay time as needed
+    }
+  }, [loginSuccess]);
 
-  // Generate JSX code for error message
-  const renderErrorMessage = (name) =>
-    name === errorMessages.name && (
-      <div className="error">{errorMessages.message}</div>
-    );
+
 
   // JSX code for login form
   const renderForm = (
     <div className="form">
       <form onSubmit={handleSubmit}>
         <div className="input-container">
-          <label>Username </label>
+          <label>Email </label>
           <input type="text" name="uname" required />
-          {renderErrorMessage("uname")}
+          {/* {renderErrorMessage("uname")} */}
         </div>
         <div className="input-container">
           <label>Password </label>
           <input type="password" name="pass" required />
-          {renderErrorMessage("pass")}
+          {/* {renderErrorMessage("pass")} */}
         </div>
         <div className="button-container">
           <input type="submit" />
@@ -75,14 +78,14 @@ const LoginPage = () => {
 
   return (
     <div className="app">
+
       <div className="login-form">
-        <div className="title">Sign In</div>
-        {isSubmitted ? (
-          <div>User is successfully logged in</div>
-        ) : (
+        <h1>Login</h1>
+        {
           renderForm
-        )}
+        }
       </div>
+
     </div>
   );
 };
