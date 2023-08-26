@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import moment from 'moment';
-import { BsFillTrashFill, BsFillPencilFill, BsEyeFill } from "react-icons/bs";
+import { BsFillTrashFill, BsFillPencilFill, BsEyeFill,BsWhatsapp } from "react-icons/bs";
 import {Modal, Button} from "react-bootstrap";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Table.css";
@@ -35,6 +35,8 @@ export const Table = ({ rows, deleteRow, editRow }) => {
   const toggleTrueFalse = () =>{
     setShowModal(handleShow);
   }
+  
+  
   
   const ModalContent = () =>{
     return (
@@ -75,8 +77,8 @@ export const Table = ({ rows, deleteRow, editRow }) => {
           <tr>
             <th>Patient ID</th>
             <th>Patient Name</th>
-            <th>Gender</th>
             <th>Date of Birth</th>
+            <th>Gender</th>
             <th>Contact Info</th>
             <th className="expand">Remarks</th>
             <th>Status</th>
@@ -88,47 +90,43 @@ export const Table = ({ rows, deleteRow, editRow }) => {
             const statusText =
               row.status.charAt(0).toUpperCase() + row.status.slice(1);
 
-            return (
-              <tr key={idx}>
-                <td>{row.patientID}</td>
-                <td>{row.firstName + " " +  row.lastName }</td>
-                <td>{moment(row.dob).format("MM/DD/YYYY")}</td>
-                <td>{row.gender}</td>
-                <td data-href={`https://wa.me/${row.phoneNo}`}>
-                  <a
-                    href={`https://wa.me/${row.phoneNo}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleContactInfoClick(row.phoneNo);
-                    }}
-                  >
-                    {row.phoneNo}
-                  </a>
+              return (
+                <tr key={idx} className="clickable-row" onClick={() => handleRowClick(row)}>
+                  <td>
+                    {row.patientID}
+                  </td>
+                  <td>{row.firstName + " " + row.lastName}</td>
+                  <td>{moment(row.dob).format("MM/DD/YYYY")}</td>
+                  <td>{row.gender}</td>
+                  <td>{row.phoneNo}</td>
+                  <td className="expand">{row.remarks}</td>
+                  <td>
+                    <span className={`label label-${row.status}`}>
+                      {statusText}
+                    </span>
+                  </td>
+                  <td className="fit">
+                    <span className="actions">
+                      <div onClick={(e) => e.stopPropagation()}>
+                      <BsFillTrashFill
+                        className="delete-btn"
+                        onClick={() => deleteRow(idx)}
+                      />
+                      <BsFillPencilFill
+                        className="edit-btn"
+                        onClick={() => editRow(idx)}
+                      />
+                      <BsWhatsapp
+                        className="whatsapp-btn"
+                        onClick={(e) => {
+                        e.preventDefault();
+                        handleContactInfoClick(row.phoneNo);
+                      }}
+                      />
+                      </div>
+                    </span>
                 </td>
-                <td className="expand">{row.remarks}</td>
-                <td>
-                  <span className={`label label-${row.status}`}>
-                    {statusText}
-                  </span>
-                </td>
-                <td className="fit">
-                  <span className="actions">
-                    <BsFillTrashFill
-                      className="delete-btn"
-                      onClick={() => deleteRow(idx)}
-                    />
-                    <BsFillPencilFill
-                      className="edit-btn"
-                      onClick={() => editRow(idx)}
-                    />
-                     <BsEyeFill
-                      className="view-btn"
-                      onClick={() => handleRowClick(row)}
-                    />
-                  </span>
-                </td>
+                
               </tr>
             );
           })}

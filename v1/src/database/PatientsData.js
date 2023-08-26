@@ -1,3 +1,5 @@
+
+//Change phone number to +60 if want to whatsapp 
 const patientsData = [
     { patientID: "AA0001",
       creratedAT: "2001-02-03", // Format: YYYY-MM-dd
@@ -5,7 +7,7 @@ const patientsData = [
       ic: "011101110111",
       firstName: "Lebron",
       lastName: "James",
-      phoneNo: "0123456787",
+      phoneNo: "+6012345678",
       gender: "Male",
       description: "",
       status: "Healthy",
