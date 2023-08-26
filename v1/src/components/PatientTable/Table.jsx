@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import moment from 'moment';
 import { BsFillTrashFill, BsFillPencilFill, BsWhatsapp } from "react-icons/bs";
-import { Modal, Button } from "react-bootstrap";
 import "./Table.css";
 import InfoModal from './infoModal'; 
 
