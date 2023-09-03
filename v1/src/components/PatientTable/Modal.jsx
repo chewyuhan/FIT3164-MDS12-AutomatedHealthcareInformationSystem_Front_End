@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-//import DatePicker from 'react-datepicker';
-//import 'react-datepicker/dist/react-datepicker.css'
-
 import "./Modal.css";
 
-export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
+export const Modal = ({ closeModal, onSubmit, defaultValue, imagePreview, isOpen }) => {
   const [formState, setFormState] = useState(
     defaultValue || {
-      firstName:"",
+      firstName: "",
       lastName: "",
-      dob:"",
+      dob: "",
       gender: "",
       phoneNo: "",
       remarks: "",
@@ -37,16 +34,12 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   const handleChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
-  
 
   const handleSubmit = (e) => {
-    e.preventDefault(); //wont refresh page
-
+    e.preventDefault();
     if (!validateForm()) return;
-
     if (!isNaN(formState.phoneNo)) {
       onSubmit(formState);
-
       closeModal();
     } else {
       setErrors("Please enter a valid numeric value for contact info.");
@@ -54,17 +47,9 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   };
 
   return (
-
-    
-
-    <div
-      className="modal-container"
-      onClick={(e) => {
-        if (e.target.className === "modal-container") closeModal();
-      }}
-    >
+    <div className={`modal-container ${isOpen ? 'open' : ''}`} onClick={(e) => { if (e.target.className.includes("modal-container")) closeModal(); }}>
       <div className="modal">
-        <form>
+        <form className="modal-form">
           <div className="form-group">
             <label htmlFor="firstName">First Name</label>
             <input name="firstName" onChange={handleChange} value={formState.firstName} placeholder="Patient first name"/>
@@ -75,7 +60,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           </div>
           <div className="form-group">
             <label htmlFor="dob">Date of Birth</label>
-            <input name="dob" type = "date" onChange={handleChange} value={formState.dob} />
+            <input name="dob" type="date" onChange={handleChange} value={formState.dob} />
           </div>
           <div className="form-group">
             <label htmlFor="gender">Gender</label>
@@ -83,9 +68,8 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
               name="gender"
               value={formState.gender}
               onChange={handleChange}
-              
-            > 
-              <option value= "" disabled> Select gender</option>
+            >
+              <option value="" disabled> Select gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
@@ -110,7 +94,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
               onChange={handleChange}
               value={formState.status}
             >
-              <option value= "" disabled> Select status</option>
+              <option value="" disabled> Select status</option>
               <option value="Healthy">Healthy</option>
               <option value="Stable">Stable</option>
               <option value="Critical">Critical</option>
@@ -121,6 +105,11 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
             Submit
           </button>
         </form>
+        {imagePreview && (
+          <div className="image-preview">
+            <img src={imagePreview} alt="Uploaded" />
+          </div>
+        )}
       </div>
     </div>
   );
