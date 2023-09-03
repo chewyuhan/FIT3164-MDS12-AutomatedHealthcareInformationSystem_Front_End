@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import patientsData from "../../database/PatientsData";
+import InfoModal from '../PatientTable/infoModal'; 
 
 const PatientDiagnosisForm = () => {
   const [selectedPatient, setSelectedPatient] = useState(null);
@@ -7,6 +8,16 @@ const PatientDiagnosisForm = () => {
   const handlePatientSelect = (patientID) => {
     const selected = patientsData.find(patient => patient.patientID === patientID);
     setSelectedPatient(selected);
+    setModalInfo(selectedPatient);
+    setShowModal(true);
+  };
+
+  const [modalInfo, setModalInfo] = useState({});
+  const [showModal, setShowModal] = useState(false);
+
+  const handleRowClick = (row) => {
+    setModalInfo(row);
+    setShowModal(true); // Show the modal when a row is clicked
   };
 
   return (
@@ -36,6 +47,11 @@ const PatientDiagnosisForm = () => {
           <p><strong>Emergency Remarks:</strong> {selectedPatient.emergencyRemarks}</p>
           <p><strong>Remarks:</strong> {selectedPatient.remarks}</p>
           <p><strong>Status:</strong> {selectedPatient.status}</p>
+        </div>
+      )}
+      {showModal && (
+        <div className="modal-container">
+          <InfoModal modalInfo={modalInfo} onClose={() => setShowModal(false)} />
         </div>
       )}
     </div>
