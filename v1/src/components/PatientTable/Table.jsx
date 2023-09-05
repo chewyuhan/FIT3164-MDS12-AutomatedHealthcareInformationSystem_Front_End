@@ -29,14 +29,14 @@ export const Table = ({ rows, deleteRow, editRow }) => {
             <th>Gender</th>
             <th>Contact Info</th>
             <th className="expand">Remarks</th>
-            <th>Status</th>
+            {/*<th>Status</th>*/ }
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((row, idx) => {
-            const statusText =
-              row.status.charAt(0).toUpperCase() + row.status.slice(1);
+            // const statusText =
+            //   row.status.charAt(0).toUpperCase() + row.status.slice(1);
 
             return (
               <tr key={idx} className="clickable-row" onClick={() => handleRowClick(row)}>
@@ -48,18 +48,18 @@ export const Table = ({ rows, deleteRow, editRow }) => {
                 <td>{row.gender}</td>
                 <td>{row.phoneNo}</td>
                 <td className="expand">{row.remarks}</td>
-                <td>
+                {/* <td>
                   <span className={`label label-${row.status}`}>
                     {statusText}
                   </span>
-                </td>
+                </td> */}
                 <td className="fit">
                   <span className="actions">
                     <div onClick={(e) => e.stopPropagation()}>
-                      <BsFillTrashFill
+                      {/* <BsFillTrashFill
                         className="delete-btn"
                         onClick={() => deleteRow(idx)}
-                      />
+                      /> */}
                       <BsFillPencilFill
                         className="edit-btn"
                         onClick={() => editRow(idx)}

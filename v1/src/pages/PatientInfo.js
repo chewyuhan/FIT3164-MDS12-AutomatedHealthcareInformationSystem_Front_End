@@ -7,23 +7,25 @@ import { Modal } from '../components/PatientTable/Modal';
 import patientsData from "../database/PatientsData"; // Connect to dummy data
 
 function PatientInfo() {
+
+  // Used to open Modal
   const [modalOpen, setModalOpen] = useState(false);
   const [results, setResults] = useState([]); //for search bar
 
 
   const [rows, setRows] = useState(patientsData);
 
+  //Edit row
   const [rowToEdit, setRowToEdit] = useState(null);
-
-  const handleDeleteRow = (targetIndex) => {
-    setRows(rows.filter((_, idx) => idx !== targetIndex));
-  };
-
   const handleEditRow = (idx) => {
     setRowToEdit(idx);
-
     setModalOpen(true);
   };
+
+  // const handleDeleteRow = (targetIndex) => {
+  //   setRows(rows.filter((_, idx) => idx !== targetIndex));
+  // };
+
 
   const handleSubmit = (newRow) => {
     rowToEdit === null
@@ -113,7 +115,7 @@ function PatientInfo() {
             <img src={imagePreview} alt="Uploaded" />
           </div>
         )}
-      <Table rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} />
+      <Table rows={rows} /*deleteRow={handleDeleteRow}*/ editRow={handleEditRow} />
       {modalOpen && (
         <Modal
           closeModal={() => {

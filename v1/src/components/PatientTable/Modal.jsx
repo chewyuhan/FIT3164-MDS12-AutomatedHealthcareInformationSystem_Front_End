@@ -10,11 +10,12 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
       gender: "",
       phoneNo: "",
       remarks: "",
-      status: "",
+      // status: "",
     }
   );
   const [errors, setErrors] = useState("");
 
+  // Validate to check form attributes filled in correctly,
   const validateForm = () => {
     if (formState.firstName && formState.lastName && formState.dob && formState.gender) {
       setErrors("");
@@ -31,14 +32,15 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     }
   };
 
+  // Main change to take user input 
   const handleChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
   
-
+  // Submit approved if passed validation check
   const handleSubmit = (e) => {
     e.preventDefault(); //wont refresh page
-
+    
     if (!validateForm()) return;
 
     if (!isNaN(formState.phoneNo)) {
@@ -100,7 +102,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
               value={formState.remarks}
             />
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="status">Status</label>
             <select
               name="status"
@@ -112,7 +114,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
               <option value="Stable">Stable</option>
               <option value="Critical">Critical</option>
             </select>
-          </div>
+          </div> */}
           {errors && <div className="error">{`Please include: ${errors}`}</div>}
           <button type="submit" className="btn" onClick={handleSubmit}>
             Submit

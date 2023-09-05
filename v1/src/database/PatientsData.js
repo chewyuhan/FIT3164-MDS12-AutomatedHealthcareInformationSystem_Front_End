@@ -10,7 +10,7 @@ const patientsData = [
       phoneNo: "+6012345678",
       gender: "Male",
       description: "",
-      status: "Healthy",
+
       dob: "2023-02-19",
     },
     { patientID: "AA0002",
