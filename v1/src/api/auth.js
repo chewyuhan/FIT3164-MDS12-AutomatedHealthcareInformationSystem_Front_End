@@ -1,13 +1,11 @@
 
 import axios from 'axios'
 
-
-
 export const postLogin = async (credential) => {
     console.log(credential,"check credential")
     try {
         const data = await axios({
-            url: "http://localhost:3333/auth/signin",
+            url: "https://mds12.cyclic.app/auth/signin",
             headers: {
                 'Access-Control-Allow-Origin' : '*',
                 'Content-Type': "application/json",

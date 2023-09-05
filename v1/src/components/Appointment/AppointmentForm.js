@@ -2,11 +2,15 @@ import React from "react";
 import './AppointmentForm.css';
 import 'react-calendar/dist/Calendar.css';
 
-const AppointmentForm = ({ doctors, appointmentTime, setAppointmentTime, selectedDoctorId, setSelectedDoctorId, handleSelectAppointmentTime }) => {
+const AppointmentForm = ({ patients, selectedPatientId, setSelectedPatientId, doctors, appointmentTime, setAppointmentTime, selectedDoctorId, setSelectedDoctorId, handleSelectAppointmentTime }) => {
 
   const handleSelectDoctor = (doctorId) => {
     setSelectedDoctorId(doctorId);
     setAppointmentTime(""); // Reset appointment time when doctor changes
+  };
+  
+  const handleSelectPatient = (patientId) => {
+    setSelectedPatientId(patientId);
   };
 
   const generateTimeRange = (startHour, endHour) => {
@@ -45,6 +49,19 @@ const AppointmentForm = ({ doctors, appointmentTime, setAppointmentTime, selecte
         {doctors.map((doctor) => (
           <option key={doctor.id} value={doctor.id}>
             {doctor.name}
+          </option>
+        ))}
+      </select>
+      <h2>Select a Patient</h2>
+      <select
+        className="patient-select"
+        value={selectedPatientId || ""}
+        onChange={(event) => handleSelectPatient(event.target.value)}
+      >
+        <option value="">Select a patient...</option>
+        {patients.map((patient) => (
+          <option key={patient.id} value={patient.id}>
+            {`${patient.firstName} ${patient.lastName}`}
           </option>
         ))}
       </select>

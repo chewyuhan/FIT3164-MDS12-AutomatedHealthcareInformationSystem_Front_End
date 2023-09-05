@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar/Sidebar';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import doctorsData from "../database/DoctorsData";
+import patientData from "../database/PatientsData";
 
 const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
@@ -12,13 +13,20 @@ const Appointment = () => {
   const [appointmentTime, setAppointmentTime] = useState("");
   const [selectedDoctorId, setSelectedDoctorId] = useState(null);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [patients, setPatients] = useState([]);
+  const [selectedPatientId, setSelectedPatientId] = useState(null);
 
   useEffect(() => {
     setDoctors(doctorsData);
   }, []);
 
+  useEffect(() => {
+    setPatients(patientData);
+  }, []);
+
   const handleSelectAppointmentTime = () => {
     const appointment = {
+      patientID: selectedPatientId,
       doctorId: selectedDoctorId,
       date: appointmentDate,
       time: appointmentTime,
@@ -66,6 +74,9 @@ const Appointment = () => {
         </div>
         <div className="appointment-content">
           <AppointmentForm
+            patients={patients}
+            selectedPatientId={selectedPatientId}
+            setSelectedPatientId={setSelectedPatientId}
             doctors={doctors}
             appointmentDate={appointmentDate}
             setAppointmentDate={setAppointmentDate}
@@ -84,6 +95,7 @@ const Appointment = () => {
                 {selectedAppointment.map(appointment => (
                   <li key={appointment.time}>
                     <p>Doctor: {getDoctorNameById(appointment.doctorId)}</p>
+                    <p>Patient: {appointment.patientID}</p>
                     <p>Time: {appointment.time}</p>
                   </li>
                 ))}
