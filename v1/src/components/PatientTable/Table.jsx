@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import moment from 'moment';
 import { BsFillPencilFill, BsWhatsapp } from "react-icons/bs";
 import "./Table.css";
-import InfoModal from './infoModal'; 
+import InfoModal from './infoModal';
 
 export const Table = ({ rows, editRow }) => {
   const handleContactInfoClick = (phoneNo) => {
@@ -29,7 +29,7 @@ export const Table = ({ rows, editRow }) => {
             <th>Gender</th>
             <th>Contact Info</th>
             <th className="expand">Remarks</th>
-            {/*<th>Status</th>*/ }
+            {/*<th>Status</th>*/}
             <th>Actions</th>
           </tr>
         </thead>
@@ -49,25 +49,19 @@ export const Table = ({ rows, editRow }) => {
                 <td>{row.phoneNo}</td>
                 <td className="expand">{row.remarks}</td>
                 <td className="fit">
-                  <span className="actions">
-                    <div onClick={(e) => e.stopPropagation()}>
-                      {/* <BsFillTrashFill
-                        className="delete-btn"
-                        onClick={() => deleteRow(idx)}
-                      /> */}
-                      <BsFillPencilFill
-                        className="edit-btn"
-                        onClick={() => editRow(idx)}
-                      />
-                      <BsWhatsapp
-                        className="whatsapp-btn"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleContactInfoClick(row.phoneNo);
-                        }}
-                      />
-                    </div>
-                  </span>
+                  <div className="action-icons">
+                    <BsFillPencilFill
+                      className="edit-btn"
+                      onClick={() => editRow(idx)}
+                    />
+                    <BsWhatsapp
+                      className="whatsapp-btn"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleContactInfoClick(row.phoneNo);
+                      }}
+                    />
+                  </div>
                 </td>
               </tr>
             );

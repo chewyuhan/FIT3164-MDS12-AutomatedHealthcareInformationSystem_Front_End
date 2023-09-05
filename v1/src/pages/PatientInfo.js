@@ -5,15 +5,36 @@ import SearchResultsList from '../components/SearchBar/Searchresultlist';
 import { Table } from '../components/PatientTable/Table'; // Step 1: Import the Table component
 import { Modal } from '../components/PatientTable/Modal';
 import patientsData from "../database/PatientsData"; // Connect to dummy data
+import axios from 'axios';
 
 function PatientInfo() {
 
   // Used to open Modal
   const [modalOpen, setModalOpen] = useState(false);
   const [results, setResults] = useState([]); //for search bar
+  const [rows, setRows] = useState(null);
 
-
-  const [rows, setRows] = useState(patientsData);
+  useEffect(() => {
+    // Retrieve the access token from sessionStorage
+    const accessToken = sessionStorage.getItem("accessToken");
+    // If the access token exists, you can use it for authenticated API calls
+    if (accessToken) {
+      // Make an authenticated API call using the access token
+      axios.get("https://mds12.cyclic.app/patients/all", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+        .then((response) => {
+          // Handle the response and update the user data state
+          console.log("API call response:", response.data)
+          setRows(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+    }
+  }, []);
 
   //Edit row
   const [rowToEdit, setRowToEdit] = useState(null);
@@ -31,12 +52,12 @@ function PatientInfo() {
     rowToEdit === null
       ? setRows([...rows, newRow])
       : setRows(
-          rows.map((currRow, idx) => {
-            if (idx !== rowToEdit) return currRow;
+        rows.map((currRow, idx) => {
+          if (idx !== rowToEdit) return currRow;
 
-            return newRow;
-          })
-        );
+          return newRow;
+        })
+      );
   };
 
 
@@ -52,30 +73,32 @@ function PatientInfo() {
     }
   }
 
-    // Handle dropped image files
-    function handleDrop(e) {
-      e.preventDefault();
-      const selectedFile = e.dataTransfer.files[0];
-      if (selectedFile && selectedFile.type.startsWith('image/')) {
-        setFile(selectedFile);
-        setImagePreview(URL.createObjectURL(selectedFile));
-      }
+  // Handle dropped image files
+  function handleDrop(e) {
+    e.preventDefault();
+    const selectedFile = e.dataTransfer.files[0];
+    if (selectedFile && selectedFile.type.startsWith('image/')) {
+      setFile(selectedFile);
+      setImagePreview(URL.createObjectURL(selectedFile));
     }
-  
-    function handleDragOver(e) {
-      e.preventDefault();
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+  }
+
+  // Handle image selection using the hidden input
+  function handleImageChange(e) {
+    const selectedFile = e.target.files[0];
+    if (selectedFile && selectedFile.type.startsWith('image/')) {
+      setFile(selectedFile);
+      setImagePreview(URL.createObjectURL(selectedFile));
     }
+  }
 
-      // Handle image selection using the hidden input
-    function handleImageChange(e) {
-      const selectedFile = e.target.files[0];
-      if (selectedFile && selectedFile.type.startsWith('image/')) {
-        setFile(selectedFile);
-        setImagePreview(URL.createObjectURL(selectedFile));
-      }
-    }
-
-
+  if (!rows) {
+    return <p>Loading patient data...</p>;
+  }
   return (
     <div className='patientinfo'>
       <div className="header">
@@ -88,10 +111,10 @@ function PatientInfo() {
         {/* Step 3: Include the Table component with the searchResults data */}
       </div>
       <div className="App">
-      <button onClick={() => setModalOpen(true)} className="button">
-        Add New Patient
-      </button>
-      <label htmlFor="image-upload" className="button">
+        <button onClick={() => setModalOpen(true)} className="button">
+          Add New Patient
+        </button>
+        <label htmlFor="image-upload" className="button">
           Upload Image
         </label>
         <input
@@ -115,19 +138,19 @@ function PatientInfo() {
             <img src={imagePreview} alt="Uploaded" />
           </div>
         )}
-      <Table rows={rows} editRow={handleEditRow} />
-      {modalOpen && (
-        <Modal
-          closeModal={() => {
-            setModalOpen(false);
-            setRowToEdit(null);
-          }}
-          onSubmit={handleSubmit}
-          defaultValue={rowToEdit !== null && rows[rowToEdit]}
-        />
-      )}
-    </div>
-      
+        <Table rows={rows} editRow={handleEditRow} />
+        {modalOpen && (
+          <Modal
+            closeModal={() => {
+              setModalOpen(false);
+              setRowToEdit(null);
+            }}
+            onSubmit={handleSubmit}
+            defaultValue={rowToEdit !== null && rows[rowToEdit]}
+          />
+        )}
+      </div>
+
 
 
     </div>
