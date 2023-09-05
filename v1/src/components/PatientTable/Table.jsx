@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import moment from 'moment';
-import { BsFillTrashFill, BsFillPencilFill, BsWhatsapp } from "react-icons/bs";
+import { BsFillPencilFill, BsWhatsapp } from "react-icons/bs";
 import "./Table.css";
 import InfoModal from './infoModal'; 
 
-export const Table = ({ rows, deleteRow, editRow }) => {
+export const Table = ({ rows, editRow }) => {
   const handleContactInfoClick = (phoneNo) => {
     const whatsappLink = `https://wa.me/${phoneNo}`;
     window.open(whatsappLink, '_blank');
@@ -48,18 +48,9 @@ export const Table = ({ rows, deleteRow, editRow }) => {
                 <td>{row.gender}</td>
                 <td>{row.phoneNo}</td>
                 <td className="expand">{row.remarks}</td>
-                {/* <td>
-                  <span className={`label label-${row.status}`}>
-                    {statusText}
-                  </span>
-                </td> */}
                 <td className="fit">
                   <span className="actions">
                     <div onClick={(e) => e.stopPropagation()}>
-                      {/* <BsFillTrashFill
-                        className="delete-btn"
-                        onClick={() => deleteRow(idx)}
-                      /> */}
                       <BsFillPencilFill
                         className="edit-btn"
                         onClick={() => editRow(idx)}

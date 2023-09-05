@@ -80,19 +80,16 @@
   
   .actions {
     display: flex;
-    justify-content: space-between; /* This will add space between the icons */
     align-items: center; /* Vertically center the icons */
   }
   
   .actions svg {
     cursor: pointer;
-    margin: 2px; /* Add margin to the icons */
+    margin: 3px; /* Add margin to the icons */
+    flex-grow: 1; /* Distribute available space equally among icons */
   }
   
-  
-  .delete-btn {
-    color: #e10d05;
-  }
+
 
   .clickable-text {
     cursor: pointer;
