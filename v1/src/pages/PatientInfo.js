@@ -4,7 +4,7 @@ import SearchBar from '../components/SearchBar/Searchbar';
 import SearchResultsList from '../components/SearchBar/Searchresultlist';
 import { Table } from '../components/PatientTable/Table'; // Step 1: Import the Table component
 import { Modal } from '../components/PatientTable/Modal';
-import patientsData from "../database/PatientsData";
+import patientsData from "../database/PatientsData"; // Connect to dummy data
 
 function PatientInfo() {
   const [modalOpen, setModalOpen] = useState(false);
