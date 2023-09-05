@@ -54,26 +54,21 @@ export const Table = ({ rows, deleteRow, editRow }) => {
                   </span>
                 </td> */}
                 <td className="fit">
-                  <span className="actions">
-                    <div onClick={(e) => e.stopPropagation()}>
-                      {/* <BsFillTrashFill
-                        className="delete-btn"
-                        onClick={() => deleteRow(idx)}
-                      /> */}
-                      <BsFillPencilFill
-                        className="edit-btn"
-                        onClick={() => editRow(idx)}
-                      />
-                      <BsWhatsapp
-                        className="whatsapp-btn"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleContactInfoClick(row.phoneNo);
-                        }}
-                      />
-                    </div>
-                  </span>
-                </td>
+  <div className="action-icons">
+    <BsFillPencilFill
+      className="edit-btn"
+      onClick={() => editRow(idx)}
+    />
+    <BsWhatsapp
+      className="whatsapp-btn"
+      onClick={(e) => {
+        e.preventDefault();
+        handleContactInfoClick(row.phoneNo);
+      }}
+    />
+  </div>
+</td>
+
               </tr>
             );
           })}

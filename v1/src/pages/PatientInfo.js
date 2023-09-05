@@ -115,7 +115,7 @@ function PatientInfo() {
             <img src={imagePreview} alt="Uploaded" />
           </div>
         )}
-      <Table rows={rows} /*deleteRow={handleDeleteRow}*/ editRow={handleEditRow} />
+      <Table rows={rows} editRow={handleEditRow} />
       {modalOpen && (
         <Modal
           closeModal={() => {
