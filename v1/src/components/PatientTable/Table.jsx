@@ -51,6 +51,10 @@ export const Table = ({ rows, editRow }) => {
                 <td className="fit">
                   <span className="actions">
                     <div onClick={(e) => e.stopPropagation()}>
+                      {/* <BsFillTrashFill
+                        className="delete-btn"
+                        onClick={() => deleteRow(idx)}
+                      /> */}
                       <BsFillPencilFill
                         className="edit-btn"
                         onClick={() => editRow(idx)}
