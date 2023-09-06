@@ -114,11 +114,11 @@ const handleSubmit = (e) => {
           </div>
           <div className="form-group">
             <label htmlFor="emergencyNo">Emergency Number</label>
-            <input name="emergencyNo"  onChange={handleChange} value={formState.email} placeholder="Optional Emergency Number"/>
+            <input name="emergencyNo"  onChange={handleChange} value={formState.emergencyNo} placeholder="Optional Emergency Number"/>
           </div>
           <div className="form-group">
             <label htmlFor="emergencyRemarks">Emergency Remarks</label>
-            <input name="emergencyRemarks"  onChange={handleChange} value={formState.email} placeholder="Optional Emergency Remarks"/>
+            <input name="emergencyRemarks"  onChange={handleChange} value={formState.emergencyRemarks} placeholder="Optional Emergency Remarks"/>
           </div>
           <div className="form-group">
             <label htmlFor="remarks">Remarks</label>
