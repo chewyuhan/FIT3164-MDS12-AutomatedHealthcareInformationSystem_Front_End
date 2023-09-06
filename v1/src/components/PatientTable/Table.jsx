@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import moment from 'moment';
-import { BsFillTrashFill, BsFillPencilFill, BsWhatsapp } from "react-icons/bs";
+import { BsFillPencilFill, BsWhatsapp } from "react-icons/bs";
 import "./Table.css";
-import InfoModal from './infoModal'; 
+import InfoModal from './infoModal';
 
-export const Table = ({ rows, deleteRow, editRow }) => {
+export const Table = ({ rows, editRow }) => {
   const handleContactInfoClick = (phoneNo) => {
     const whatsappLink = `https://wa.me/${phoneNo}`;
     window.open(whatsappLink, '_blank');
@@ -29,7 +29,7 @@ export const Table = ({ rows, deleteRow, editRow }) => {
             <th>Gender</th>
             <th>Contact Info</th>
             <th className="expand">Remarks</th>
-            {/*<th>Status</th>*/ }
+            {/*<th>Status</th>*/}
             <th>Actions</th>
           </tr>
         </thead>
@@ -41,34 +41,28 @@ export const Table = ({ rows, deleteRow, editRow }) => {
             return (
               <tr key={idx} className="clickable-row" onClick={() => handleRowClick(row)}>
                 <td>
-                  {row.patientID}
+                  {row.patientId}
                 </td>
                 <td>{row.firstName + " " + row.lastName}</td>
                 <td>{moment(row.dob).format("MM/DD/YYYY")}</td>
                 <td>{row.gender}</td>
                 <td>{row.phoneNo}</td>
                 <td className="expand">{row.remarks}</td>
-                {/* <td>
-                  <span className={`label label-${row.status}`}>
-                    {statusText}
-                  </span>
-                </td> */}
                 <td className="fit">
-  <div className="action-icons">
-    <BsFillPencilFill
-      className="edit-btn"
-      onClick={() => editRow(idx)}
-    />
-    <BsWhatsapp
-      className="whatsapp-btn"
-      onClick={(e) => {
-        e.preventDefault();
-        handleContactInfoClick(row.phoneNo);
-      }}
-    />
-  </div>
-</td>
-
+                  <div className="action-icons">
+                    <BsFillPencilFill
+                      className="edit-btn"
+                      onClick={() => editRow(idx)}
+                    />
+                    <BsWhatsapp
+                      className="whatsapp-btn"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleContactInfoClick(row.phoneNo);
+                      }}
+                    />
+                  </div>
+                </td>
               </tr>
             );
           })}
