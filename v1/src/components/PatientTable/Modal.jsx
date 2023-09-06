@@ -8,7 +8,11 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
       lastName: "",
       dob:"",
       gender: "",
+      nationality: "",
       phoneNo: "",
+      email: "",
+      emergencyNo:"",
+      emergencyRemarks:"",
       remarks: "",
       // status: "",
     }
@@ -45,6 +49,8 @@ const handleChange = (e) => {
 // Function to handle form submission
 const handleSubmit = (e) => {
   e.preventDefault(); // Prevent page refresh
+
+  //console.log(formState)
 
   //Check if form passes validation test
   if (validateForm()) {
@@ -95,8 +101,24 @@ const handleSubmit = (e) => {
             </select>
           </div>
           <div className="form-group">
+            <label htmlFor="nationality">Nationality</label>
+            <input name="nationality"  onChange={handleChange} value={formState.nationality} placeholder="Patient Nationality"/>
+          </div>
+          <div className="form-group">
             <label htmlFor="phoneNo">Phone Number</label>
             <input name="phoneNo" onChange={handleChange} value={formState.phoneNo} placeholder="Phone number"/>
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input name="email"  onChange={handleChange} value={formState.email} placeholder="Patient email"/>
+          </div>
+          <div className="form-group">
+            <label htmlFor="emergencyNo">Emergency Number</label>
+            <input name="emergencyNo"  onChange={handleChange} value={formState.email} placeholder="Optional Emergency Number"/>
+          </div>
+          <div className="form-group">
+            <label htmlFor="emergencyRemarks">Emergency Remarks</label>
+            <input name="emergencyRemarks"  onChange={handleChange} value={formState.email} placeholder="Optional Emergency Remarks"/>
           </div>
           <div className="form-group">
             <label htmlFor="remarks">Remarks</label>
