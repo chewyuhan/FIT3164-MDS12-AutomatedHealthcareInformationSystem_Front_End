@@ -41,7 +41,7 @@ export const Table = ({ rows, editRow }) => {
             return (
               <tr key={idx} className="clickable-row" onClick={() => handleRowClick(row)}>
                 <td>
-                  {row.patientID}
+                  {row.patientId}
                 </td>
                 <td>{row.firstName + " " + row.lastName}</td>
                 <td>{moment(row.dob).format("MM/DD/YYYY")}</td>
