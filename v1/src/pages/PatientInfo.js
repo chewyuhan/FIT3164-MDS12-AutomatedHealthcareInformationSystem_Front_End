@@ -4,7 +4,6 @@ import SearchBar from '../components/SearchBar/Searchbar';
 import SearchResultsList from '../components/SearchBar/Searchresultlist';
 import { Table } from '../components/PatientTable/Table'; // Step 1: Import the Table component
 import { Modal } from '../components/PatientTable/Modal';
-import patientsData from "../database/PatientsData"; // Connect to dummy data
 import axios from 'axios';
 
 function PatientInfo() {
@@ -73,32 +72,25 @@ function PatientInfo() {
     }
   }
 
-  // Handle dropped image files
-  function handleDrop(e) {
-    e.preventDefault();
-    const selectedFile = e.dataTransfer.files[0];
-    if (selectedFile && selectedFile.type.startsWith('image/')) {
-      setFile(selectedFile);
-      setImagePreview(URL.createObjectURL(selectedFile));
-    }
-  }
+  // // Handle dropped image files
+  // function handleDrop(e) {
+  //   e.preventDefault();
+  //   const selectedFile = e.dataTransfer.files[0];
+  //   if (selectedFile && selectedFile.type.startsWith('image/')) {
+  //     setFile(selectedFile);
+  //     setImagePreview(URL.createObjectURL(selectedFile));
+  //   }
+  // }
 
-  function handleDragOver(e) {
-    e.preventDefault();
-  }
+  // function handleDragOver(e) {
+  //   e.preventDefault();
+  // }
 
-  // Handle image selection using the hidden input
-  function handleImageChange(e) {
-    const selectedFile = e.target.files[0];
-    if (selectedFile && selectedFile.type.startsWith('image/')) {
-      setFile(selectedFile);
-      setImagePreview(URL.createObjectURL(selectedFile));
-    }
-  }
 
   if (!rows) {
     return <p>Loading patient data...</p>;
   }
+  
   return (
     <div className='patientinfo'>
       <div className="header">
