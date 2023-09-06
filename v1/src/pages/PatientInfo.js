@@ -51,7 +51,7 @@ function PatientInfo() {
       setRows([...rows, newRow]);
     } else {
       // Editing an existing patient
-      const patientId = rows[rowToEdit].id; // Replace 'id' with the actual property name
+      const patientId = rows[rowToEdit].patientId; 
       editPatient(patientId, newRow);
       setRows(
         rows.map((currRow, idx) => {
