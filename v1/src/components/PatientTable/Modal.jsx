@@ -88,7 +88,12 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
             </div>
             <div className="form-group">
               <label htmlFor="dob">Date of Birth</label>
-              <input name="dob" type="date" onChange={handleChange} value={formState.dob} />
+              <input
+                name="dob"
+                type="date"
+                onChange={handleChange}
+                defaultValue={formState.dob ? moment(formState.dob).format("YYYY-MM-DD") : ""} // Format the date
+              />
             </div>
             <div className="form-group">
               <label htmlFor="gender">Gender</label>

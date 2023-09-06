@@ -47,7 +47,7 @@ const InfoModal = ({ modalInfo, onClose }) => {
         <div className="modal-body scrollable">
           {Object.entries(modalInfo).map(([key, value]) => (
             <p key={key}>
-              {translations[key] || key}: {key === 'dob' || key === 'createdAt' || key === 'updatedAt' ? moment(value).format('MM/DD/YYYY') : value}
+              {translations[key] || key}: {key === 'dob' || key === 'createdAt' || key === 'updatedAt' ? moment(value).format('DD/MM/YYYY') : value}
             </p>
           ))}
         </div>
