@@ -15,42 +15,46 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   );
   const [errors, setErrors] = useState("");
 
-  // Validate to check form attributes filled in correctly,
-  const validateForm = () => {
-    if (formState.firstName && formState.lastName && formState.dob && formState.gender) {
-      setErrors("");
+// Function to validate the form
+const validateForm = () => {
+  const { firstName, lastName, dob, gender, phoneNo } = formState;
+
+  if (firstName && lastName && dob && gender) {
+    setErrors("");
+    if (!isNaN(phoneNo)) {
       return true;
     } else {
-      let errorFields = [];
-      for (const [key, value] of Object.entries(formState)) {
-        if (!value) {
-          errorFields.push(key);
-        }
-      }
-      setErrors(errorFields.join(", "));
+      setErrors("Please enter a valid numeric value for contact info.");
       return false;
     }
-  };
+  } else {
+    const errorFields = Object.entries(formState)
+      .filter(([key, value]) => !value)
+      .map(([key]) => key);
+    setErrors(errorFields.join(", "));
+    return false;
+  }
+};
 
-  // Main change to take user input 
-  const handleChange = (e) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
-  };
-  
-  // Submit approved if passed validation check
-  const handleSubmit = (e) => {
-    e.preventDefault(); //wont refresh page
-    
-    if (!validateForm()) return;
+// Function to handle input changes
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setFormState({ ...formState, [name]: value });
+};
 
-    if (!isNaN(formState.phoneNo)) {
-      onSubmit(formState);
+// Function to handle form submission
+const handleSubmit = (e) => {
+  e.preventDefault(); // Prevent page refresh
 
-      closeModal();
-    } else {
-      setErrors("Please enter a valid numeric value for contact info.");
-    }
-  };
+  //Check if form passes validation test
+  if (validateForm()) {
+    // if yes then update form details to rows in table
+    onSubmit(formState);
+    // closes the modal
+    closeModal();
+  }
+};
+
 
   return (
 
