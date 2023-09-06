@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from 'moment';
 import "./Modal.css";
 
 export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
@@ -84,7 +85,12 @@ const handleSubmit = (e) => {
           </div>
           <div className="form-group">
             <label htmlFor="dob">Date of Birth</label>
-            <input name="dob" type = "date" onChange={handleChange} value={formState.dob} />
+            <input
+              name="dob"
+              type="date"
+              onChange={handleChange}
+              defaultValue={formState.dob ? moment(formState.dob).format("YYYY-MM-DD") : ""} // Format the date
+            />
           </div>
           <div className="form-group">
             <label htmlFor="gender">Gender</label>

@@ -44,7 +44,7 @@ export const Table = ({ rows, editRow }) => {
                   {row.patientId}
                 </td>
                 <td>{row.firstName + " " + row.lastName}</td>
-                <td>{moment(row.dob).format("MM/DD/YYYY")}</td>
+                <td>{moment(row.dob).format("DD/MM/YYYY")}</td>
                 <td>{row.gender}</td>
                 <td>{row.phoneNo}</td>
                 <td className="expand">{row.remarks}</td>
