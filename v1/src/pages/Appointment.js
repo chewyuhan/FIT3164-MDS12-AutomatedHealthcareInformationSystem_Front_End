@@ -3,8 +3,7 @@ import AppointmentForm from "../components/Appointment/AppointmentForm";
 import Sidebar from '../components/Sidebar/Sidebar';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
-import doctorsData from "../database/DoctorsData";
-import patientData from "../database/PatientsData";
+import axios from 'axios'; // Import Axios for making API requests
 
 const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
@@ -15,19 +14,57 @@ const Appointment = () => {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [patients, setPatients] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // State to control the visibility of the popup
 
-  useEffect(() => {
-    setDoctors(doctorsData);
-  }, []);
+useEffect(() => {
+  // Retrieve the access token from sessionStorage
+  const accessToken = sessionStorage.getItem("accessToken");
+  // If the access token exists, you can use it for authenticated API calls
+  if (accessToken) {
+    // Make an authenticated API call using the access token
+    axios.get("https://mds12.cyclic.app/employees/doctors", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+      .then((response) => {
+        // Handle the response and update the user data state
+        console.log("Doctors response:", response.data);
+        setDoctors(response.data);
+        // Now, make another Axios call for fetching patients data
+        axios.get('https://mds12.cyclic.app/patients/all', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        })
+          .then(response => {
+            setPatients(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching patients data', error);
+          });
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
+  }
+}, []);
 
-  useEffect(() => {
-    setPatients(patientData);
-  }, []);
+  // Function to open the appointment popup
+  const openAppointmentPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  // Function to close the appointment popup
+  const closeAppointmentPopup = () => {
+    setIsPopupOpen(false);
+  };
+
 
   const handleSelectAppointmentTime = () => {
     const appointment = {
       patientID: selectedPatientId,
-      doctorId: selectedDoctorId,
+      employeeId: selectedDoctorId,
       date: appointmentDate,
       time: appointmentTime,
     };
@@ -40,10 +77,11 @@ const Appointment = () => {
     setSelectedAppointment(appointmentsForDay);
   };
 
-  const getDoctorNameById = (doctorId) => {
-    const doctor = doctors.find(d => d.id === doctorId);
-    return doctor ? doctor.name : "Unknown Doctor";
+  const getDoctorNameById = (employeeId) => {
+    const doctor = doctors.find(d => d.employeeId === employeeId);
+    return doctor ? `${doctor.firstName} ${doctor.lastName}` : "Unknown Doctor";
   };
+  
   
   return (
     <div className="appointment-page">
@@ -94,7 +132,7 @@ const Appointment = () => {
               <ul>
                 {selectedAppointment.map(appointment => (
                   <li key={appointment.time}>
-                    <p>Doctor: {getDoctorNameById(appointment.doctorId)}</p>
+                    <p>Doctor: {getDoctorNameById(appointment.employeeId)}</p>
                     <p>Patient: {appointment.patientID}</p>
                     <p>Time: {appointment.time}</p>
                   </li>

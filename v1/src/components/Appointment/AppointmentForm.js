@@ -2,40 +2,41 @@ import React from "react";
 import './AppointmentForm.css';
 import 'react-calendar/dist/Calendar.css';
 
-const AppointmentForm = ({ patients, selectedPatientId, setSelectedPatientId, doctors, appointmentTime, setAppointmentTime, selectedDoctorId, setSelectedDoctorId, handleSelectAppointmentTime }) => {
-
+const AppointmentForm = ({
+  patients,
+  selectedPatientId,
+  setSelectedPatientId,
+  doctors,
+  appointmentTime,
+  setAppointmentTime,
+  selectedDoctorId,
+  setSelectedDoctorId,
+  handleSelectAppointmentTime
+}) => {
   const handleSelectDoctor = (doctorId) => {
     setSelectedDoctorId(doctorId);
-    setAppointmentTime(""); // Reset appointment time when doctor changes
   };
-  
+
   const handleSelectPatient = (patientId) => {
     setSelectedPatientId(patientId);
   };
 
-  const generateTimeRange = (startHour, endHour) => {
+  const generateTimeRange = () => {
     const timeRange = [];
-  
-    for (let hour = startHour; hour <= endHour; hour++) {
+
+    for (let hour = 9; hour <= 18; hour++) {
       for (let minute = 0; minute < 60; minute += 20) {
-        if (!(hour === 13 && minute >= 0 && minute < 20)) { // Exclude 1:00 PM to 1:20 PM (lunch time)
+        if (!(hour === 13 && minute >= 0 && minute < 20)) {
           const formattedTime = `${hour % 12 || 12}:${minute === 0 ? '00' : minute} ${hour < 12 ? 'AM' : 'PM'}`;
           timeRange.push({ time: formattedTime });
         }
       }
     }
-  
+
     return timeRange;
   };
-  
 
-  const doctorAppointmentTimes = {
-    1: generateTimeRange(9, 17), 
-    2: generateTimeRange(9, 17), 
-    3: generateTimeRange(9, 17), 
-  };
-
-
+  const doctorAppointmentTimes = generateTimeRange();
 
   return (
     <div className="appointment-form">
@@ -47,8 +48,8 @@ const AppointmentForm = ({ patients, selectedPatientId, setSelectedPatientId, do
       >
         <option value="">Select a doctor...</option>
         {doctors.map((doctor) => (
-          <option key={doctor.id} value={doctor.id}>
-            {doctor.name}
+          <option key={doctor.employeeId} value={doctor.employeeId}>
+            {`${doctor.firstName} ${doctor.lastName}`}
           </option>
         ))}
       </select>
@@ -60,7 +61,7 @@ const AppointmentForm = ({ patients, selectedPatientId, setSelectedPatientId, do
       >
         <option value="">Select a patient...</option>
         {patients.map((patient) => (
-          <option key={patient.id} value={patient.id}>
+          <option key={patient.patientId} value={patient.patientId}>
             {`${patient.firstName} ${patient.lastName}`}
           </option>
         ))}
@@ -72,8 +73,7 @@ const AppointmentForm = ({ patients, selectedPatientId, setSelectedPatientId, do
         onChange={(event) => setAppointmentTime(event.target.value)}
       >
         <option value="">Select a time...</option>
-
-        {doctorAppointmentTimes[selectedDoctorId]?.map(({ time }) => (
+        {doctorAppointmentTimes.map(({ time }) => (
           <option key={time} value={time}>
             {time}
           </option>
