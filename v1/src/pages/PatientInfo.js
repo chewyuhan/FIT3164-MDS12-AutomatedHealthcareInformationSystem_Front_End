@@ -5,7 +5,8 @@ import SearchResultsList from '../components/SearchBar/Searchresultlist';
 import { Table } from '../components/PatientTable/Table'; // Step 1: Import the Table component
 import { Modal } from '../components/PatientTable/Modal';
 import axios from 'axios';
-import { addPatient, editPatient, fetchPatientDataFromAPI } from '../api/patient';
+import { addPatient, editPatient} from '../api/patient';
+
 function PatientInfo() {
 
   // Used to open Modal
