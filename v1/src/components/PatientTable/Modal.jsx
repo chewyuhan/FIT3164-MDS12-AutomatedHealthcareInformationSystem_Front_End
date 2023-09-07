@@ -13,34 +13,60 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
       nationality: "",
       phoneNo: "",
       email: "",
-      emergencyNo: "",
-      emergencyRemarks: "",
-      remarks: "",
-      // status: "",
+      emergencyNo: null,
+      emergencyRemarks: null,
+      remarks: null,
     }
   );
   const [errors, setErrors] = useState("");
 
-  // Function to validate the form
-  const validateForm = () => {
-    const { firstName, lastName, dob, gender, phoneNo, ic, nationality} = formState;
+// Function to validate the form
+const validateForm = () => {
+  const {
+    firstName,
+    lastName,
+    dob,
+    gender,
+    ic,
+    nationality,
+    phoneNo,
+    email,
+    emergencyNo,
+    emergencyRemarks,
+    remarks,
+  } = formState;
 
-    if (firstName && lastName && dob && gender && ic && nationality && phoneNo) {
-      setErrors("");
-      if (!isNaN(phoneNo)) {
+  if (
+    firstName &&
+    lastName &&
+    dob &&
+    gender &&
+    ic &&
+    nationality &&
+    phoneNo &&
+    email
+    ) {
+      if (!isNaN(phoneNo) && !isNaN(emergencyNo)) {
+        if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+        setErrors("");
         return true;
       } else {
-        setErrors("Please enter a valid numeric value for contact info.");
-        return false;
+        setErrors("Please enter a valid email address.");
       }
     } else {
-      const errorFields = Object.entries(formState)
-        .filter(([key, value]) => !value)
-        .map(([key]) => key);
-      setErrors(errorFields.join(", "));
-      return false;
+      setErrors(
+        "Please enter a valid numeric value for contact info."
+      );
     }
-  };
+  } else {
+    const errorFields = Object.entries(formState)
+      .filter(([key, value]) => !value) 
+      .map(([key]) => key);
+    setErrors(errorFields.join(", "));
+  }
+  return false;
+};
+
 
   // Function to handle input changes
   const handleChange = (e) => {
@@ -52,22 +78,16 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent page refresh
 
-    //console.log(formState)
-
-    //Check if form passes validation test
+    // Check if form passes validation test
     if (validateForm()) {
-      // if yes then update form details to rows in table
+      // If yes then update form details to rows in table
       onSubmit(formState);
-      // closes the modal
+      // Closes the modal
       closeModal();
     }
   };
 
-
   return (
-
-
-
     <div
       className="modal-container"
       onClick={(e) => {
@@ -80,11 +100,21 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           <form>
             <div className="form-group">
               <label htmlFor="firstName">First Name</label>
-              <input name="firstName" onChange={handleChange} value={formState.firstName} placeholder="Patient first name" />
+              <input
+                name="firstName"
+                onChange={handleChange}
+                value={formState.firstName}
+                placeholder="Patient first name"
+              />
             </div>
             <div className="form-group">
               <label htmlFor="lastName">Last Name</label>
-              <input name="lastName" onChange={handleChange} value={formState.lastName} placeholder="Patient last name" />
+              <input
+                name="lastName"
+                onChange={handleChange}
+                value={formState.lastName}
+                placeholder="Patient last name"
+              />
             </div>
             <div className="form-group">
               <label htmlFor="dob">Date of Birth</label>
@@ -92,7 +122,11 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                 name="dob"
                 type="date"
                 onChange={handleChange}
-                defaultValue={formState.dob ? moment(formState.dob).format("YYYY-MM-DD") : ""} // Format the date
+                defaultValue={
+                  formState.dob
+                    ? moment(formState.dob).format("YYYY-MM-DD")
+                    : ""
+                } // Format the date
               />
             </div>
             <div className="form-group">
@@ -101,9 +135,10 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                 name="gender"
                 value={formState.gender}
                 onChange={handleChange}
-
               >
-                <option value="" disabled> Select gender</option>
+                <option value="" disabled>
+                  Select gender
+                </option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
@@ -111,49 +146,67 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
             </div>
             <div className="form-group">
               <label htmlFor="nationality">Nationality</label>
-              <input name="nationality" onChange={handleChange} value={formState.nationality} placeholder="Patient Nationality" />
+              <input
+                name="nationality"
+                onChange={handleChange}
+                value={formState.nationality}
+                placeholder="Patient Nationality"
+              />
             </div>
             <div className="form-group">
               <label htmlFor="ic">Identification Number</label>
-              <input name="ic" onChange={handleChange} value={formState.ic} placeholder="Identification Number" />
+              <input
+                name="ic"
+                onChange={handleChange}
+                value={formState.ic}
+                placeholder="Identification Number"
+              />
             </div>
             <div className="form-group">
               <label htmlFor="phoneNo">Phone Number</label>
-              <input name="phoneNo" onChange={handleChange} value={formState.phoneNo} placeholder="Phone number" />
+              <input
+                name="phoneNo"
+                onChange={handleChange}
+                value={formState.phoneNo}
+                placeholder="Phone number"
+              />
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              <input name="email" onChange={handleChange} value={formState.email} placeholder="Patient email" />
+              <input
+                name="email"
+                onChange={handleChange}
+                value={formState.email}
+                placeholder="Patient email"
+              />
             </div>
             <div className="form-group">
               <label htmlFor="emergencyNo">Emergency Number</label>
-              <input name="emergencyNo" onChange={handleChange} value={formState.emergencyNo} placeholder="Optional Emergency Number" />
+              <input
+                name="emergencyNo"
+                onChange={handleChange}
+                value={formState.emergencyNo}
+                placeholder="Emergency Number"
+              />
             </div>
             <div className="form-group">
               <label htmlFor="emergencyRemarks">Emergency Remarks</label>
-              <input name="emergencyRemarks" onChange={handleChange} value={formState.emergencyRemarks} placeholder="Optional Emergency Remarks" />
+              <input
+                name="emergencyRemarks"
+                onChange={handleChange}
+                value={formState.emergencyRemarks}
+                placeholder="Emergency Remarks"
+              />
             </div>
             <div className="form-group">
               <label htmlFor="remarks">Remarks</label>
               <textarea
-                name="remarks" placeholder="Optional remarks"
+                name="remarks"
+                placeholder="Optional remarks"
                 onChange={handleChange}
                 value={formState.remarks}
               />
             </div>
-            {/* <div className="form-group">
-            <label htmlFor="status">Status</label>
-            <select
-              name="status"
-              onChange={handleChange}
-              value={formState.status}
-            >
-              <option value= "" disabled> Select status</option>
-              <option value="Healthy">Healthy</option>
-              <option value="Stable">Stable</option>
-              <option value="Critical">Critical</option>
-            </select>
-          </div> */}
             {errors && <div className="error">{`Please include: ${errors}`}</div>}
             <button type="submit" className="btn" onClick={handleSubmit}>
               Submit
