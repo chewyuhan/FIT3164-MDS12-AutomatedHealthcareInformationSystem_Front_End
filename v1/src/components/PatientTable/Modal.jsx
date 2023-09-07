@@ -177,7 +177,7 @@ const validateForm = () => {
                 name="email"
                 onChange={handleChange}
                 value={formState.email}
-                placeholder="Patient email"
+                placeholder="Patient Email"
               />
             </div>
             <div className="form-group">
@@ -186,7 +186,7 @@ const validateForm = () => {
                 name="emergencyNo"
                 onChange={handleChange}
                 value={formState.emergencyNo}
-                placeholder="Emergency Number"
+                placeholder="Optional Emergency Number"
               />
             </div>
             <div className="form-group">
@@ -195,7 +195,7 @@ const validateForm = () => {
                 name="emergencyRemarks"
                 onChange={handleChange}
                 value={formState.emergencyRemarks}
-                placeholder="Emergency Remarks"
+                placeholder="Optional Emergency Remarks"
               />
             </div>
             <div className="form-group">
