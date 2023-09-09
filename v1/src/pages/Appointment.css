@@ -1,0 +1,79 @@
+/* Appointment.css */
+.appointment-container {
+    display: flex;
+    flex-direction: column;
+    /* Change to column direction */
+    /* align-items: center; Center horizontally */
+    margin-top: 0px;
+}
+.appointment-list-container {
+    display: flex;
+    flex-direction: row;
+    /* Change to column direction */
+    /* align-items: center; Center horizontally */
+    margin-top: 0px;
+}
+.add-appointment-button {
+    background-color: #1d4ed8;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    /* Adjust the top margin as needed */
+    cursor: pointer;
+    width: 100%;
+    /* Make the button width 100% */
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+
+}
+
+.calendar-container {
+    margin-bottom: 20px;
+}
+
+
+
+.add-appointment-button:hover {
+    background-color: #0056b3;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+
+    max-height: 100vh;
+    /* Set the maximum height for the modal body */
+    overflow-y: auto;
+    /* Add vertical scroll if content exceeds max height */
+
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.close-popup-button {
+    background-color: #1d4ed8;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    /* Adjust the top margin as needed */
+    cursor: pointer;
+}
+
+.close-popup-button:hover {
+    background-color: #0056b3;
+}

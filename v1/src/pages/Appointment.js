@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar/Sidebar';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios'; // Import Axios for making API requests
+import './Appointment.css';
 
 const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
@@ -64,7 +65,7 @@ useEffect(() => {
   const handleSelectAppointmentTime = () => {
     const appointment = {
       patientID: selectedPatientId,
-      employeeId: selectedDoctorId,
+      employeeID: selectedDoctorId,
       date: appointmentDate,
       time: appointmentTime,
     };
@@ -77,54 +78,77 @@ useEffect(() => {
     setSelectedAppointment(appointmentsForDay);
   };
 
-  const getDoctorNameById = (employeeId) => {
-    const doctor = doctors.find(d => d.employeeId === employeeId);
-    return doctor ? `${doctor.firstName} ${doctor.lastName}` : "Unknown Doctor";
-  };
-  
+const getDoctorNameById = (employeeID) => {
+  // console.log("Doctors:", doctors);
+  const doctor = doctors.find(d => d.employeeId.toString() === employeeID);
+  // console.log("Doctor found:", doctor);
+  return doctor ? `${doctor.firstName} ${doctor.lastName}` : "Unknown Doctor";
+};
+
+const getPatientNameById = (patientID) => {
+  // console.log("Patients:", patients);
+  const patient = patients.find(p => p.patientId.toString() === patientID);
+  // console.log("Patient found:", patient);
+  return patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient";
+};
+
+
   
   return (
     <div className="appointment-page">
       <Sidebar />
       <div className="appointment-container">
-        <div className="calendar-container">
-          <h1>Book an Appointment</h1>
-          <h2>Select a Date</h2>
-          <Calendar
-            value={appointmentDate}
-            onChange={(date) => setAppointmentDate(date)}
-            onClickDay={handleCalendarClick}
-            tileContent={({ date, view }) => {
-              if (view === 'month') {
-                const formattedDate = date.toISOString().split('T')[0];
-                const appointmentsForDay = appointments.filter(appointment => appointment.date.toISOString().split('T')[0] === formattedDate);
-                const appointmentCount = appointmentsForDay.length;
-                return (
-                  <div className="appointment-tile-content">
-                    {appointmentCount >= 0 && <span className="appointment-indicator">📅</span>}
-                    <span className="appointment-count">{appointmentCount}</span>
-                  </div>
-                );
-              }
-              return null;
-            }}
-          />
+        <div className="add-appointment-content">
+          <button onClick={openAppointmentPopup} className="add-appointment-button">
+            Add Appointment
+          </button>
         </div>
-        <div className="appointment-content">
-          <AppointmentForm
-            patients={patients}
-            selectedPatientId={selectedPatientId}
-            setSelectedPatientId={setSelectedPatientId}
-            doctors={doctors}
-            appointmentDate={appointmentDate}
-            setAppointmentDate={setAppointmentDate}
-            appointmentTime={appointmentTime}
-            setAppointmentTime={setAppointmentTime}
-            selectedDoctorId={selectedDoctorId}
-            setSelectedDoctorId={setSelectedDoctorId}
-            handleSelectAppointmentTime={handleSelectAppointmentTime}
-          />
-        </div>
+        {isPopupOpen && (
+          <div className="popup">
+            <div className="popup-content">
+              <AppointmentForm
+                patients={patients}
+                selectedPatientId={selectedPatientId}
+                setSelectedPatientId={setSelectedPatientId}
+                doctors={doctors}
+                appointmentDate={appointmentDate}
+                setAppointmentDate={setAppointmentDate}
+                appointmentTime={appointmentTime}
+                setAppointmentTime={setAppointmentTime}
+                selectedDoctorId={selectedDoctorId}
+                setSelectedDoctorId={setSelectedDoctorId}
+                handleSelectAppointmentTime={handleSelectAppointmentTime}
+              />
+              <button onClick={closeAppointmentPopup} className="close-popup-button">
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+        <div className="appointment-list-container">
+          <div className="calendar-container">
+            <h1>Book an Appointment</h1>
+            <h2>Select a Date</h2>
+            <Calendar
+              value={appointmentDate}
+              onChange={(date) => setAppointmentDate(date)}
+              onClickDay={handleCalendarClick}
+              tileContent={({ date, view }) => {
+                if (view === 'month') {
+                  const formattedDate = date.toISOString().split('T')[0];
+                  const appointmentsForDay = appointments.filter(appointment => appointment.date.toISOString().split('T')[0] === formattedDate);
+                  const appointmentCount = appointmentsForDay.length;
+                  return (
+                    <div className="appointment-tile-content">
+                      {appointmentCount >= 0 && <span className="appointment-indicator">📅</span>}
+                      <span className="appointment-count">{appointmentCount}</span>
+                    </div>
+                  );
+                }
+                return null;
+              }}
+            />
+          </div>
         {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
           <div className="selected-appointment-details">
             <h2>Appointments for {selectedAppointment[0]?.date.toDateString()}</h2>
@@ -132,8 +156,8 @@ useEffect(() => {
               <ul>
                 {selectedAppointment.map(appointment => (
                   <li key={appointment.time}>
-                    <p>Doctor: {getDoctorNameById(appointment.employeeId)}</p>
-                    <p>Patient: {appointment.patientID}</p>
+                    <p>Doctor: {getDoctorNameById(appointment.employeeID)}</p>
+                    <p>Patient: {getPatientNameById(appointment.patientID)}</p>
                     <p>Time: {appointment.time}</p>
                   </li>
                 ))}
@@ -143,6 +167,7 @@ useEffect(() => {
         )}
       </div>
     </div>
+  </div>
   );
 };
 
