@@ -9,6 +9,9 @@ const AppointmentForm = ({
   defaultValue,
   patients,
   selectedPatientId,
+  setSelectedDoctorId,
+  setSelectedPatientId,
+  setAppointmentTime,
   doctors,
   appointmentTime,
   selectedDoctorId,
@@ -47,6 +50,13 @@ const AppointmentForm = ({
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleSelectDoctor = (doctorId) => {
+    setSelectedDoctorId(doctorId);
+  };
+
+  const handleSelectPatient = (patientId) => {
+    setSelectedPatientId(patientId);
+  };
 
   const handleSubmit = () => {
     // Validate the form data
@@ -74,8 +84,8 @@ const AppointmentForm = ({
         <select
           className="doctor-select"
           value={selectedDoctorId || ""}
-          onChange={handleChange}
-        >
+          onChange={(event) => handleSelectDoctor(event.target.value)}
+          >
           <option value="">Select a doctor...</option>
           {doctors.map((doctor) => (
             <option key={doctor.employeeId} value={doctor.employeeId}>
@@ -89,8 +99,8 @@ const AppointmentForm = ({
         <select
           className="patient-select"
           value={selectedPatientId || ""}
-          onChange={handleChange}
-        >
+          onChange={(event) => handleSelectPatient(event.target.value)}
+          >
           <option value="">Select a patient...</option>
           {patients.map((patient) => (
             <option key={patient.patientId} value={patient.patientId}>
@@ -104,8 +114,8 @@ const AppointmentForm = ({
         <select
           className="time-select"
           value={appointmentTime}
-          onChange={handleChange}
-        >
+          onChange={(event) => setAppointmentTime(event.target.value)}
+          >
           <option value="">Select a time...</option>
           {doctorAppointmentTimes.map(({ time }) => (
             <option key={time} value={time}>
