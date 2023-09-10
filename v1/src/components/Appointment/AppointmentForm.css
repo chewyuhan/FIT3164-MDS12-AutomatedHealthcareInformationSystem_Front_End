@@ -1,29 +1,30 @@
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+}
+
 /* Custom styling for the calendar */
-  .react-calendar__tile--active {
-    background: #007bff;
-    color: white;
-  }
-  .appointment-container {
-    display: flex;
-  }
+.react-calendar__tile--active {
+  background: #007bff;
+  color: white;
+}
 
-  .calendar-container {
-    /* Define calendar container styles here */
-    width: 30%;
-    padding: 20px;
-  }
-  
-  .appointment-content {
-    /* Define appointment content styles here */
-    flex: 1;
-  }
-  
-  .selected-appointment-details {
-    /* Define appointment content styles here */
-    flex: 1;
-  }
+/* Layout styles */
+.appointment-container {
+  display: flex;
+}
 
-/* Style for h1 and h2 within calendar-container */
+.calendar-container {
+  width: 30%;
+  padding: 20px;
+}
+
+.appointment-content,
+.selected-appointment-details {
+  flex: 1;
+}
+
+/* Typography */
 .calendar-container h1 {
   font-size: 24px;
   margin: 0;
@@ -33,10 +34,93 @@
   font-size: 18px;
   margin-top: 10px;
 }
-  
-/* Center-align button */
-.book-button {
-    display: block;
-    margin-top: 10px; /* Add margin to create space below the button */
-  }
 
+.book-button {
+  display: block;
+  /* Remove 'margin: auto;' to align to the left */
+  margin-top: 1rem;
+  margin-left: 0; /* Add this to align to the left */
+  border: none;
+  background-color: #1d4ed8;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0px 5px 5px #ccc;
+}
+.form-group {
+  display: flex;
+  margin-left: auto;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  border: 1px solid black;
+  border-radius: 0.3rem;
+  padding: 0.3rem;
+  font-size: 1rem;
+}
+
+.form-group label {
+  margin-bottom: 0.2rem;
+}
+
+/* Checkbox styles */
+.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+/* Form styles */
+/* Form styles */
+.appointment-form {
+  border-radius: 5px;
+  padding: 3rem;
+  background-color: white;
+  width: 25em;
+  max-height: 70vh; /* Set the maximum height for the modal body */
+}
+
+
+.appointment-form h1 {
+  font-size: 24px;
+}
+
+.appointment-form h2 {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.appointment-form input[type="text"],
+.appointment-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.appointment-form input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.appointment-form .checkbox {
+  margin-top: 10px;
+}
+
+/* Add more form styling as needed */
+
+/* Error message styles */
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}

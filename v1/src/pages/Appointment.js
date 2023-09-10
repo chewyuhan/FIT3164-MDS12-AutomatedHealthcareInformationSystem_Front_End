@@ -68,6 +68,9 @@ useEffect(() => {
       employeeID: selectedDoctorId,
       date: appointmentDate,
       time: appointmentTime,
+      remarks: "aa",
+      reason: "aa",
+      completed: false,
     };
     setAppointments([...appointments, appointment]);
   };
@@ -159,6 +162,8 @@ const getPatientNameById = (patientID) => {
                     <p>Doctor: {getDoctorNameById(appointment.employeeID)}</p>
                     <p>Patient: {getPatientNameById(appointment.patientID)}</p>
                     <p>Time: {appointment.time}</p>
+                    <p>Reason: {appointment.reason}</p>
+                    <p>Remarks: {appointment.remarks}</p>
                   </li>
                 ))}
               </ul>

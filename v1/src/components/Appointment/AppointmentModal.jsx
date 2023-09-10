@@ -2,7 +2,42 @@ import React, { useState } from "react";
 import moment from 'moment';
 import "./Modal.css";
 
-export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
+export const Modal = ({
+  closeModal,
+  onSubmit,
+  defaultValue,
+  patients,
+  selectedPatientId,
+  setSelectedPatientId,
+  doctors,
+  appointmentTime,
+  setAppointmentTime,
+  selectedDoctorId,
+  setSelectedDoctorId,
+  handleSelectAppointmentTime }) => {
+
+  const handleSelectDoctor = (doctorId) => {
+    setSelectedDoctorId(doctorId);
+  };
+
+  const handleSelectPatient = (patientId) => {
+    setSelectedPatientId(patientId);
+  };
+  const generateTimeRange = () => {
+    const timeRange = [];
+
+    for (let hour = 9; hour <= 18; hour++) {
+      for (let minute = 0; minute < 60; minute += 20) {
+        if (!(hour === 13 && minute >= 0 && minute < 20)) {
+          const formattedTime = `${hour % 12 || 12}:${minute === 0 ? '00' : minute} ${hour < 12 ? 'AM' : 'PM'}`;
+          timeRange.push({ time: formattedTime });
+        }
+      }
+    }
+
+    return timeRange;
+  };
+
   const [formState, setFormState] = useState(
     defaultValue || {
       appointmentId: "",
@@ -15,6 +50,8 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
       completed: false,
     }
   );
+
+  const doctorAppointmentTimes = generateTimeRange();
 
   const [errors, setErrors] = useState(""); // Add errors state
 
