@@ -56,8 +56,7 @@ const InfoModal = ({ modalInfo, onClose, patientId }) => {
           {diagnosisData.length > 0 ? (
             diagnosisData.map((diagnosis, index) => (
               <div key={index}>
-                <h3>Diagnosis {index + 1}</h3>
-                <p>{translations.diagnosisId}: {diagnosis.diagnosisId}</p>
+                <h3>{translations.diagnosisId}: {diagnosis.diagnosisId}</h3>
                 <p>{translations.createdAt}: {moment(diagnosis.createdAt).format('DD/MM/YYYY h:mm a')}</p>
                 <p>{translations.updatedAt}: {moment(diagnosis.updatedAt).format('DD/MM/YYYY h:mm a')}</p>
                 <p>{translations.appointmentId}: {diagnosis.appointmentId}</p>

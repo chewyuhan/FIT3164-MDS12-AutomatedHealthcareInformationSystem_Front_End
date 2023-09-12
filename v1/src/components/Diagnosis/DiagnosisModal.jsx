@@ -15,16 +15,19 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     }
   );
   const [errors, setErrors] = useState("");
-  const [patients, setPatients] = useState([]); // To store patient data
+  const [patients, setPatients] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
-  const [employees, setEmployees] = useState([]); // To store employee data
+  const [employees, setEmployees] = useState([]);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
-  const [fetchError, setFetchError] = useState(null); // To store fetch errors
+  const [fetchError, setFetchError] = useState(null);
+  const [appointment, setAppointment] = useState([]);
+  const [appointmentIds, setAppointmentIds] = useState([]);
+  const [appointmentOptions, setAppointmentOptions] = useState([]);
+
 
   useEffect(() => {
     const accessToken = sessionStorage.getItem("accessToken");
 
-    // Fetch patient data from the API
     const fetchPatientData = async () => {
       try {
         const response = await axios.get("https://mds12.cyclic.app/patients/all", {
@@ -40,7 +43,6 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
       }
     };
 
-    // Fetch employee data from the API
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get("https://mds12.cyclic.app/employees/doctors", {
@@ -55,11 +57,36 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
       }
     };
 
+    const fetchAppointmentData = async (patientId) => {
+      try {
+        const appointmentResponse = await axios.get(`https://mds12.cyclic.app/appointments/patient/${patientId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        setAppointment(appointmentResponse.data);
+
+        const appointmentOptions = appointmentResponse.data.map((appointment) => ({
+          id: appointment.appointmentId,
+          datetime: new Date(appointment.appointmentDateTime),
+        }));
+        setAppointmentIds(appointmentOptions);
+
+        // Set the appointment options for the selected patient
+        setAppointmentOptions(appointmentOptions);
+      } catch (error) {
+        console.error("Error fetching appointment data:", error);
+        setFetchError("Error fetching appointment data. Please try again later.");
+      }
+    };
+
+
     fetchPatientData();
     fetchEmployeeData();
-  }, []);
+    fetchAppointmentData(selectedPatientId);
 
-  // Function to validate the form
+  }, [selectedPatientId]);
+
   const validateForm = () => {
     const {
       appointmentId,
@@ -83,32 +110,24 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     }
   };
 
-  // Function to handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormState({ ...formState, [name]: value });
   };
 
-  // Function to handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent page refresh
+    e.preventDefault();
+    const parsedAppointmentId = parseInt(formState.appointmentId, 10);
 
-    // Check if form passes validation test
+
     if (validateForm()) {
-      // If yes, update form details to rows in table
-      onSubmit(formState);
-      // Close the modal
+      onSubmit({ ...formState, appointmentId: parsedAppointmentId });
       closeModal();
     }
   };
 
   return (
-    <div
-      className="modal-container"
-      onClick={(e) => {
-        if (e.target.className === "modal-container") closeModal();
-      }}
-    >
+    <div className="modal-container" onClick={(e) => { if (e.target.className === "modal-container") closeModal(); }}>
       <div className="modal">
         <div className="modal-header">
           <h1 className="modal-title">Diagnosis Details</h1>
@@ -133,7 +152,10 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
               <select
                 name="patientId"
                 value={selectedPatientId}
-                onChange={(e) => setSelectedPatientId(Number(e.target.value))}
+                onChange={(e) => {
+                  setSelectedPatientId(Number(e.target.value));
+                  setFormState({ ...formState, appointmentId: "" }); // Reset appointment ID when patient changes
+                }}
               >
                 <option value="">Select a patient</option>
                 {patients.map((patient) => (
@@ -143,6 +165,29 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                 ))}
               </select>
             </div>
+            <div className="form-group">
+              <label htmlFor="appointmentId">Select Appointment</label>
+              <select
+                name="appointmentId"
+                value={formState.appointmentId}
+                onChange={handleChange}
+              >
+                <option value="">Select an appointment</option>
+                {appointmentOptions.map((appointmentOption) => {
+                  const appointmentDate = new Date(appointmentOption.datetime);
+                  const formattedDate = `${appointmentDate.getFullYear()}-${(appointmentDate.getMonth() + 1).toString().padStart(2, "0")
+                    }-${appointmentDate.getDate().toString().padStart(2, "0")}`;
+                  const formattedTime = `${appointmentDate.getHours()}:${appointmentDate.getMinutes().toString().padStart(2, "0")}`;
+
+                  return (
+                    <option key={appointmentOption.id} value={parseInt(appointmentOption.id, 10)}>
+                      {`${formattedDate} ${formattedTime} ${appointmentDate.getHours() >= 12 ? "PM" : "AM"}`}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+
             <div className="form-group">
               <label htmlFor="icd">ICD</label>
               <input
@@ -161,6 +206,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                 placeholder="Symptoms"
               />
             </div>
+
             <div className="form-group">
               <label htmlFor="remarks">Remarks (Optional)</label>
               <input

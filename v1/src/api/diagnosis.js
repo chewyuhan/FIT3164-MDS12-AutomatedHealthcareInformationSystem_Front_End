@@ -27,14 +27,14 @@ export const fetchDiagnosisDataFromAPI = async (patientId) => {
 
 export const addDiagnosis = (newDiagnosis) => {
     const accessToken = sessionStorage.getItem("accessToken");
-
+    console.log(newDiagnosis)
     if (!accessToken) {
         // Handle the case where there's no access token (authentication failed)
         console.error("No access token found");
         return;
     }
 
-    axios.post("https://mds12.cyclic.app/patients/", newDiagnosis, {
+    axios.post("https://mds12.cyclic.app/diagnoses/", newDiagnosis, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -59,7 +59,7 @@ export const editDiagnosis = (diagnosisId, updatedDiagnosis) => {
         return;
     }
 
-    axios.patch(`https://mds12.cyclic.app/patients/${diagnosisId}`, updatedDiagnosis, {
+    axios.patch(`https://mds12.cyclic.app/diagnoses/${diagnosisId}`, updatedDiagnosis, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },

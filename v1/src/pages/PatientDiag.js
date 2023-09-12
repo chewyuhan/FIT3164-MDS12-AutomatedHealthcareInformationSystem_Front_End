@@ -83,40 +83,23 @@ function PatientDiag() {
   };
 
 
-  const fetchDataAndUpdateRows = async () => {
-    try {
-      // Add a delay of 1 second (1000 milliseconds) before fetching data
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-  
-      const accessToken = sessionStorage.getItem("accessToken");
-      if (accessToken) {
-        const response = await axios.get("https://mds12.cyclic.app/patients/all", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        });
-        console.log("Data fetched from API:", response.data);
-        setPatients(response.data);
-      }
-    } catch (error) {
-      console.error("Error fetching data from the API:", error);
-    }
-  };
+
   
 
   const handleSubmit = async (newRow) => {
     try {
+      console.log("Adding new diagnosis:", newRow);
+
       if (rowToEdit === null) {
         // Adding a new patient
         await addDiagnosis(newRow);
+        console.log("Added new diagnosis");
       } else {
         // Editing an existing patient
         const diagnosisId = diagnosis[rowToEdit].diagnosisId;
         await editDiagnosis(diagnosisId, newRow);
       }
   
-      // Fetch and update the data from the API after the operation is complete
-      fetchDataAndUpdateRows();
     } catch (error) {
       console.error("Error:", error);
     }
