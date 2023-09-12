@@ -5,7 +5,7 @@ import SearchResultsList from '../components/SearchBar/Searchresultlist';
 import { Table } from '../components/PatientTable/Table'; // Step 1: Import the Table component
 import { Modal } from '../components/PatientTable/Modal';
 import axios from 'axios';
-import { addPatient, editPatient} from '../api/patient';
+import { addPatient, editPatient } from '../api/patient';
 
 function PatientInfo() {
 
@@ -13,6 +13,7 @@ function PatientInfo() {
   const [modalOpen, setModalOpen] = useState(false);
   const [results, setResults] = useState([]); //for search bar
   const [rows, setRows] = useState(null);
+  const [filteredRows, setFilteredRows] = useState([]); // Create state for filtered rows
 
 
   useEffect(() => {
@@ -49,7 +50,7 @@ function PatientInfo() {
     try {
       // Add a delay of 1 second (1000 milliseconds) before fetching data
       await new Promise((resolve) => setTimeout(resolve, 1000));
-  
+
       const accessToken = sessionStorage.getItem("accessToken");
       if (accessToken) {
         const response = await axios.get("https://mds12.cyclic.app/patients/all", {
@@ -64,7 +65,7 @@ function PatientInfo() {
       console.error("Error fetching data from the API:", error);
     }
   };
-  
+
 
   const handleSubmit = async (newRow) => {
     try {
@@ -76,7 +77,7 @@ function PatientInfo() {
         const patientId = rows[rowToEdit].patientId;
         await editPatient(patientId, newRow);
       }
-  
+
       // Fetch and update the data from the API after the operation is complete
       fetchDataAndUpdateRows();
     } catch (error) {
@@ -84,7 +85,7 @@ function PatientInfo() {
     }
   };
 
-  
+
   //For uploading and viewing Image
   const [file, setFile] = useState(); // State for the uploaded image file
   const [imagePreview, setImagePreview] = useState(null); // State for image preview
@@ -123,9 +124,8 @@ function PatientInfo() {
       </div>
       <h1>PatientInfo</h1>
       <div className="search-bar-container">
-        <SearchBar setResults={setResults} />
-        {results && results.length > 0 && <SearchResultsList results={results} />}
-        {/* Step 3: Include the Table component with the searchResults data */}
+        <SearchBar setResults={setResults} rows={rows} setFilteredRows={setFilteredRows} />
+        {results && results.length > 0 }
       </div>
       <div className="App">
         <button onClick={() => setModalOpen(true)} className="button">
@@ -155,7 +155,7 @@ function PatientInfo() {
             <img src={imagePreview} alt="Uploaded" />
           </div>
         )}
-        <Table rows={rows} editRow={handleEditRow} />
+        <Table rows={filteredRows.length > 0 ? filteredRows : rows} editRow={handleEditRow} />
         {modalOpen && (
           <Modal
             closeModal={() => {
