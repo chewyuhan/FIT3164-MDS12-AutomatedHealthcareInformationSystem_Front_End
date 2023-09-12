@@ -32,8 +32,6 @@ const validateForm = () => {
     phoneNo,
     email,
     emergencyNo,
-    emergencyRemarks,
-    remarks,
   } = formState;
 
   if (
