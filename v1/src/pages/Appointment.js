@@ -4,7 +4,11 @@ import Sidebar from '../components/Sidebar/Sidebar';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios'; // Import Axios for making API requests
+import { Table } from '../components/Appointment/AppointmentTable'; 
 import './Appointment.css';
+
+//using dummy data
+import appointmentData from "../database/apptData2";
 
 const Appointment = () => {
   const [appointments, setAppointments] = useState([]);
@@ -16,6 +20,12 @@ const Appointment = () => {
   const [patients, setPatients] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false); // State to control the visibility of the popup
+  
+  // Used to open Modal
+  const [rows, setRows] = useState(appointmentData);
+
+
+
 
 useEffect(() => {
   // Retrieve the access token from sessionStorage
@@ -60,7 +70,6 @@ useEffect(() => {
   const closeAppointmentPopup = () => {
     setIsPopupOpen(false);
   };
-
 
   const handleSelectAppointmentTime = () => {
     const appointment = {
@@ -155,7 +164,8 @@ const getPatientNameById = (patientID) => {
         {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
           <div className="selected-appointment-details">
             <h2>Appointments for {selectedAppointment[0]?.date.toDateString()}</h2>
-            <div className="centered-list">
+            <div className="centered-list"> 
+              
               <ul>
                 {selectedAppointment.map(appointment => (
                   <li key={appointment.time}>
@@ -169,7 +179,8 @@ const getPatientNameById = (patientID) => {
               </ul>
             </div>
           </div>
-        )}
+        )}<Table rows={rows} />
+        
       </div>
     </div>
   </div>
