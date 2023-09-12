@@ -53,11 +53,6 @@ const InfoModal = ({ modalInfo, onClose, patientId }) => {
           <h2> Diagnosis Info</h2>
         </div>
         <div className="modal-body scrollable">
-          {Object.entries(modalInfo).map(([key, value]) => (
-            <p key={key}>
-              {translations[key] || key}: {key === 'dob' || key === 'createdAt' || key === 'updatedAt' ? moment(value).format('DD/MM/YYYY') : value}
-            </p>
-          ))}
           {diagnosisData.length > 0 ? (
             diagnosisData.map((diagnosis, index) => (
               <div key={index}>
