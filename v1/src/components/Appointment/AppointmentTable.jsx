@@ -25,6 +25,8 @@ export const Table = ({ rows, editRow }) => {
             <th>Appointment Date/Time</th>
             <th>Reason</th>
             <th>Status</th>
+            <th>Remarks</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -34,8 +36,8 @@ export const Table = ({ rows, editRow }) => {
                 <td>
                   {row.appointmentId}
                 </td>
-                <td>{row.patient.id}</td>
-                <td>{row.employee.id}</td>
+                <td>{row.patientId}</td>
+                <td>{row.employeeId}</td>
                 <td>{moment(row.appointmentDateTime).format("DD/MM/YYYY HH:mm")}</td>
                 <td>{row.reason}</td>
                 <td>{row.completed ? "Completed" : "Not Completed"}</td>
