@@ -3,7 +3,7 @@ import moment from 'moment'; // Import moment
 import "./Table.css";
 import InfoModal from './DiagnosisinfoModal';
 
-export const Table = ({ patients, editPatients }) => {
+export const Table = ({ patients }) => {
   const [modalInfo, setModalInfo] = useState({});
   const [showModal, setShowModal] = useState(false);
 
@@ -53,7 +53,7 @@ export const Table = ({ patients, editPatients }) => {
       </table>
       {showModal && (
         <div className="modal-container">
-    <InfoModal modalInfo={modalInfo} onClose={() => setShowModal(false)} patientId={modalInfo.patientId} />
+    <InfoModal onClose={() => setShowModal(false)} patientId={modalInfo.patientId} />
         </div>
       )}
     </div>

@@ -5,7 +5,7 @@ import SearchResultsList from '../components/SearchBar/Searchresultlist';
 import { Table } from '../components/Diagnosis/DiagnosisTable'; // Step 1: Import the Table component
 import { Modal } from '../components/Diagnosis/DiagnosisModal';
 import axios from 'axios';
-import { addDiagnosis, editDiagnosis} from '../api/diagnosis';
+import { addDiagnosis } from '../api/diagnosis';
 
 function PatientDiag() {
 
@@ -13,7 +13,6 @@ function PatientDiag() {
   const [modalOpen, setModalOpen] = useState(false);
   const [results, setResults] = useState([]); //for search bar
   const [patients, setPatients] = useState(null);
-  const [diagnosis, setDiagnosis] = useState(null);
 
   const findLatestAppointmentTime = (appointments) => {
     if (!appointments || appointments.length === 0) {
@@ -73,33 +72,12 @@ function PatientDiag() {
     }
   }, []);
   
-  
-
-  //Edit row
-  const [rowToEdit, setRowToEdit] = useState(null);
-  const handleEditRow = (idx) => {
-    setRowToEdit(idx);
-    setModalOpen(true);
-  };
-
-
-
-  
-
   const handleSubmit = async (newRow) => {
     try {
       console.log("Adding new diagnosis:", newRow);
-
-      if (rowToEdit === null) {
         // Adding a new patient
         await addDiagnosis(newRow);
         console.log("Added new diagnosis");
-      } else {
-        // Editing an existing patient
-        const diagnosisId = diagnosis[rowToEdit].diagnosisId;
-        await editDiagnosis(diagnosisId, newRow);
-      }
-  
     } catch (error) {
       console.error("Error:", error);
     }
@@ -125,15 +103,13 @@ function PatientDiag() {
         <button onClick={() => setModalOpen(true)} className="button">
           Add New Diagnosis
         </button>
-        <Table patients={patients} editRow={handleEditRow} />
+        <Table patients={patients} />
         {modalOpen && (
           <Modal
             closeModal={() => {
               setModalOpen(false);
-              setRowToEdit(null);
             }}
             onSubmit={handleSubmit}
-            defaultValue={rowToEdit !== null && patients[rowToEdit]}
           />
         )}
       </div>
