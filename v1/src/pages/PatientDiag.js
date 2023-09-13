@@ -94,6 +94,9 @@ function PatientDiag() {
       <div className="search-bar-container">
         {/* Pass patients and setFilteredRows to the SearchBar component */}
         <SearchBar rows={patients} setFilteredRows={setFilteredRows} />
+        <button onClick={() => setModalOpen(true)} className="button">
+          Add New Diagnosis
+        </button>
         {filteredRows && filteredRows.length > 0 && (
           <Table patients={filteredRows} />
         )}
@@ -101,10 +104,6 @@ function PatientDiag() {
           <Table patients={patients} />
         )}
       </div>
-      <div className="App">
-        <button onClick={() => setModalOpen(true)} className="button">
-          Add New Diagnosis
-        </button>
         {modalOpen && (
           <Modal
             closeModal={() => {
@@ -114,7 +113,6 @@ function PatientDiag() {
           />
         )}
       </div>
-    </div>
   );
 }
 
