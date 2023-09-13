@@ -5,6 +5,8 @@ import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios'; // Import Axios for making API requests
 import AppointmentTable from "../components/Appointment/AppointmentTable";
+import { format, isSameDay } from "date-fns";
+
 
 import './Appointment.css';
 
@@ -12,7 +14,7 @@ import './Appointment.css';
 import appointmentData from "../database/apptData2";
 
 const Appointment = () => {
-  const [appointments, setAppointments] = useState([]);
+  const [appointments, setAppointments] = useState(appointmentData);
   const [doctors, setDoctors] = useState([]);
   const [appointmentDate, setAppointmentDate] = useState(new Date());
   const [appointmentTime, setAppointmentTime] = useState("");
@@ -21,44 +23,41 @@ const Appointment = () => {
   const [patients, setPatients] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false); // State to control the visibility of the popup
-  
-  // Used to open Modal
-  const [rows, setRows] = useState(appointmentData);
 
 
-useEffect(() => {
-  // Retrieve the access token from sessionStorage
-  const accessToken = sessionStorage.getItem("accessToken");
-  // If the access token exists, you can use it for authenticated API calls
-  if (accessToken) {
-    // Make an authenticated API call using the access token
-    axios.get("https://mds12.cyclic.app/employees/doctors", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
-      .then((response) => {
-        // Handle the response and update the user data state
-        console.log("Doctors response:", response.data);
-        setDoctors(response.data);
-        // Now, make another Axios call for fetching patients data
-        axios.get('https://mds12.cyclic.app/patients/all', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        })
-          .then(response => {
-            setPatients(response.data);
-          })
-          .catch(error => {
-            console.error('Error fetching patients data', error);
-          });
+  useEffect(() => {
+    // Retrieve the access token from sessionStorage
+    const accessToken = sessionStorage.getItem("accessToken");
+    // If the access token exists, you can use it for authenticated API calls
+    if (accessToken) {
+      // Make an authenticated API call using the access token
+      axios.get("https://mds12.cyclic.app/employees/doctors", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
       })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-      });
-  }
-}, []);
+        .then((response) => {
+          // Handle the response and update the user data state
+          console.log("Doctors response:", response.data);
+          setDoctors(response.data);
+          // Now, make another Axios call for fetching patients data
+          axios.get('https://mds12.cyclic.app/patients/all', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
+          })
+            .then(response => {
+              setPatients(response.data);
+            })
+            .catch(error => {
+              console.error('Error fetching patients data', error);
+            });
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+    }
+  }, []);
 
   // Function to open the appointment popup
   const openAppointmentPopup = () => {
@@ -78,45 +77,41 @@ useEffect(() => {
       employeeID: selectedDoctorId,
       date: appointmentDate,
       time: appointmentTime,
-      remarks: "aa",
-      reason: "aa",
+      remarks: "",
+      reason: "",
       completed: false,
       doctor: doctorName,
       patient: patientName,
     };
     setAppointments([...appointments, appointment]);
   };
-  
+
 
   const handleCalendarClick = (value) => {
-    const formattedDate = value.toISOString().split("T")[0];
-    const appointmentsForDay = appointments
-      .filter((appointment) => appointment.date.toISOString().split("T")[0] === formattedDate)
-      .map((appointment) => ({
-        ...appointment,
-        doctor: getDoctorNameById(appointment.employeeID),
-        patient: getPatientNameById(appointment.patientID),
-      }));
+    const formattedDate = format(value, "yyyy-MM-dd");
+    const appointmentsForDay = appointments.filter((appointment) =>
+      isSameDay(new Date(appointment.appointmentDateTime), value)
+    );
     setSelectedAppointment(appointmentsForDay);
   };
-  
-
-const getDoctorNameById = (employeeID) => {
-  // console.log("Doctors:", doctors);
-  const doctor = doctors.find(d => d.employeeId.toString() === employeeID);
-  // console.log("Doctor found:", doctor);
-  return doctor ? `${doctor.firstName} ${doctor.lastName}` : "Unknown Doctor";
-};
-
-const getPatientNameById = (patientID) => {
-  // console.log("Patients:", patients);
-  const patient = patients.find(p => p.patientId.toString() === patientID);
-  // console.log("Patient found:", patient);
-  return patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient";
-};
 
 
-  
+  const getDoctorNameById = (employeeID) => {
+    // console.log("Doctors:", doctors);
+    const doctor = doctors.find(d => d.employeeId.toString() === employeeID);
+    // console.log("Doctor found:", doctor);
+    return doctor ? `${doctor.firstName} ${doctor.lastName}` : "Unknown Doctor";
+  };
+
+  const getPatientNameById = (patientID) => {
+    // console.log("Patients:", patients);
+    const patient = patients.find(p => p.patientId.toString() === patientID);
+    // console.log("Patient found:", patient);
+    return patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient";
+  };
+
+
+
   return (
     <div className="appointment-page">
       <Sidebar />
@@ -158,8 +153,10 @@ const getPatientNameById = (patientID) => {
               onClickDay={handleCalendarClick}
               tileContent={({ date, view }) => {
                 if (view === 'month') {
-                  const formattedDate = date.toISOString().split('T')[0];
-                  const appointmentsForDay = appointments.filter(appointment => appointment.date.toISOString().split('T')[0] === formattedDate);
+                  const formattedDate = format(date, "yyyy-MM-dd");
+                  const appointmentsForDay = appointments.filter(appointment =>
+                    isSameDay(new Date(appointment.appointmentDateTime), date)
+                  );
                   const appointmentCount = appointmentsForDay.length;
                   return (
                     <div className="appointment-tile-content">
@@ -173,17 +170,17 @@ const getPatientNameById = (patientID) => {
             />
           </div>
 
-        {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
-          <div className="selected-appointment-details">
-            {/* <h2>Appointments for {selectedAppointment[0]?.date.toDateString()}</h2> */}
-            {/* Remove the previous header */}
-            <AppointmentTable appointments={selectedAppointment} />
-          </div>
-        )}
-        
+          {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
+            <div className="selected-appointment-details">
+              {/* <h2>Appointments for {selectedAppointment[0]?.date.toDateString()}</h2> */}
+              {/* Remove the previous header */}
+              <AppointmentTable appointments={selectedAppointment} />
+            </div>
+          )}
+
+        </div>
       </div>
     </div>
-  </div>
   );
 };
 
