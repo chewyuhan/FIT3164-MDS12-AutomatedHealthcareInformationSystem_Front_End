@@ -76,3 +76,4 @@ export const Table = ({ rows, editRow }) => {
     </div>
   );
 };
+ 

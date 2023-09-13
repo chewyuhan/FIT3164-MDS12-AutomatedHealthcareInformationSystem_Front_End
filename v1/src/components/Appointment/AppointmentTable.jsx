@@ -1,65 +1,33 @@
-import React, { useState } from "react";
-import moment from 'moment';
-import { BsFillPencilFill, BsWhatsapp } from "react-icons/bs";
-import "./Table.css";
-import InfoModal from './AppointmentinfoModal';
+import React from "react";
 
-export const Table = ({ rows, editRow }) => {
-
-  const [modalInfo, setModalInfo] = useState({});
-  const [showModal, setShowModal] = useState(false);
-
-  const handleRowClick = (row) => {
-    setModalInfo(row);
-    setShowModal(true); // Show the modal when a row is clicked
-  };
-
+const AppointmentTable = ({ appointments }) => {
   return (
     <div className="table-wrapper">
+      <h2>Appointments for {appointments[0]?.date.toDateString()}</h2>
       <table className="table">
         <thead>
           <tr>
-            <th>Appointment ID</th>
-            <th>Patient Id</th>
-            <th>Employee Id</th>
-            <th>Appointment Date/Time</th>
+            <th>Doctor</th>
+            <th>Patient</th>
+            <th>Time</th>
             <th>Reason</th>
-            <th>Status</th>
             <th>Remarks</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, idx) => {
-            return (
-              <tr key={idx} className="clickable-row" onClick={() => handleRowClick(row)}>
-                <td>
-                  {row.appointmentId}
-                </td>
-                <td>{row.patientId}</td>
-                <td>{row.employeeId}</td>
-                <td>{moment(row.appointmentDateTime).format("DD/MM/YYYY HH:mm")}</td>
-                <td>{row.reason}</td>
-                <td>{row.completed ? "Completed" : "Not Completed"}</td>
-                <td className="expand">{row.remarks}</td>
-                <td className="fit">
-                  <div className="action-icons">
-                    <BsFillPencilFill
-                      className="edit-btn"
-                      onClick={() => editRow(idx)}
-                    />
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
+          {appointments.map((appointment) => (
+            <tr key={appointment.time}>
+              <td>{appointment.doctor}</td>
+              <td>{appointment.patient}</td>
+              <td>{appointment.time}</td>
+              <td>{appointment.reason}</td>
+              <td className="expand">{appointment.remarks}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
-      {showModal && (
-        <div className="modal-container">
-          <InfoModal modalInfo={modalInfo} onClose={() => setShowModal(false)} />
-        </div>
-      )}
     </div>
   );
 };
+
+export default AppointmentTable;

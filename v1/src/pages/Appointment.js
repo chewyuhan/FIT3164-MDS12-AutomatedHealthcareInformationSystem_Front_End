@@ -4,7 +4,8 @@ import Sidebar from '../components/Sidebar/Sidebar';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios'; // Import Axios for making API requests
-import { Table } from '../components/Appointment/AppointmentTable'; 
+import AppointmentTable from "../components/Appointment/AppointmentTable";
+
 import './Appointment.css';
 
 //using dummy data
@@ -23,8 +24,6 @@ const Appointment = () => {
   
   // Used to open Modal
   const [rows, setRows] = useState(appointmentData);
-
-
 
 
 useEffect(() => {
@@ -72,6 +71,8 @@ useEffect(() => {
   };
 
   const handleSelectAppointmentTime = () => {
+    const doctorName = getDoctorNameById(selectedDoctorId);
+    const patientName = getPatientNameById(selectedPatientId);
     const appointment = {
       patientID: selectedPatientId,
       employeeID: selectedDoctorId,
@@ -80,15 +81,25 @@ useEffect(() => {
       remarks: "aa",
       reason: "aa",
       completed: false,
+      doctor: doctorName,
+      patient: patientName,
     };
     setAppointments([...appointments, appointment]);
   };
+  
 
   const handleCalendarClick = (value) => {
-    const formattedDate = value.toISOString().split('T')[0];
-    const appointmentsForDay = appointments.filter(appointment => appointment.date.toISOString().split('T')[0] === formattedDate);
+    const formattedDate = value.toISOString().split("T")[0];
+    const appointmentsForDay = appointments
+      .filter((appointment) => appointment.date.toISOString().split("T")[0] === formattedDate)
+      .map((appointment) => ({
+        ...appointment,
+        doctor: getDoctorNameById(appointment.employeeID),
+        patient: getPatientNameById(appointment.patientID),
+      }));
     setSelectedAppointment(appointmentsForDay);
   };
+  
 
 const getDoctorNameById = (employeeID) => {
   // console.log("Doctors:", doctors);
@@ -161,25 +172,14 @@ const getPatientNameById = (patientID) => {
               }}
             />
           </div>
+
         {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
           <div className="selected-appointment-details">
-            <h2>Appointments for {selectedAppointment[0]?.date.toDateString()}</h2>
-            <div className="centered-list"> 
-              
-              <ul>
-                {selectedAppointment.map(appointment => (
-                  <li key={appointment.time}>
-                    <p>Doctor: {getDoctorNameById(appointment.employeeID)}</p>
-                    <p>Patient: {getPatientNameById(appointment.patientID)}</p>
-                    <p>Time: {appointment.time}</p>
-                    <p>Reason: {appointment.reason}</p>
-                    <p>Remarks: {appointment.remarks}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* <h2>Appointments for {selectedAppointment[0]?.date.toDateString()}</h2> */}
+            {/* Remove the previous header */}
+            <AppointmentTable appointments={selectedAppointment} />
           </div>
-        )}<Table rows={rows} />
+        )}
         
       </div>
     </div>
