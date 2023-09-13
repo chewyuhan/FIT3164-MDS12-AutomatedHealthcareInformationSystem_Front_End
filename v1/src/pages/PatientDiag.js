@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar/Sidebar';
 import SearchBar from '../components/SearchBar/Searchbar';
-import SearchResultsList from '../components/SearchBar/Searchresultlist';
 import { Table } from '../components/Diagnosis/DiagnosisTable';
 import { Modal } from '../components/Diagnosis/DiagnosisModal';
 import axios from 'axios';
