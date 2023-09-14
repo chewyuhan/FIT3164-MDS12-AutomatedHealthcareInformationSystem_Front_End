@@ -92,8 +92,24 @@ const Appointment = () => {
     const appointmentsForDay = appointments.filter((appointment) =>
       isSameDay(new Date(appointment.appointmentDateTime), value)
     );
-    setSelectedAppointment(appointmentsForDay);
+  
+    // Map the appointments to include doctor and patient names
+    const appointmentsWithNames = appointmentsForDay.map((appointment) => {
+      const doctorName = getDoctorNameById(appointment.employeeID);
+      const patientName = getPatientNameById(appointment.patientID);
+  
+      return {
+        ...appointment,
+        doctor: doctorName,
+        patient: patientName,
+      };
+    });
+  
+    setSelectedAppointment(appointmentsWithNames);
+  
+    console.log("Appointments for day:", appointmentsForDay);
   };
+  
 
 
   const getDoctorNameById = (employeeID) => {
@@ -172,12 +188,9 @@ const Appointment = () => {
 
           {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
             <div className="selected-appointment-details">
-              {/* <h2>Appointments for {selectedAppointment[0]?.date.toDateString()}</h2> */}
-              {/* Remove the previous header */}
-              <AppointmentTable appointments={selectedAppointment} />
+              <AppointmentTable appointments={selectedAppointment} doctors={doctors} patients={patients} />
             </div>
           )}
-
         </div>
       </div>
     </div>

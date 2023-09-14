@@ -1,10 +1,17 @@
 import React from "react";
-import "./Table.css"
 
 const AppointmentTable = ({ appointments }) => {
+  // Assuming all appointments are for the same date, you can get the date from the first appointment
+  const firstAppointment = appointments[0];
+  const appointmentDate = firstAppointment
+    ? new Date(firstAppointment.appointmentDateTime)
+    : null;
+
   return (
     <div className="table-wrapper">
-      <h2>Appointments for {appointments[0]?.date.toDateString()}</h2>
+      {appointmentDate && (
+        <h2>Appointments for {appointmentDate.toDateString()}</h2>
+      )}
       <table className="table">
         <thead>
           <tr>
@@ -17,12 +24,12 @@ const AppointmentTable = ({ appointments }) => {
         </thead>
         <tbody>
           {appointments.map((appointment) => (
-            <tr key={appointment.time}>
-              <td>{appointment.doctor}</td>
-              <td>{appointment.patient}</td>
-              <td>{appointment.time}</td>
-              <td>{appointment.reason}</td>
-              <td className="expand">{appointment.remarks}</td>
+            <tr key={appointment.appointmentId}>
+              <td>{appointment.doctor}</td> 
+              <td>{appointment.patient}</td> 
+              <td>{appointment.appointmentDateTime.toLocaleString()}</td>
+              <td>{appointment.reason || "N/A"}</td>
+              <td>{appointment.remarks || "N/A"}</td>
             </tr>
           ))}
         </tbody>

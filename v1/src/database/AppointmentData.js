@@ -49,6 +49,16 @@ const randomAppointments = [
     remarks: "Avoid allergen triggers.",
     completed: false,
   },
+  {
+    appointmentId: 6,
+    registrationDateTime: new Date("2023-09-21T16:50:00Z"),
+    patientId: 45,
+    employeeId: 14,
+    appointmentDateTime: new Date("2023-09-21T15:30:00Z"),
+    reason: "Allergy consultation",
+    remarks: "Avoid allergen triggers.",
+    completed: false,
+  },
   // Add more appointment objects here
 ];
 
