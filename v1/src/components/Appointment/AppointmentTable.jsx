@@ -1,4 +1,5 @@
 import React from "react";
+import "./ApptTable.css"
 
 const AppointmentTable = ({ appointments }) => {
   // Assuming all appointments are for the same date, you can get the date from the first appointment
@@ -9,10 +10,10 @@ const AppointmentTable = ({ appointments }) => {
 
   return (
     <div className="table-wrapper">
+      <table className="table">
       {appointmentDate && (
         <h2>Appointments for {appointmentDate.toDateString()}</h2>
       )}
-      <table className="table">
         <thead>
           <tr>
             <th>Doctor</th>

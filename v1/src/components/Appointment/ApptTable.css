@@ -1,21 +1,27 @@
 /* Remove width property from .table class */
-.table {
+/* Adjustments for .table and .table-wrapper */
+
+.table-wrapper {
   display: flex;
   flex-direction: column; /* Change to column direction */
-  overflow: auto;
+}
+
+.table {
+  display: block;
+  overflow-x: auto; /* Allow horizontal scrolling for overflowing content */
+  overflow-y: hidden; /* Hide vertical scrollbar */
   border-collapse: collapse;
   box-shadow: 0px 10px 10px #ccc;
   white-space: nowrap;
   max-width: 100%; /* Adjust the maximum width as needed */
   margin: auto;
+  table-layout: auto; /* Let the table determine column widths */
 }
 
-.table-wrapper {
-  display: flex;
-  flex-direction: column; /* Change to column direction */
-  align-items: left; /* Center horizontally */
 
-}
+
+/* Rest of your CSS styles remain unchanged */
+
 
 /* Rest of your CSS styles remain unchanged */
 
