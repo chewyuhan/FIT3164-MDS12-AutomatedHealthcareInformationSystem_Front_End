@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import "./Searchresultlist.css";
 import "./Searchbar.css";
 
 const SearchBar = ({ rows, setFilteredRows }) => {
