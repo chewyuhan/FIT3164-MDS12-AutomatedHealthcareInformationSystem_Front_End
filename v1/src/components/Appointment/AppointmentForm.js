@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import moment from 'moment';
 import "./AppointmentForm.css";
 import 'react-calendar/dist/Calendar.css';
 
@@ -15,18 +14,18 @@ const AppointmentForm = ({
   doctors,
   appointmentTime,
   selectedDoctorId,
-  handleSelectAppointmentTime
 }) => {
-  const [formData, setFormData] = useState({
-    patientId: "",
-    employeeId: "",
-    appointmentDateTime: "",
-    reason: "",
-    remarks: "",
-    completed: false,
-  });
+  const [formData, setFormData] = useState(
+    defaultValue || {
+      patientId: "",
+      employeeId: "",
+      appointmentDateTime: "",
+      reason: "",
+      remarks: "",
+      completed: false,
+    });
 
-
+  const [errors, setErrors] = useState("");
 
   const generateTimeRange = () => {
     const timeRange = [];
@@ -58,21 +57,31 @@ const AppointmentForm = ({
     setSelectedPatientId(patientId);
   };
 
-  const handleSubmit = () => {
-    // Validate the form data
-    if (
-      Number.isInteger(parseInt(formData.patientId)) &&
-      Number.isInteger(parseInt(formData.employeeId)) &&
-      moment(formData.appointmentDateTime, moment.ISO_8601, true).isValid() &&
-      typeof formData.reason === "string" &&
-      typeof formData.remarks === "string" &&
-      typeof formData.completed === "boolean"
-    ) {
-      // Form data is valid, you can use formData for further processing
-      console.log("Form data submitted:", formData);
-    } else {
-      // Form data is invalid, display an error message
-      console.error("Invalid form data.");
+  const validateForm = () => {
+    const {
+      patientId,
+      employeeId,
+      appointmentDateTime
+    } = formData;
+
+    if (!patientId || !employeeId || !appointmentDateTime) {
+      setErrors("Patient, employee, and appointment date must be entered.");
+      return false; // Form is not valid
+    }
+
+    setErrors(""); // Clear any previous errors
+    return true; // Form is valid
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent page refresh
+
+    // Check if form passes validation test
+    if (validateForm()) {
+      // If yes then update form details to rows in the table
+      onSubmit(formData);
+      // Closes the modal
+      closeModal();
     }
   };
 
@@ -85,7 +94,7 @@ const AppointmentForm = ({
           className="doctor-select"
           value={selectedDoctorId || ""}
           onChange={(event) => handleSelectDoctor(event.target.value)}
-          >
+        >
           <option value="">Select a doctor...</option>
           {doctors.map((doctor) => (
             <option key={doctor.employeeId} value={doctor.employeeId}>
@@ -100,7 +109,7 @@ const AppointmentForm = ({
           className="patient-select"
           value={selectedPatientId || ""}
           onChange={(event) => handleSelectPatient(event.target.value)}
-          >
+        >
           <option value="">Select a patient...</option>
           {patients.map((patient) => (
             <option key={patient.patientId} value={patient.patientId}>
@@ -115,7 +124,7 @@ const AppointmentForm = ({
           className="time-select"
           value={appointmentTime}
           onChange={(event) => setAppointmentTime(event.target.value)}
-          >
+        >
           <option value="">Select a time...</option>
           {doctorAppointmentTimes.map(({ time }) => (
             <option key={time} value={time}>
@@ -158,7 +167,8 @@ const AppointmentForm = ({
           />
         </div>
       </div>
-      <button className="book-button" onClick={handleSelectAppointmentTime}>
+      {errors && <p className="error">{errors}</p>}
+      <button type="submit" className="book-button" onClick={handleSubmit}>
         Book Appointment
       </button>
     </div>

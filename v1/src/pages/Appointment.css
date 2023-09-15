@@ -10,8 +10,7 @@
     display: flex;
     flex-direction: row;
     /* Change to column direction */
-    /* align-items: center; Center horizontally */
-    margin-top: 0px;
+    row-gap: 2px;
 }
 .add-appointment-button {
     background-color: #1d4ed8;

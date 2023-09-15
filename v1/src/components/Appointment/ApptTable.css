@@ -1,141 +1,68 @@
-/* Remove width property from .table class */
-/* Adjustments for .table and .table-wrapper */
+/* ApptTable.css */
 
+/* Style for the table container */
 .table-wrapper {
-  display: flex;
-  flex-direction: column; /* Change to column direction */
+  text-align: left;
+  margin: 20px;
 }
 
+/* Style for the table container */
+.table-container {
+  max-height: 400px; /* Set the maximum height for the table container */
+  overflow: auto; /* Enable vertical and horizontal scrolling when the content overflows */
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #fff;
+  align-self: start;
+}
+
+/* Style for the table */
 .table {
-  display: block;
-  overflow-x: auto; /* Allow horizontal scrolling for overflowing content */
-  overflow-y: hidden; /* Hide vertical scrollbar */
-  border-collapse: collapse;
-  box-shadow: 0px 10px 10px #ccc;
-  white-space: nowrap;
-  max-width: 100%; /* Adjust the maximum width as needed */
-  margin: auto;
-  table-layout: auto; /* Let the table determine column widths */
-}
-
-
-
-/* Rest of your CSS styles remain unchanged */
-
-
-/* Rest of your CSS styles remain unchanged */
-
-
-.button {
-  position: relative;
-  bottom: 10px;
-  left: 45%;
-  margin-top: 1rem;
-  border: none;
-  background-color: #1d4ed8;
-  color: #fff;
-  padding: 0.5rem;
-  border-radius: 10px;
-  cursor: pointer;
-  box-shadow: 0px 5px 5px #ccc;
-  margin: auto;
-}
-
-.table thead {
-  background-color: #ccc;
-  color: #222;
-}
-
-.table th,
-.table td {
-  padding: 0.8rem;
-}
-
-.table td {
-  border-top: 0.5px solid #ddd;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.table tbody tr:hover {
-  background-color: #eee;
-}
-
-.expand {
   width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
 }
 
-.label {
-  border-radius: 3px;
-  padding: 0.3rem;
-  color: white;
+/* Style for table header */
+.table th {
+  background-color: #f2f2f2;
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
-.label-Stable {
-  background-color: #777;
+/* Style for table data cells */
+.table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
-.label-Healthy {
-  background-color: #42a942;
+/* Style for alternating row colors */
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
-.label-Critical {
-  background-color: #d9534f;
-}
-
-.actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.action-icons {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.actions svg {
-  cursor: pointer;
-  margin: 2px;
-}
-
-.delete-btn {
-  color: #e10d05;
-}
-
-.clickable-text {
-  cursor: pointer;
-  display: inline-block;
-  padding: 5px 10px;
-  color: black;
-  text-decoration: none;
-}
-
-.clickable-text:hover {
-  background-color: #f5f5f5;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-.clickable-row {
-  position: relative;
-}
-
-.tooltip-box {
-  display: none;
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #f0f0f0;
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 12px;
-  pointer-events: none;
-}
-
-.clickable-row:hover .tooltip-box {
-  display: block;
+/* Media query for responsive behavior */
+@media (max-width: 600px) {
+  .table {
+    table-layout: auto; /* Allow columns to adjust dynamically */
+  }
+  
+  .table th,
+  .table td {
+    display: block;
+    width: 100%; /* Expand columns to full width */
+  }
+  
+  .table td::before {
+    content: attr(data-label); /* Use "data-label" attribute content as label */
+    font-weight: bold;
+    float: left;
+  }
+  
+  /* Hide table headers in this mode */
+  .table th {
+    display: none;
+  }
 }

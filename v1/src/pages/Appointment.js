@@ -5,16 +5,13 @@ import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios'; // Import Axios for making API requests
 import AppointmentTable from "../components/Appointment/AppointmentTable";
-import { format, isSameDay } from "date-fns";
-
+import { isSameDay } from "date-fns";
+import { fetchAppointmentDataFromAPI } from "../api/appointment";
 
 import './Appointment.css';
 
-//using dummy data
-import appointmentData from "../database/apptData2";
-
 const Appointment = () => {
-  const [appointments, setAppointments] = useState(appointmentData);
+  const [appointments, setAppointments] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [appointmentDate, setAppointmentDate] = useState(new Date());
   const [appointmentTime, setAppointmentTime] = useState("");
@@ -30,7 +27,16 @@ const Appointment = () => {
     const accessToken = sessionStorage.getItem("accessToken");
     // If the access token exists, you can use it for authenticated API calls
     if (accessToken) {
-      // Make an authenticated API call using the access token
+      // Make an authenticated API call to fetch appointments
+      fetchAppointmentDataFromAPI()
+        .then((data) => {
+          setAppointments(data); // Update the appointments state with fetched data
+        })
+        .catch((error) => {
+          console.error("Error fetching appointment data:", error);
+        });
+
+      // Make an authenticated API call to fetch doctors data
       axios.get("https://mds12.cyclic.app/employees/doctors", {
         headers: {
           Authorization: `Bearer ${accessToken}`
@@ -88,15 +94,14 @@ const Appointment = () => {
 
 
   const handleCalendarClick = (value) => {
-    const formattedDate = format(value, "yyyy-MM-dd");
     const appointmentsForDay = appointments.filter((appointment) =>
       isSameDay(new Date(appointment.appointmentDateTime), value)
     );
   
     // Map the appointments to include doctor and patient names
     const appointmentsWithNames = appointmentsForDay.map((appointment) => {
-      const doctorName = getDoctorNameById(appointment.employeeID);
-      const patientName = getPatientNameById(appointment.patientID);
+      const doctorName = getDoctorNameById(appointment.employeeId);
+      const patientName = getPatientNameById(appointment.patientId);
   
       return {
         ...appointment,
@@ -104,27 +109,22 @@ const Appointment = () => {
         patient: patientName,
       };
     });
-  
     setSelectedAppointment(appointmentsWithNames);
-  
     console.log("Appointments for day:", appointmentsForDay);
   };
   
 
 
   const getDoctorNameById = (employeeID) => {
-    // console.log("Doctors:", doctors);
-    const doctor = doctors.find(d => d.employeeId.toString() === employeeID);
-    // console.log("Doctor found:", doctor);
+    const doctor = doctors.find((d) => d.employeeId.toString() === employeeID.toString());
     return doctor ? `${doctor.firstName} ${doctor.lastName}` : "Unknown Doctor";
   };
-
+  
   const getPatientNameById = (patientID) => {
-    // console.log("Patients:", patients);
-    const patient = patients.find(p => p.patientId.toString() === patientID);
-    // console.log("Patient found:", patient);
+    const patient = patients.find((p) => p.patientId.toString() === patientID.toString());
     return patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient";
   };
+  
 
 
 
@@ -169,7 +169,6 @@ const Appointment = () => {
               onClickDay={handleCalendarClick}
               tileContent={({ date, view }) => {
                 if (view === 'month') {
-                  const formattedDate = format(date, "yyyy-MM-dd");
                   const appointmentsForDay = appointments.filter(appointment =>
                     isSameDay(new Date(appointment.appointmentDateTime), date)
                   );
