@@ -10,6 +10,14 @@
     align-items: center;
     justify-content: center;
   }
+
+  .modal-container .modal {
+    background-color: white;
+    border-radius: 5px;
+    padding: 3rem;
+    max-height: 70vh; /* Set the maximum height for the modal body */
+    overflow-y: auto; /* Add vertical scroll if content exceeds max height */
+  }
   
   .modal {
     border-radius: 5px;
@@ -37,7 +45,7 @@
 
   }
   
-  .form-group {
+.form-group {
     display: flex;
     margin-left: auto;
     flex-direction: column;
@@ -48,11 +56,12 @@
   .form-group input,
   .form-group textarea,
   .form-group select {
-    border: 1px solid black;
-    border-radius: 0.3rem;
-    padding: 0.3rem;
-    font-size: 1rem;
+    width: 100%; /* Set the width to 100% for all input fields within .form-group */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
+  
   
   .form-group label {
     margin-bottom: 0.2rem;
@@ -71,6 +80,3 @@
     overflow-y: auto; /* Add vertical scroll if content exceeds max height */
   }
   
-  .scrollable {
-    overflow-y: auto; /* Add vertical scroll to the content */
-  }
