@@ -89,11 +89,37 @@ const Appointment = () => {
     closeAppointmentPopup();
   };
 
+  // Yu Han pls help API here thankss
   const handleSubmitAppointmentForm = (formData) => {
-    // Handle form submission or validation here
-    // formData contains the form data
-    console.log("Form Data:", formData);
+    // Create a JavaScript Date object based on appointmentDate and appointmentTime
+    const appointmentDateTime = new Date(appointmentDate);
+    const [hours, minutes] = appointmentTime.split(":");
+    appointmentDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
+  
+    // Create an object with the form data to send to the API
+    const requestData = {
+      patientId: parseInt(formData.patientId),
+      employeeId: parseInt(formData.employeeId),
+      appointmentDateTime: appointmentDateTime.toISOString(), // Convert to ISO date string
+      reason: formData.reason || "",
+      remarks: formData.remarks || "",
+      completed: formData.completed || false,
+    };
+  
+    // Make a POST request to your backend API
+    axios.post('http://localhost:3333/appointments/', requestData)
+      .then((response) => {
+        // Handle a successful response from the API
+        console.log('API response:', response.data);
+        // You can also update your UI or perform other actions here
+      })
+      .catch((error) => {
+        // Handle errors if the API request fails
+        console.error('API error:', error);
+        // You can display an error message to the user or perform other error-handling actions
+      });
   };
+  
 
   const handleCalendarClick = (value) => {
     const appointmentsForDay = appointments.filter((appointment) =>
