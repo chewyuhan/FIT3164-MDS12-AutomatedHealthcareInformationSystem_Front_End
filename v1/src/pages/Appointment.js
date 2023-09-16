@@ -89,7 +89,7 @@ const Appointment = () => {
     closeAppointmentPopup();
   };
 
-  // Yu Han pls help API here thankss
+  // Yu Han pls help API here thanks
   const handleSubmitAppointmentForm = (formData) => {
     // Create a JavaScript Date object based on appointmentDate and appointmentTime
     const appointmentDateTime = new Date(appointmentDate);
@@ -160,7 +160,9 @@ const Appointment = () => {
           </button>
         </div>
         {isPopupOpen && (
-          <div className="popup">
+          <div className="popup" onClick = {(e) => {
+            if (e.target.className === "popup") closeAppointmentPopup();
+          }}>
             <div className="popup-content">
               <AppointmentForm
                 patients={patients}
@@ -177,9 +179,6 @@ const Appointment = () => {
                 onSubmit={handleSubmitAppointmentForm} 
                 closeModal={closeAppointmentPopup}
               />
-              <button onClick={closeAppointmentPopup} className="close-popup-button">
-                Close
-              </button>
             </div>
           </div>
         )}
