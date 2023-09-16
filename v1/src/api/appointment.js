@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const fetchAppointmentDataFromAPI = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     const accessToken = sessionStorage.getItem("accessToken");
 
     if (!accessToken) {

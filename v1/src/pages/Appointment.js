@@ -1,3 +1,4 @@
+// Import necessary dependencies and components
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
@@ -9,7 +10,9 @@ import Sidebar from '../components/Sidebar/Sidebar';
 import { fetchAppointmentDataFromAPI, addAppointment } from "../api/appointment";
 import './Appointment.css';
 
+// Define the main Appointment component
 const Appointment = () => {
+  // Define state variables using useState
   const [appointments, setAppointments] = useState(null);
   const [doctors, setDoctors] = useState([]);
   const [patients, setPatients] = useState([]);
@@ -20,6 +23,7 @@ const Appointment = () => {
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+  // useEffect to fetch initial data when the component mounts
   useEffect(() => {
     const accessToken = sessionStorage.getItem("accessToken");
 
@@ -27,9 +31,11 @@ const Appointment = () => {
 
     const fetchData = async () => {
       try {
+        // Fetch appointment data from an API
         const appointmentData = await fetchAppointmentDataFromAPI();
         setAppointments(appointmentData);
 
+        // Fetch doctor and patient data
         const doctorsResponse = await axios.get("https://mds12.cyclic.app/employees/doctors", {
           headers: {
             Authorization: `Bearer ${accessToken}`
@@ -51,6 +57,24 @@ const Appointment = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    fetchDataAndUpdate();
+  }, []);
+
+  const fetchDataAndUpdate = async () => {
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    if (!accessToken) return;
+
+    try {
+      const appointmentData = await fetchAppointmentDataFromAPI();
+      setAppointments(appointmentData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  // Define functions for handling appointment-related actions
   const openAppointmentPopup = () => {
     setIsPopupOpen(true);
   };
@@ -64,6 +88,7 @@ const Appointment = () => {
   };
 
   const handleSelectAppointmentTime = () => {
+    // Create an appointment object
     const doctorName = getDoctorNameById(selectedDoctorId);
     const patientName = getPatientNameById(selectedPatientId);
     const appointment = {
@@ -77,14 +102,14 @@ const Appointment = () => {
       doctor: doctorName,
       patient: patientName,
     };
-  
-    // Update the appointments state using a callback function
+
+    // Update the appointments state with the new appointment
     setAppointments((prevAppointments) => [...prevAppointments, appointment]);
+    // After adding the appointment, fetch data again and update the calendar
     closeAppointmentPopup();
   };
-  
 
-  const handleSubmitAppointmentForm = (formData) => {
+  const handleSubmitAppointmentForm = async (formData) => {
     const appointmentDateTime = new Date(appointmentDate);
     const [hours, minutes] = appointmentTime.split(":");
     appointmentDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
@@ -98,14 +123,9 @@ const Appointment = () => {
       completed: formData.completed || false,
     };
 
-    addAppointment(requestData)
-      .then((response) => {
-        setAppointments([...appointments, response.data]);
-        closeAppointmentPopup();
-      })
-      .catch((error) => {
-        console.error("Error adding appointment:", error);
-      });
+    addAppointment(requestData);
+    await fetchDataAndUpdate();
+    closeAppointmentPopup();
   };
 
   const handleCalendarClick = (value) => {
@@ -132,6 +152,7 @@ const Appointment = () => {
     return patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient";
   };
 
+  // Render JSX content based on the state
   if (!appointments) {
     return <p>Loading Appointment data...</p>;
   }
@@ -146,11 +167,13 @@ const Appointment = () => {
           </button>
         </div>
         {isPopupOpen && (
-          <div className="popup" onClick = {(e) => {
+          // Render a popup for adding appointments
+          <div className="popup" onClick={(e) => {
             if (e.target.className === "popup") closeAppointmentPopup();
           }}>
             <div className="popup-content">
               <AppointmentForm
+                // Pass props to the AppointmentForm component
                 patients={patients}
                 selectedPatientId={selectedPatientId}
                 setSelectedPatientId={setSelectedPatientId}
@@ -173,10 +196,12 @@ const Appointment = () => {
             <h1>Book an Appointment</h1>
             <h2>Select a Date</h2>
             <Calendar
+              // Render a calendar for selecting dates
               value={appointmentDate}
               onChange={(date) => setAppointmentDate(date)}
               onClickDay={handleCalendarClick}
               tileContent={({ date, view }) => {
+                // Render appointment count indicators on the calendar
                 if (view === 'month') {
                   const appointmentsForDay = appointments.filter(appointment =>
                     isSameDay(new Date(appointment.appointmentDateTime), date)
@@ -195,6 +220,7 @@ const Appointment = () => {
           </div>
 
           {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
+            // Render appointment details in a table
             <div className="selected-appointment-details">
               <AppointmentTable appointments={selectedAppointment} doctors={doctors} patients={patients} />
             </div>
