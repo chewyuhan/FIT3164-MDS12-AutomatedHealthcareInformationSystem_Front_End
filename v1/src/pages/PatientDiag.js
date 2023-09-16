@@ -81,7 +81,7 @@ function PatientDiag() {
   };
 
   if (!patients) {
-    return <p>Loading patient data...</p>;
+    return <p>Loading Diagnosis data...</p>;
   }
 
   return (
