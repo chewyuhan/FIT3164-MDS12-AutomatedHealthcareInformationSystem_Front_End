@@ -146,7 +146,9 @@ const Appointment = () => {
           </button>
         </div>
         {isPopupOpen && (
-          <div className="popup">
+          <div className="popup" onClick = {(e) => {
+            if (e.target.className === "popup") closeAppointmentPopup();
+          }}>
             <div className="popup-content">
               <AppointmentForm
                 patients={patients}
@@ -163,9 +165,6 @@ const Appointment = () => {
                 onSubmit={handleSubmitAppointmentForm}
                 closeModal={closeAppointmentPopup}
               />
-              <button onClick={closeAppointmentPopup} className="close-popup-button">
-                Close
-              </button>
             </div>
           </div>
         )}
