@@ -31,7 +31,7 @@ export const addAppointment = async (newAppointment) => {
         return;
     }
 
-    axios.post("https://mds12.cyclic.app/diagnoses/", newAppointment, {
+    axios.post("https://mds12.cyclic.app/appointments/", newAppointment, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },

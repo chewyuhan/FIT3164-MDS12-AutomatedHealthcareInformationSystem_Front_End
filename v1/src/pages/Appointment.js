@@ -6,12 +6,12 @@ import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import AppointmentTable from "../components/Appointment/AppointmentTable";
 import { isSameDay } from "date-fns";
-import { fetchAppointmentDataFromAPI } from "../api/appointment";
+import { fetchAppointmentDataFromAPI , addAppointment} from "../api/appointment";
 
 import './Appointment.css';
 
 const Appointment = () => {
-  const [appointments, setAppointments] = useState([]);
+  const [appointments, setAppointments] = useState(null);
   const [doctors, setDoctors] = useState([]);
   const [appointmentDate, setAppointmentDate] = useState(new Date());
   const [appointmentTime, setAppointmentTime] = useState("");
@@ -95,7 +95,7 @@ const Appointment = () => {
     const appointmentDateTime = new Date(appointmentDate);
     const [hours, minutes] = appointmentTime.split(":");
     appointmentDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
-  
+    // console.log("formData:", formData)
     // Create an object with the form data to send to the API
     const requestData = {
       patientId: parseInt(formData.patientId),
@@ -106,18 +106,15 @@ const Appointment = () => {
       completed: formData.completed || false,
     };
   
+    console.log("Request data:", requestData);
     // Make a POST request to your backend API
-    axios.post('http://localhost:3333/appointments/', requestData)
+    addAppointment(requestData)
       .then((response) => {
-        // Handle a successful response from the API
-        console.log('API response:', response.data);
-        // You can also update your UI or perform other actions here
+        console.log("Appointment added:", response);
+        // Update the appointments state variable so that the UI re-renders
+        setAppointments([...appointments, response.data]);
+        closeAppointmentPopup();
       })
-      .catch((error) => {
-        // Handle errors if the API request fails
-        console.error('API error:', error);
-        // You can display an error message to the user or perform other error-handling actions
-      });
   };
   
 
@@ -150,6 +147,10 @@ const Appointment = () => {
     return patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient";
   };
 
+  
+  if (!appointments) {
+    return <p>Loading Appointment data...</p>;
+  }
   return (
     <div className="appointment-page">
       <Sidebar />

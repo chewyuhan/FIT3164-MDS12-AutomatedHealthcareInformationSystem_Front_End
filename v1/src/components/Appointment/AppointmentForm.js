@@ -51,7 +51,6 @@ const AppointmentForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent page refresh
-
     // Check if required fields are selected
     if (!selectedPatientId || !selectedDoctorId || !appointmentTime) {
       setErrors("Patient, doctor, and appointment time must be selected.");
@@ -79,8 +78,8 @@ const AppointmentForm = ({
     const doctorName = getDoctorNameById(selectedDoctorId);
     const patientName = getPatientNameById(selectedPatientId);
     const appointment = {
-      patientID: selectedPatientId,
-      employeeID: selectedDoctorId,
+      patientId: selectedPatientId,
+      employeeId: selectedDoctorId,
       date: new Date(), // You may want to set the correct date here
       time: appointmentTime,
       remarks: "",

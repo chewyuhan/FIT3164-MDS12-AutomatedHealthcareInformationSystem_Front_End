@@ -8,7 +8,6 @@ import { format } from "date-fns";
 
 const AppointmentTable = ({ appointments }) => {
   // Assuming all appointments are for the same date, you can get the date from the first appointment
-  console.log(appointments);
   const firstAppointment = appointments[0];
   const appointmentDate = firstAppointment
     ? new Date(firstAppointment.appointmentDateTime)
