@@ -3,7 +3,7 @@ import AppointmentForm from "../components/Appointment/AppointmentForm";
 import Sidebar from '../components/Sidebar/Sidebar';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
-import axios from 'axios'; // Import Axios for making API requests
+import axios from 'axios';
 import AppointmentTable from "../components/Appointment/AppointmentTable";
 import { isSameDay } from "date-fns";
 import { fetchAppointmentDataFromAPI } from "../api/appointment";
@@ -19,34 +19,28 @@ const Appointment = () => {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [patients, setPatients] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
-  const [isPopupOpen, setIsPopupOpen] = useState(false); // State to control the visibility of the popup
-
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
-    // Retrieve the access token from sessionStorage
     const accessToken = sessionStorage.getItem("accessToken");
-    // If the access token exists, you can use it for authenticated API calls
     if (accessToken) {
-      // Make an authenticated API call to fetch appointments
       fetchAppointmentDataFromAPI()
         .then((data) => {
-          setAppointments(data); // Update the appointments state with fetched data
+          setAppointments(data);
         })
         .catch((error) => {
           console.error("Error fetching appointment data:", error);
         });
 
-      // Make an authenticated API call to fetch doctors data
       axios.get("https://mds12.cyclic.app/employees/doctors", {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       })
         .then((response) => {
-          // Handle the response and update the user data state
           console.log("Doctors response:", response.data);
           setDoctors(response.data);
-          // Now, make another Axios call for fetching patients data
+
           axios.get('https://mds12.cyclic.app/patients/all', {
             headers: {
               Authorization: `Bearer ${accessToken}`
@@ -65,22 +59,17 @@ const Appointment = () => {
     }
   }, []);
 
-  // Function to open the appointment popup
   const openAppointmentPopup = () => {
     setIsPopupOpen(true);
   };
 
-  // Function to close the appointment popup
   const closeAppointmentPopup = () => {
     setIsPopupOpen(false);
-    // Reset the form data within the AppointmentForm component
     setSelectedPatientId(null);
     setSelectedDoctorId(null);
     setAppointmentDate(new Date());
     setAppointmentTime("");
-    // Other form data resets go here
   };
-  
 
   const handleSelectAppointmentTime = () => {
     const doctorName = getDoctorNameById(selectedDoctorId);
@@ -97,19 +86,24 @@ const Appointment = () => {
       patient: patientName,
     };
     setAppointments([...appointments, appointment]);
+    closeAppointmentPopup();
   };
 
+  const handleSubmitAppointmentForm = (formData) => {
+    // Handle form submission or validation here
+    // formData contains the form data
+    console.log("Form Data:", formData);
+  };
 
   const handleCalendarClick = (value) => {
     const appointmentsForDay = appointments.filter((appointment) =>
       isSameDay(new Date(appointment.appointmentDateTime), value)
     );
-  
-    // Map the appointments to include doctor and patient names
+
     const appointmentsWithNames = appointmentsForDay.map((appointment) => {
       const doctorName = getDoctorNameById(appointment.employeeId);
       const patientName = getPatientNameById(appointment.patientId);
-  
+
       return {
         ...appointment,
         doctor: doctorName,
@@ -119,21 +113,16 @@ const Appointment = () => {
     setSelectedAppointment(appointmentsWithNames);
     console.log("Appointments for day:", appointmentsForDay);
   };
-  
-
 
   const getDoctorNameById = (employeeID) => {
     const doctor = doctors.find((d) => d.employeeId.toString() === employeeID.toString());
     return doctor ? `${doctor.firstName} ${doctor.lastName}` : "Unknown Doctor";
   };
-  
+
   const getPatientNameById = (patientID) => {
     const patient = patients.find((p) => p.patientId.toString() === patientID.toString());
     return patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient";
   };
-  
-
-
 
   return (
     <div className="appointment-page">
@@ -159,6 +148,8 @@ const Appointment = () => {
                 selectedDoctorId={selectedDoctorId}
                 setSelectedDoctorId={setSelectedDoctorId}
                 handleSelectAppointmentTime={handleSelectAppointmentTime}
+                onSubmit={handleSubmitAppointmentForm} 
+                closeModal={closeAppointmentPopup}
               />
               <button onClick={closeAppointmentPopup} className="close-popup-button">
                 Close

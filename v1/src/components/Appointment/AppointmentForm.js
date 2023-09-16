@@ -49,6 +49,24 @@ const AppointmentForm = ({
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent page refresh
+
+    // Check if required fields are selected
+    if (!selectedPatientId || !selectedDoctorId || !appointmentTime) {
+      setErrors("Patient, doctor, and appointment time must be selected.");
+    } else {
+      // Clear any previous errors
+      setErrors("");
+
+      // Handle the appointment booking here
+      handleSelectAppointmentTime();
+
+      // Close the modal
+      closeModal();
+    }
+  };
+
   const handleSelectDoctor = (doctorId) => {
     setSelectedDoctorId(doctorId);
   };
@@ -57,32 +75,33 @@ const AppointmentForm = ({
     setSelectedPatientId(patientId);
   };
 
-  const validateForm = () => {
-    const {
-      patientId,
-      employeeId,
-      appointmentDateTime
-    } = formData;
-
-    if (!patientId || !employeeId || !appointmentDateTime) {
-      setErrors("Patient, employee, and appointment date must be entered.");
-      return false; // Form is not valid
-    }
-
-    setErrors(""); // Clear any previous errors
-    return true; // Form is valid
+  const handleSelectAppointmentTime = () => {
+    const doctorName = getDoctorNameById(selectedDoctorId);
+    const patientName = getPatientNameById(selectedPatientId);
+    const appointment = {
+      patientID: selectedPatientId,
+      employeeID: selectedDoctorId,
+      date: new Date(), // You may want to set the correct date here
+      time: appointmentTime,
+      remarks: "",
+      reason: "",
+      completed: false,
+      doctor: doctorName,
+      patient: patientName,
+    };
+    // You can handle the appointment data as needed
+    // For example, you can submit it to an API using onSubmit
+    onSubmit(appointment);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent page refresh
+  const getDoctorNameById = (employeeID) => {
+    const doctor = doctors.find((d) => d.employeeId.toString() === employeeID.toString());
+    return doctor ? `${doctor.firstName} ${doctor.lastName}` : "Unknown Doctor";
+  };
 
-    // Check if form passes validation test
-    if (validateForm()) {
-      // If yes then update form details to rows in the table
-      onSubmit(formData);
-      // Closes the modal
-      closeModal();
-    }
+  const getPatientNameById = (patientID) => {
+    const patient = patients.find((p) => p.patientId.toString() === patientID.toString());
+    return patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient";
   };
 
   return (
