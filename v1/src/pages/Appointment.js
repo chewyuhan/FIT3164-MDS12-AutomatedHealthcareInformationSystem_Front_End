@@ -8,6 +8,8 @@ import AppointmentForm from "../components/Appointment/AppointmentForm";
 import AppointmentTable from "../components/Appointment/AppointmentTable";
 import Sidebar from '../components/Sidebar/Sidebar';
 import { fetchAppointmentDataFromAPI, addAppointment } from "../api/appointment";
+import { fetchDoctorDataFromAPI } from "../api/doctor";
+import { fetchPatientDataFromAPI } from "../api/patient";
 import './Appointment.css';
 
 // Define the main Appointment component
@@ -36,19 +38,11 @@ const Appointment = () => {
         setAppointments(appointmentData);
 
         // Fetch doctor and patient data
-        const doctorsResponse = await axios.get("https://mds12.cyclic.app/employees/doctors", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        });
-        setDoctors(doctorsResponse.data);
+        const doctorsResponse = await fetchDoctorDataFromAPI();
+        setDoctors(doctorsResponse);
 
-        const patientsResponse = await axios.get('https://mds12.cyclic.app/patients/all', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        });
-        setPatients(patientsResponse.data);
+        const patientsResponse = await fetchPatientDataFromAPI();
+        setPatients(patientsResponse);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
