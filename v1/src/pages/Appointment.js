@@ -73,7 +73,14 @@ const Appointment = () => {
   // Function to close the appointment popup
   const closeAppointmentPopup = () => {
     setIsPopupOpen(false);
+    // Reset the form data within the AppointmentForm component
+    setSelectedPatientId(null);
+    setSelectedDoctorId(null);
+    setAppointmentDate(new Date());
+    setAppointmentTime("");
+    // Other form data resets go here
   };
+  
 
   const handleSelectAppointmentTime = () => {
     const doctorName = getDoctorNameById(selectedDoctorId);
