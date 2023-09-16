@@ -1,17 +1,19 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import moment from 'moment'; // Import Moment.js for date formatting
 import './Modal.css';
 
 const InfoModal = ({ modalInfo, onClose }) => {
   const modalRef = useRef(null);
 
+  // Function to handle clicks outside of the modal
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
-      onClose();
+      onClose(); // Close the modal when clicking outside
     }
   };
 
+  // Attach and remove event listeners for handling clicks outside the modal
   useEffect(() => {
     window.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -19,6 +21,7 @@ const InfoModal = ({ modalInfo, onClose }) => {
     };
   }, []);
 
+  // Translations for key names in the modal
   const translations = {
     appointmentid: 'Appointment ID',
     registrationDateTime: 'Registration Date/Time',
@@ -54,8 +57,8 @@ const InfoModal = ({ modalInfo, onClose }) => {
 };
 
 InfoModal.propTypes = {
-  modalInfo: PropTypes.object.isRequired,
-  onClose: PropTypes.func.isRequired,
+  modalInfo: PropTypes.object.isRequired, // Expected object for modalInfo
+  onClose: PropTypes.func.isRequired, // Function to close the modal
 };
 
 export default InfoModal;

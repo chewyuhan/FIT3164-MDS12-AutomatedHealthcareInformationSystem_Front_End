@@ -5,6 +5,7 @@ import "./Table.css";
 import InfoModal from './infoModal';
 
 export const Table = ({ rows, editRow }) => {
+  // Function to handle clicking on the WhatsApp icon to open WhatsApp link
   const handleContactInfoClick = (phoneNo) => {
     const whatsappLink = `https://wa.me/${phoneNo}`;
     window.open(whatsappLink, '_blank');
@@ -13,6 +14,7 @@ export const Table = ({ rows, editRow }) => {
   const [modalInfo, setModalInfo] = useState({});
   const [showModal, setShowModal] = useState(false);
 
+  // Function to handle clicking on a row to display the modal
   const handleRowClick = (row) => {
     setModalInfo(row);
     setShowModal(true); // Show the modal when a row is clicked
@@ -29,20 +31,14 @@ export const Table = ({ rows, editRow }) => {
             <th>Gender</th>
             <th>Contact Info</th>
             <th className="expand">Remarks</th>
-            {/*<th>Status</th>*/}
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((row, idx) => {
-            // const statusText =
-            //   row.status.charAt(0).toUpperCase() + row.status.slice(1);
-
             return (
               <tr key={idx} className="clickable-row" onClick={() => handleRowClick(row)}>
-                <td>
-                  {row.patientId}
-                </td>
+                <td>{row.patientId}</td>
                 <td>{row.firstName + " " + row.lastName}</td>
                 <td>{moment(row.dob).format("DD/MM/YYYY")}</td>
                 <td>{row.gender}</td>
@@ -76,4 +72,3 @@ export const Table = ({ rows, editRow }) => {
     </div>
   );
 };
- 

@@ -1,12 +1,13 @@
+// Import necessary dependencies and components
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Sidebar from '../components/Sidebar/Sidebar';
 import SearchBar from '../components/SearchBar/Searchbar';
 import { Table } from '../components/PatientTable/Table';
 import { Modal } from '../components/PatientTable/Modal';
-import { addPatient, editPatient } from '../api/patient';
+import { addPatient, editPatient, fetchPatientDataFromAPI } from '../api/patient';
 
 function PatientInfo() {
+  // State variables
   const [modalOpen, setModalOpen] = useState(false);
   const [results, setResults] = useState([]);
   const [rows, setRows] = useState(null);
@@ -16,58 +17,51 @@ function PatientInfo() {
   const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
-    const accessToken = sessionStorage.getItem("accessToken");
-    if (accessToken) {
-      axios.get("https://mds12.cyclic.app/patients/all", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
+    // Fetch patient data from the API when the component mounts
+    fetchPatientDataFromAPI()
+      .then((response) => {
+        setRows(response);
       })
-        .then((response) => {
-          setRows(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
-        });
-    }
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
   }, []);
 
+  // Function to fetch data from the API and update rows
   const fetchDataAndUpdateRows = async () => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      const accessToken = sessionStorage.getItem("accessToken");
-      if (accessToken) {
-        const response = await axios.get("https://mds12.cyclic.app/patients/all", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        });
-        setRows(response.data);
-      }
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulated delay
+      const response = await fetchPatientDataFromAPI();
+      setRows(response);
     } catch (error) {
       console.error("Error fetching data from the API:", error);
     }
   };
 
+  // Function to handle editing a row
   const handleEditRow = (idx) => {
     setRowToEdit(idx);
     setModalOpen(true);
   };
 
+  // Function to handle form submission (add or edit patient)
   const handleSubmit = async (newRow) => {
     try {
       if (rowToEdit === null) {
+        // Adding a new patient
         await addPatient(newRow);
       } else {
+        // Editing an existing patient
         const patientId = rows[rowToEdit].patientId;
         await editPatient(patientId, newRow);
       }
-      fetchDataAndUpdateRows();
+      fetchDataAndUpdateRows(); // Update rows after adding/editing
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
+  // Function to handle image upload
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
@@ -76,52 +70,56 @@ function PatientInfo() {
     }
   };
 
+  // Render loading message if patient data is not yet available
   if (!rows) {
     return <p>Loading patient data...</p>;
   }
 
   return (
     <div className='patientinfo'>
+      {/* Sidebar component */}
       <Sidebar />
       <div className="header">
         <h1>PatientInfo</h1>
       </div>
       <div className="search-bar-container">
-          <SearchBar setResults={setResults} rows={rows} setFilteredRows={setFilteredRows} />
-          {results && results.length > 0}
-        </div>
-      <div className='search-add-upload'>
-          <button onClick={() => setModalOpen(true)} className="button add-button">
-            Add New Patient
-          </button>
-          <label htmlFor="image-upload" className="button upload-button">
-            Upload Image
-          </label>
-          <input
-            type="file"
-            id="image-upload"
-            accept="image/*"
-            onChange={handleImageChange}
-            style={{ display: 'none' }}
-          />
-          {imagePreview && (
-            <div className="image-preview">
-              <button
-                className="close-button"
-                onClick={() => {
-                  setFile(null);
-                  setImagePreview(null);
-                }}
-              >
-                Close
-              </button>
-              <img src={imagePreview} alt="Uploaded" />
-            </div>
-          )}
-
+        {/* SearchBar component */}
+        <SearchBar setResults={setResults} rows={rows} setFilteredRows={setFilteredRows} />
+        {results && results.length > 0}
       </div>
+      <div className='search-add-upload'>
+        <button onClick={() => setModalOpen(true)} className="button add-button">
+          Add New Patient
+        </button>
+        <label htmlFor="image-upload" className="button upload-button">
+          Upload Image
+        </label>
+        <input
+          type="file"
+          id="image-upload"
+          accept="image/*"
+          onChange={handleImageChange}
+          style={{ display: 'none' }}
+        />
+        {imagePreview && (
+          <div className="image-preview">
+            <button
+              className="close-button"
+              onClick={() => {
+                setFile(null);
+                setImagePreview(null);
+              }}
+            >
+              Close
+            </button>
+            <img src={imagePreview} alt="Uploaded" />
+          </div>
+        )}
+      </div>
+      {/* Table component */}
       <Table rows={filteredRows.length > 0 ? filteredRows : rows} editRow={handleEditRow} />
       {modalOpen && (
+        // Modal component for adding/editing patient
         <Modal
           closeModal={() => {
             setModalOpen(false);

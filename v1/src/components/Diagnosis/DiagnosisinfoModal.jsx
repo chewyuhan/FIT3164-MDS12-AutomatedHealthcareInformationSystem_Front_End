@@ -2,13 +2,21 @@ import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import './Modal.css';
-import { BsFillPencilFill } from "react-icons/bs";
+import { BsFillPencilFill } from 'react-icons/bs';
 import { fetchDiagnosisDataFromAPI, editDiagnosis } from '../../api/diagnosis';
 
+// Component to display diagnosis information in a modal
 const InfoModal = ({ onClose, patientId }) => {
+  // Ref for the modal element
   const modalRef = useRef(null);
+
+  // State for diagnosis data
   const [diagnosisData, setDiagnosisData] = useState([]);
+  
+  // State for editing diagnosis
   const [editingDiagnosis, setEditingDiagnosis] = useState(null);
+
+  // State for edited diagnosis
   const [editedDiagnosis, setEditedDiagnosis] = useState({
     diagnosisId: '',
     createdAt: '',
@@ -19,22 +27,26 @@ const InfoModal = ({ onClose, patientId }) => {
     remarks: '',
   });
 
+  // Function to handle clicks outside the modal
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       onClose();
     }
   };
 
+  // Function to handle the edit button click
   const handleEditClick = (diagnosis) => {
     setEditingDiagnosis(diagnosis);
     setEditedDiagnosis({ ...diagnosis });
   };
 
+  // Function to handle input changes in the edit form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditedDiagnosis({ ...editedDiagnosis, [name]: value });
   };
 
+  // Function to handle the edit form submission
   const handleEditSubmit = async (e) => {
     e.preventDefault();
 
@@ -48,6 +60,7 @@ const InfoModal = ({ onClose, patientId }) => {
     }
   };
 
+  // Function to refresh diagnosis data for a patient
   const refreshDiagnosisData = async (patientId) => {
     try {
       const data = await fetchDiagnosisDataFromAPI(patientId);
@@ -58,6 +71,7 @@ const InfoModal = ({ onClose, patientId }) => {
     }
   };
 
+  // Event listener for clicks outside the modal
   useEffect(() => {
     window.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -65,12 +79,14 @@ const InfoModal = ({ onClose, patientId }) => {
     };
   }, []);
 
+  // Effect to refresh diagnosis data when patientId changes
   useEffect(() => {
     if (patientId) {
       refreshDiagnosisData(patientId);
     }
   }, [patientId]);
 
+  // Translations for diagnosis field names
   const translations = {
     diagnosisId: 'Diagnosis ID',
     createdAt: 'Created At',
@@ -159,8 +175,8 @@ const InfoModal = ({ onClose, patientId }) => {
   );
 };
 
+// PropTypes for the InfoModal component
 InfoModal.propTypes = {
-  modalInfo: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   patientId: PropTypes.string.isRequired,
 };

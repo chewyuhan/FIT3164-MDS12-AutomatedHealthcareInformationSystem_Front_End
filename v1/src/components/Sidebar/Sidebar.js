@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { SidebarData } from './SidebarData';
+import { SidebarData } from './SidebarData'; // Assuming SidebarData is an array of sidebar menu items
 import './sidebar.css';
 import { IconContext } from 'react-icons';
 import axios from "axios";
@@ -15,17 +15,17 @@ function Sidebar() {
   useEffect(() => {
     // Retrieve the access token from sessionStorage
     const accessToken =  sessionStorage.getItem("accessToken");
-    // If the access token exists, you can use it for authenticated API calls
+    
+    // If the access token exists, make an authenticated API call
     if (accessToken) {
-      // Make an authenticated API call using the access token
       axios.get("https://mds12.cyclic.app/employees/myinfo", {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       })
       .then((response) => {
-        // Handle the response and update the user data state
-        console.log("API call response:", response.data)
+        // Handle the API response and update the user data state
+        console.log("API call response:", response.data);
         setUserData(response.data);
       })
       .catch((error) => {
@@ -42,10 +42,7 @@ function Sidebar() {
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
           <div className='navbar-user'>
-
-            
-          <h1>Hi, Dr {userData?.firstName} </h1>
-          {/* <h1>Hi, {`${userData.firstName}`}</h1> */}
+            <h1>Hi, Dr {userData?.firstName} </h1>
           </div>
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>

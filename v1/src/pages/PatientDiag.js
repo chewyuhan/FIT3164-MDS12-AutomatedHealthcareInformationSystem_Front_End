@@ -1,65 +1,45 @@
+// Import necessary dependencies and components
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar/Sidebar';
 import SearchBar from '../components/SearchBar/Searchbar';
 import { Table } from '../components/Diagnosis/DiagnosisTable';
 import { Modal } from '../components/Diagnosis/DiagnosisModal';
-import axios from 'axios';
 import { addDiagnosis } from '../api/diagnosis';
+import { fetchPatientDataFromAPI } from '../api/patient';
+import { fetchAppointmentsbyPatient } from '../api/appointment';
 
 function PatientDiag() {
+  // State variables
   const [modalOpen, setModalOpen] = useState(false);
   const [patients, setPatients] = useState(null);
   const [filteredRows, setFilteredRows] = useState([]); // Create state for filtered rows
 
   useEffect(() => {
-    // Retrieve the access token from sessionStorage
-    const accessToken = sessionStorage.getItem("accessToken");
-    // If the access token exists, you can use it for authenticated API calls
-    if (accessToken) {
-      // Make an authenticated API call to fetch patient data
-      axios.get("https://mds12.cyclic.app/patients/all", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
+    // Fetch patient data from the API when the component mounts
+    fetchPatientDataFromAPI()
+      .then(async (response) => {
+        // Handle the response and update the user data state
+        console.log("API call response:", response);
+        const patientsData = response;
+
+        // Fetch and update the latest appointment time for each patient
+        const updatedPatients = [];
+        for (const patient of patientsData) {
+          const appointments = await fetchAppointmentsbyPatient(patient.patientId);
+          patient.latestAppointmentDateTime = findLatestAppointmentTime(appointments);
+          updatedPatients.push(patient);
         }
+
+        console.log("Updated patients:", updatedPatients);
+        setPatients(updatedPatients);
+        setFilteredRows(updatedPatients); // Initialize filteredRows with all patients
       })
-        .then(async (response) => {
-          // Handle the response and update the user data state
-          console.log("API call response:", response.data);
-          const patientsData = response.data;
-
-          // Fetch appointments for each patient
-          const fetchAppointments = async (patientId) => {
-            try {
-              const appointmentResponse = await axios.get(`https://mds12.cyclic.app/appointments/patient/${patientId}`, {
-                headers: {
-                  Authorization: `Bearer ${accessToken}`
-                }
-              });
-              return appointmentResponse.data;
-            } catch (error) {
-              console.error("Error fetching appointments:", error);
-              return [];
-            }
-          };
-
-          // Fetch and update the latest appointment time for each patient
-          const updatedPatients = [];
-          for (const patient of patientsData) {
-            const appointments = await fetchAppointments(patient.patientId);
-            patient.latestAppointmentDateTime = findLatestAppointmentTime(appointments);
-            updatedPatients.push(patient);
-          }
-
-          console.log("Updated patients:", updatedPatients);
-          setPatients(updatedPatients);
-          setFilteredRows(updatedPatients); // Initialize filteredRows with all patients
-        })
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
-        });
-    }
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
   }, []);
 
+  // Function to find the latest appointment time for a patient
   const findLatestAppointmentTime = (appointments) => {
     if (!appointments || appointments.length === 0) {
       return "No appointments";
@@ -69,10 +49,11 @@ function PatientDiag() {
     return sortedAppointments[0].appointmentDateTime;
   };
 
+  // Function to handle the submission of a new diagnosis
   const handleSubmit = async (newRow) => {
     try {
       console.log("Adding new diagnosis:", newRow);
-      // Adding a new patient
+      // Adding a new diagnosis
       await addDiagnosis(newRow);
       console.log("Added new diagnosis");
     } catch (error) {
@@ -80,12 +61,14 @@ function PatientDiag() {
     }
   };
 
+  // Render loading message if patient data is not yet available
   if (!patients) {
     return <p>Loading Diagnosis data...</p>;
   }
 
   return (
     <div className='patientinfo'>
+      {/* Sidebar component */}
       <div className="header">
         <Sidebar />
       </div>
@@ -96,6 +79,7 @@ function PatientDiag() {
         <button onClick={() => setModalOpen(true)} className="button">
           Add New Diagnosis
         </button>
+        {/* Display the Table component with filtered or unfiltered patients */}
         {filteredRows && filteredRows.length > 0 && (
           <Table patients={filteredRows} />
         )}
@@ -103,15 +87,16 @@ function PatientDiag() {
           <Table patients={patients} />
         )}
       </div>
-        {modalOpen && (
-          <Modal
-            closeModal={() => {
-              setModalOpen(false);
-            }}
-            onSubmit={handleSubmit}
-          />
-        )}
-      </div>
+      {/* Display the Modal for adding a new diagnosis if modalOpen is true */}
+      {modalOpen && (
+        <Modal
+          closeModal={() => {
+            setModalOpen(false);
+          }}
+          onSubmit={handleSubmit}
+        />
+      )}
+    </div>
   );
 }
 

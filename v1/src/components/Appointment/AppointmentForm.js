@@ -15,6 +15,7 @@ const AppointmentForm = ({
   appointmentTime,
   selectedDoctorId,
 }) => {
+  // State for form data and errors
   const [formData, setFormData] = useState(
     defaultValue || {
       patientId: "",
@@ -23,10 +24,11 @@ const AppointmentForm = ({
       reason: "",
       remarks: "",
       completed: false,
-    });
-
+    }
+  );
   const [errors, setErrors] = useState("");
 
+  // Function to generate a time range for appointments
   const generateTimeRange = () => {
     const timeRange = [];
 
@@ -42,15 +44,19 @@ const AppointmentForm = ({
     return timeRange;
   };
 
+  // Array of appointment times for the selected doctor
   const doctorAppointmentTimes = generateTimeRange();
 
+  // Function to handle form field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent page refresh
+
     // Check if required fields are selected
     if (!selectedPatientId || !selectedDoctorId || !appointmentTime) {
       setErrors("Patient, doctor, and appointment time must be selected.");
@@ -66,14 +72,17 @@ const AppointmentForm = ({
     }
   };
 
+  // Function to handle doctor selection
   const handleSelectDoctor = (doctorId) => {
     setSelectedDoctorId(doctorId);
   };
 
+  // Function to handle patient selection
   const handleSelectPatient = (patientId) => {
     setSelectedPatientId(patientId);
   };
 
+  // Function to handle appointment time selection
   const handleSelectAppointmentTime = () => {
     const doctorName = getDoctorNameById(selectedDoctorId);
     const patientName = getPatientNameById(selectedPatientId);
@@ -82,22 +91,25 @@ const AppointmentForm = ({
       employeeId: selectedDoctorId,
       date: new Date(), // You may want to set the correct date here
       time: appointmentTime,
-      remarks: "",
-      reason: "",
-      completed: false,
+      remarks: formData.remarks,
+      reason: formData.reason,
+      completed: formData.completed,
       doctor: doctorName,
       patient: patientName,
     };
+
     // You can handle the appointment data as needed
     // For example, you can submit it to an API using onSubmit
     onSubmit(appointment);
   };
 
+  // Function to get the doctor's full name by ID
   const getDoctorNameById = (employeeID) => {
     const doctor = doctors.find((d) => d.employeeId.toString() === employeeID.toString());
     return doctor ? `${doctor.firstName} ${doctor.lastName}` : "Unknown Doctor";
   };
 
+  // Function to get the patient's full name by ID
   const getPatientNameById = (patientID) => {
     const patient = patients.find((p) => p.patientId.toString() === patientID.toString());
     return patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient";
@@ -106,6 +118,8 @@ const AppointmentForm = ({
   return (
     <div className="appointment-form">
       <h1>Book an Appointment</h1>
+
+      {/* Form for selecting a doctor */}
       <div className="form-group">
         <h2>Select a Doctor</h2>
         <select
@@ -121,6 +135,8 @@ const AppointmentForm = ({
           ))}
         </select>
       </div>
+
+      {/* Form for selecting a patient */}
       <div className="form-group">
         <h2>Select a Patient</h2>
         <select
@@ -136,6 +152,8 @@ const AppointmentForm = ({
           ))}
         </select>
       </div>
+
+      {/* Form for selecting an appointment time */}
       <div className="form-group">
         <h2>Select an Appointment Time</h2>
         <select
@@ -151,6 +169,8 @@ const AppointmentForm = ({
           ))}
         </select>
       </div>
+
+      {/* Form for marking a reason */}
       <div className="form-group">
         <h2>Mark a Reason</h2>
         <textarea
@@ -161,6 +181,8 @@ const AppointmentForm = ({
           onChange={handleChange}
         />
       </div>
+
+      {/* Form for additional remarks */}
       <div className="form-group">
         <h2>Additional Remarks</h2>
         <textarea
@@ -171,12 +193,12 @@ const AppointmentForm = ({
           onChange={handleChange}
         />
       </div>
+
+      {/* Form for marking appointment status */}
       <div className="form-group">
         <h2>Status</h2>
         <div className="checkbox">
-          <label>
-            Completed
-          </label>
+          <label>Completed</label>
           <input
             type="checkbox"
             name="completed"
@@ -185,7 +207,11 @@ const AppointmentForm = ({
           />
         </div>
       </div>
+
+      {/* Display errors if any */}
       {errors && <p className="error">{errors}</p>}
+
+      {/* Submit button */}
       <button type="submit" className="book-button" onClick={handleSubmit}>
         Book Appointment
       </button>

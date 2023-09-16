@@ -47,3 +47,26 @@ export const addAppointment = async (newAppointment) => {
             console.error("Error adding patient:", error);
         });
 };
+
+
+export const fetchAppointmentsbyPatient = async (patientId) => {
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    if (!accessToken) {
+        // Handle the case where there's no access token (authentication failed)
+        console.error("No access token found");
+        return [];
+    }
+
+    try {
+        const response = await axios.get(`https://mds12.cyclic.app/appointments/patient/${patientId}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching appointments:", error);
+        return [];
+    }
+}

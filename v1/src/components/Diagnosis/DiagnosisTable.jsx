@@ -4,14 +4,17 @@ import "./Table.css";
 import InfoModal from './DiagnosisinfoModal';
 
 export const Table = ({ patients }) => {
+  // State to manage modal visibility and data
   const [modalInfo, setModalInfo] = useState({});
   const [showModal, setShowModal] = useState(false);
 
+  // Function to handle row click and display modal
   const handleRowClick = (row) => {
     setModalInfo(row);
     setShowModal(true); // Show the modal when a row is clicked
   };
 
+  // Function to format appointment date and time using moment
   const formatAppointmentDateTime = (datetime) => {
     const date = moment(datetime);
     if (date.isValid()) {
@@ -20,6 +23,7 @@ export const Table = ({ patients }) => {
       return datetime;
     }
   };
+
   return (
     <div className="table-wrapper">
       <table className="table">
@@ -53,7 +57,8 @@ export const Table = ({ patients }) => {
       </table>
       {showModal && (
         <div className="modal-container">
-    <InfoModal onClose={() => setShowModal(false)} patientId={modalInfo.patientId} />
+          {/* Render InfoModal with patient data */}
+          <InfoModal onClose={() => setShowModal(false)} patientId={modalInfo.patientId} />
         </div>
       )}
     </div>

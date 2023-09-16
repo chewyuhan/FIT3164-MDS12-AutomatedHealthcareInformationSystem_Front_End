@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
-import axios from 'axios';
 import { isSameDay } from "date-fns";
 import AppointmentForm from "../components/Appointment/AppointmentForm";
 import AppointmentTable from "../components/Appointment/AppointmentTable";
