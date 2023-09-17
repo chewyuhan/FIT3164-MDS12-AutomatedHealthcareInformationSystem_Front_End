@@ -53,11 +53,16 @@ const AppointmentTable = ({ appointments , deleteRow, editRow}) => {
                   <span className="actions">
                     <BsFillTrashFill
                       className="delete-btn"
-                      onClick={() => deleteRow(appointment.appointmentId)}
+                      onClick={(e) =>{
+                        e.stopPropagation();
+                        deleteRow(appointment.appointmentId)}}
                     />
                     <BsFillPencilFill
                       className="edit-btn"
-                      onClick={() => editRow(appointment.appointmentId)}
+                      onClick={(e) => {
+                        e.stopPropagation(); // Stop the click event from propagating
+                        editRow(appointment.appointmentId);
+                      }}
                     />
                   </span>
                 </td>
