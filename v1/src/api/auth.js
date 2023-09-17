@@ -4,7 +4,7 @@ export const postLogin = async (credential) => {
     console.log(credential,"check credential")
     try {
         const data = await axios({
-            url: "https://mds12.cyclic.app/auth/signin",
+            url: "https://mds12-dev.cyclic.cloud/auth/signin",
             headers: {
                 'Access-Control-Allow-Origin' : '*',
                 'Content-Type': "application/json",

@@ -18,7 +18,7 @@ function Sidebar() {
     
     // If the access token exists, make an authenticated API call
     if (accessToken) {
-      axios.get("https://mds12.cyclic.app/employees/myinfo", {
+      axios.get("https://mds12-dev.cyclic.cloud/employees/myinfo", {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }

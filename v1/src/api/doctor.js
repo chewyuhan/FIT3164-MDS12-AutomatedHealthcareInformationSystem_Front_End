@@ -11,7 +11,7 @@ export const fetchDoctorDataFromAPI = async () => {
         return;
     }
     try {
-        const response = await axios.get(`https://mds12.cyclic.app/employees/doctors`, {
+        const response = await axios.get(`https://mds12-dev.cyclic.cloud/employees/doctors`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }

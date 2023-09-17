@@ -11,7 +11,7 @@ export const fetchAppointmentDataFromAPI = async () => {
     }
     
     try {
-        const response = await axios.get("https://mds12.cyclic.app/appointments/all", {
+        const response = await axios.get("https://mds12-dev.cyclic.cloud/appointments/all", {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -32,7 +32,7 @@ export const addAppointment = async (newAppointment) => {
         return;
     }
 
-    axios.post("https://mds12.cyclic.app/appointments/", newAppointment, {
+    axios.post("https://mds12-dev.cyclic.cloud/appointments/", newAppointment, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -59,7 +59,7 @@ export const fetchAppointmentsbyPatient = async (patientId) => {
     }
 
     try {
-        const response = await axios.get(`https://mds12.cyclic.app/appointments/patient/${patientId}`, {
+        const response = await axios.get(`https://mds12-dev.cyclic.cloud/appointments/patient/${patientId}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }

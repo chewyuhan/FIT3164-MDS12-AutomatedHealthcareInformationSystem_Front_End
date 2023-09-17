@@ -40,7 +40,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     // Function to fetch patient data
     const fetchPatientData = async () => {
       try {
-        const response = await axios.get('https://mds12.cyclic.app/patients/all', {
+        const response = await axios.get('https://mds12-dev.cyclic.cloud/patients/all', {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -55,7 +55,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     // Function to fetch employee data
     const fetchEmployeeData = async () => {
       try {
-        const response = await axios.get('https://mds12.cyclic.app/employees/doctors', {
+        const response = await axios.get('https://mds12-dev.cyclic.cloud/employees/doctors', {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -71,7 +71,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     const fetchAppointmentData = async (patientId) => {
       try {
         const appointmentResponse = await axios.get(
-          `https://mds12.cyclic.app/appointments/patient/${patientId}`,
+          `https://mds12-dev.cyclic.cloud/appointments/patient/${patientId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
