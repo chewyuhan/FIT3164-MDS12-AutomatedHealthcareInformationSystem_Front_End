@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Modal.css';
+import { fetchPatientDataFromAPI } from '../../api/patient';
+import {fetchDoctorDataFromAPI} from '../../api/doctor';
+import { fetchAppointmentsbyPatient } from '../../api/appointment';
 
 export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   // State for form data
@@ -35,17 +38,11 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   const [appointmentOptions, setAppointmentOptions] = useState([]);
 
   useEffect(() => {
-    const accessToken = sessionStorage.getItem('accessToken');
-
     // Function to fetch patient data
     const fetchPatientData = async () => {
       try {
-        const response = await axios.get('https://mds12-dev.cyclic.cloud/patients/all', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        setPatients(response.data);
+        const patientdata = await fetchPatientDataFromAPI();
+        setPatients(patientdata);
       } catch (error) {
         console.error('Error fetching patient data:', error);
         setErrors('Error fetching patient data. Please try again later.');
@@ -55,12 +52,8 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     // Function to fetch employee data
     const fetchEmployeeData = async () => {
       try {
-        const response = await axios.get('https://mds12-dev.cyclic.cloud/employees/doctors', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        setEmployees(response.data);
+        const doctordata = await fetchDoctorDataFromAPI();
+        setEmployees(doctordata);
       } catch (error) {
         console.error('Error fetching employee data:', error);
         setErrors('Error fetching employee data. Please try again later.');
@@ -70,15 +63,8 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     // Function to fetch appointment data
     const fetchAppointmentData = async (patientId) => {
       try {
-        const appointmentResponse = await axios.get(
-          `https://mds12-dev.cyclic.cloud/appointments/patient/${patientId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        const appointmentOptions = appointmentResponse.data.map((appointment) => ({
+        const appointmentResponse = await fetchAppointmentsbyPatient(patientId);
+        const appointmentOptions = appointmentResponse.map((appointment) => ({
           id: appointment.appointmentId,
           datetime: new Date(appointment.appointmentDateTime),
         }));
