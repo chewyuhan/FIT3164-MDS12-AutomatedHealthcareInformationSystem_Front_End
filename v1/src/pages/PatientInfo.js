@@ -5,6 +5,7 @@ import SearchBar from '../components/SearchBar/Searchbar';
 import { Table } from '../components/PatientTable/Table';
 import { Modal } from '../components/PatientTable/Modal';
 import { addPatient, editPatient, fetchPatientDataFromAPI } from '../api/patient';
+import ImagePreviewDialog from '../components/PatientTable/Imagemodel';
 
 function PatientInfo() {
   // State variables
@@ -15,6 +16,7 @@ function PatientInfo() {
   const [rowToEdit, setRowToEdit] = useState(null);
   const [file, setFile] = useState();
   const [imagePreview, setImagePreview] = useState(null);
+  const [showImagePreview, setShowImagePreview] = useState(false);
 
   useEffect(() => {
     // Fetch patient data from the API when the component mounts
@@ -70,6 +72,11 @@ function PatientInfo() {
     }
   };
 
+    // Function to handle showing the image preview dialog
+    const handleShowImagePreview = () => {
+      setShowImagePreview(true);
+    };
+
   // Render loading message if patient data is not yet available
   if (!rows) {
     return <p>Loading patient data...</p>;
@@ -105,14 +112,17 @@ function PatientInfo() {
           <div className="image-preview">
             <button
               className="close-button"
-              onClick={() => {
-                setFile(null);
-                setImagePreview(null);
-              }}
+              onClick={handleShowImagePreview}
             >
-              Close
+              View Image
             </button>
-            <img src={imagePreview} alt="Uploaded" />
+            {showImagePreview && imagePreview && (
+        // ImagePreviewDialog component
+        <ImagePreviewDialog
+          imageUrl={imagePreview}
+          onClose={() => setShowImagePreview(false)}
+        />
+      )}
           </div>
         )}
       </div>
