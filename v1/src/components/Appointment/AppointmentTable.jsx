@@ -1,12 +1,13 @@
 import React from "react";
 import "./ApptTable.css"
+import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import { format } from "date-fns";
 
 
 
 
 
-const AppointmentTable = ({ appointments }) => {
+const AppointmentTable = ({ appointments , deleteRow, editRow}) => {
   // Assuming all appointments are for the same date, you can get the date from the first appointment
   const firstAppointment = appointments[0];
   const appointmentDate = firstAppointment
@@ -28,6 +29,7 @@ const AppointmentTable = ({ appointments }) => {
               <th>Time</th>
               <th>Reason</th>
               <th>Remarks</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -38,6 +40,18 @@ const AppointmentTable = ({ appointments }) => {
                 <td>  {format(new Date(appointment.appointmentDateTime), "dd-MM-yyyy hh:mm a")}</td>
                 <td>{appointment.reason || "N/A"}</td>
                 <td>{appointment.remarks || "N/A"}</td>
+                <td className="fit">
+                  <span className="actions">
+                    <BsFillTrashFill
+                      className="delete-btn"
+                      onClick={() => deleteRow(appointment.appointmentId)}
+                    />
+                    <BsFillPencilFill
+                      className="edit-btn"
+                      onClick={() => editRow(appointment.appointmentId)}
+                    />
+                  </span>
+                </td>
               </tr>
             ))}
           </tbody>

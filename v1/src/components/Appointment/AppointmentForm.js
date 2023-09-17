@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AppointmentForm.css";
 import 'react-calendar/dist/Calendar.css';
 
 const AppointmentForm = ({
   closeModal,
   onSubmit,
-  defaultValue,
   patients,
   selectedPatientId,
   setSelectedDoctorId,
@@ -14,6 +13,7 @@ const AppointmentForm = ({
   doctors,
   appointmentTime,
   selectedDoctorId,
+  defaultValue,
 }) => {
   // State for form data and errors
   const [formData, setFormData] = useState(
@@ -26,7 +26,17 @@ const AppointmentForm = ({
       completed: false,
     }
   );
+
+  
   const [errors, setErrors] = useState("");
+
+  useEffect(() => {
+    if (defaultValue) {
+      console.log("Setting form data with defaultValue:", defaultValue);
+      setFormData(defaultValue);
+    }
+  }, [defaultValue]);
+  
 
   // Function to generate a time range for appointments
   const generateTimeRange = () => {

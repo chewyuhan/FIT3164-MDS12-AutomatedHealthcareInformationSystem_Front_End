@@ -23,6 +23,14 @@ const Appointment = () => {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [rowToEdit, setRowToEdit] = useState(null);
+
+
+  const handleEditRow = (idx) => {
+    setRowToEdit(idx); // Corrected assignment
+    setIsPopupOpen(true);
+  }
+  
 
   // useEffect to fetch initial data when the component mounts
   useEffect(() => {
@@ -74,10 +82,6 @@ const Appointment = () => {
 
   const closeAppointmentPopup = () => {
     setIsPopupOpen(false);
-    setSelectedPatientId(null);
-    setSelectedDoctorId(null);
-    setAppointmentDate(new Date());
-    setAppointmentTime("");
   };
 
   const handleSelectAppointmentTime = () => {
@@ -102,7 +106,10 @@ const Appointment = () => {
     closeAppointmentPopup();
   };
 
+  // Edit appointment should go here. 
+  // use if(rowToEdit === null) to check if it is a new appointment or an existing one.
   const handleSubmitAppointmentForm = async (formData) => {
+
     const appointmentDateTime = new Date(appointmentDate);
     const [hours, minutes] = appointmentTime.split(":");
     appointmentDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
@@ -119,6 +126,11 @@ const Appointment = () => {
     addAppointment(requestData);
     await fetchDataAndUpdate();
     closeAppointmentPopup();
+  };
+
+  // Need to modify handle delete row here with API
+  const handleDeleteRow = (targetIndex) => {
+    setAppointments(appointments.filter((_, idx) => idx !== targetIndex));
   };
 
   const handleCalendarClick = (value) => {
@@ -160,30 +172,31 @@ const Appointment = () => {
           </button>
         </div>
         {isPopupOpen && (
-          // Render a popup for adding appointments
-          <div className="popup" onClick={(e) => {
-            if (e.target.className === "popup") closeAppointmentPopup();
-          }}>
-            <div className="popup-content">
-              <AppointmentForm
-                // Pass props to the AppointmentForm component
-                patients={patients}
-                selectedPatientId={selectedPatientId}
-                setSelectedPatientId={setSelectedPatientId}
-                doctors={doctors}
-                appointmentDate={appointmentDate}
-                setAppointmentDate={setAppointmentDate}
-                appointmentTime={appointmentTime}
-                setAppointmentTime={setAppointmentTime}
-                selectedDoctorId={selectedDoctorId}
-                setSelectedDoctorId={setSelectedDoctorId}
-                handleSelectAppointmentTime={handleSelectAppointmentTime}
-                onSubmit={handleSubmitAppointmentForm}
-                closeModal={closeAppointmentPopup}
-              />
+            // Render a popup for adding appointments
+            <div className="popup" onClick={(e) => {
+              if (e.target.className === "popup") closeAppointmentPopup();
+            }}>
+              <div className="popup-content">
+                <AppointmentForm
+                  // Pass props to the AppointmentForm component
+                  patients={patients}
+                  selectedPatientId={selectedPatientId}
+                  setSelectedPatientId={setSelectedPatientId}
+                  doctors={doctors}
+                  appointmentDate={appointmentDate}
+                  setAppointmentDate={setAppointmentDate}
+                  appointmentTime={appointmentTime}
+                  setAppointmentTime={setAppointmentTime}
+                  selectedDoctorId={selectedDoctorId}
+                  setSelectedDoctorId={setSelectedDoctorId}
+                  handleSelectAppointmentTime={handleSelectAppointmentTime}
+                  onSubmit={handleSubmitAppointmentForm}
+                  closeModal={closeAppointmentPopup}
+                  defaultValue={rowToEdit !== null && selectedAppointment[rowToEdit]}
+                />
+              </div>
             </div>
-          </div>
-        )}
+          )}
         <div className="appointment-list-container">
           <div className="calendar-container">
             <h1>Book an Appointment</h1>
@@ -215,7 +228,9 @@ const Appointment = () => {
           {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
             // Render appointment details in a table
             <div className="selected-appointment-details">
-              <AppointmentTable appointments={selectedAppointment} doctors={doctors} patients={patients} />
+              <AppointmentTable appointments={selectedAppointment} doctors={doctors} patients={patients} 
+              editRow = {handleEditRow}
+              deleteRow={handleDeleteRow} />
             </div>
           )}
         </div>
