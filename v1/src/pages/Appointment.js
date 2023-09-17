@@ -9,6 +9,8 @@ import Sidebar from '../components/Sidebar/Sidebar';
 import { fetchAppointmentDataFromAPI, addAppointment } from "../api/appointment";
 import { fetchDoctorDataFromAPI } from "../api/doctor";
 import { fetchPatientDataFromAPI } from "../api/patient";
+
+
 import './Appointment.css';
 
 // Define the main Appointment component

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ApptTable.css"
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
+import InfoModal from './AppointmentinfoModal';
 import { format } from "date-fns";
 
 
@@ -13,6 +14,14 @@ const AppointmentTable = ({ appointments , deleteRow, editRow}) => {
   const appointmentDate = firstAppointment
     ? new Date(firstAppointment.appointmentDateTime)
     : null;
+
+  const [modalInfo, setModalInfo] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  // Function to handle clicking on a row to display the modal
+  const handleRowClick = (row) => {
+    setModalInfo(row);
+    setShowModal(true); // Show the modal when a row is clicked
+  };
 
   return (
     <div className="table-wrapper">
@@ -34,7 +43,7 @@ const AppointmentTable = ({ appointments , deleteRow, editRow}) => {
           </thead>
           <tbody>
             {appointments.map((appointment) => (
-              <tr key={appointment.appointmentId}>
+              <tr key={appointment.appointmentId} className="clickable-row" onClick={() => handleRowClick(appointment)}>
                 <td>{appointment.doctor}</td>
                 <td>{appointment.patient}</td>
                 <td>  {format(new Date(appointment.appointmentDateTime), "dd-MM-yyyy hh:mm a")}</td>
@@ -56,6 +65,11 @@ const AppointmentTable = ({ appointments , deleteRow, editRow}) => {
             ))}
           </tbody>
         </table>
+        {showModal && (
+        <div className="modal-container">
+          <InfoModal modalInfo={modalInfo} onClose={() => setShowModal(false)} />
+        </div>
+      )}
       </div>
     </div>
   );
