@@ -48,7 +48,6 @@ export const addAppointment = async (newAppointment) => {
         });
 };
 
-
 export const fetchAppointmentsbyPatient = async (patientId) => {
     const accessToken = sessionStorage.getItem("accessToken");
 
@@ -57,7 +56,6 @@ export const fetchAppointmentsbyPatient = async (patientId) => {
         console.error("No access token found");
         return [];
     }
-
     try {
         const response = await axios.get(`https://mds12-dev.cyclic.cloud/appointments/patient/${patientId}`, {
             headers: {
@@ -69,4 +67,54 @@ export const fetchAppointmentsbyPatient = async (patientId) => {
         console.error("Error fetching appointments:", error);
         return [];
     }
+}
+
+export const editAppointment = async (appointmentId, updatedAppointment) => {
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    if (!accessToken) {
+        // Handle the case where there's no access token (authentication failed)
+        console.error("No access token found");
+        return;
+    }
+
+    axios.patch(`https://mds12-dev.cyclic.cloud/appointments/${appointmentId}`, updatedAppointment, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    })
+        .then((response) => {
+            // Handle the success response if needed
+            console.log("Updated appointment successfully:", response.data);
+            // You can update your state or take any other action here
+        })
+        .catch((error) => {
+            // Handle the error if the request fails
+            console.error("Error updating appointment:", error);
+        });
+}
+
+export const deleteAppointment = async (appointmentId) => {
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    if (!accessToken) {
+        // Handle the case where there's no access token (authentication failed)
+        console.error("No access token found");
+        return;
+    }
+
+    axios.delete(`https://mds12-dev.cyclic.cloud/appointments/${appointmentId}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    })
+        .then((response) => {
+            // Handle the success response if needed
+            console.log("Deleted appointment successfully:", response.data);
+            // You can update your state or take any other action here
+        })
+        .catch((error) => {
+            // Handle the error if the request fails
+            console.error("Error deleting appointment:", error);
+        });
 }
