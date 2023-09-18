@@ -251,6 +251,7 @@ const Appointment = () => {
               }}
             />
           </div>
+          {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
             <div className="selected-appointment-details">
               <AppointmentTable
                 appointments={selectedAppointment}
@@ -260,6 +261,7 @@ const Appointment = () => {
                 deleteRow={handleDeleteRow}
               />
             </div>
+          )}
         </div>
 
         {isPopupOpen && (

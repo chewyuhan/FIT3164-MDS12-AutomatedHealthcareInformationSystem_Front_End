@@ -22,9 +22,8 @@
   display: block;
   overflow: hidden;
   table-layout: fixed;
-  border-collapse: collapse;
-  box-shadow: 0px 10px 10px #ccc;
-  border-radius: 10px;
+  border-collapse: separate;
+  border-spacing: 0;
   white-space: nowrap;
   width: 100em;
   max-width: 80%;
@@ -38,27 +37,35 @@
 .table thead {
   background-color: #ccc;
   color: #222;
+  border-bottom: 2px solid #ddd; /* Add a bottom border for header row */
+
 }
 
 .table thead th {
-  padding: 0.8rem;
   font-weight: bold;
-  font-size: 1.2rem;
   text-align: left;
-  border-bottom: 1px solid #ddd;
 }
 
 
 .table th,
 .table td {
   padding: 0.8rem;
-  
+  border-right: 1px solid black; /* Add a right border for header cells */
+  border-left: 1px solid black; /* Add a left border for header cells */
+  border-top: 1px solid black; /* Add a top border for header cells */
+  border-bottom: 1px solid black; /* Add a bottom border for all cells */
+
 }
 
 .table td {
-  border-top: 0.5px solid #ddd;
+  border-top: 0.5px solid black;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  .table td:last-child,
+.table th:last-child {
+  border-right: none; /* Remove right border for the last column */
+}
 }
 
 .table tbody tr:hover {
