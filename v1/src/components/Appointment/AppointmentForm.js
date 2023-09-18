@@ -27,16 +27,16 @@ const AppointmentForm = ({
     }
   );
 
-  
+
   const [errors, setErrors] = useState("");
 
   useEffect(() => {
+    console.log("skhjdakdja", defaultValue);
     if (defaultValue) {
-      console.log("Setting form data with defaultValue:", defaultValue);
       setFormData(defaultValue);
     }
   }, [defaultValue]);
-  
+
 
   // Function to generate a time range for appointments
   const generateTimeRange = () => {
@@ -134,7 +134,7 @@ const AppointmentForm = ({
         <h2>Select a Doctor</h2>
         <select
           className="doctor-select"
-          value={selectedDoctorId || ""}
+          value={defaultValue ? defaultValue.employeeId : selectedDoctorId || ""}
           onChange={(event) => handleSelectDoctor(event.target.value)}
         >
           <option value="">Select a doctor...</option>
@@ -144,14 +144,10 @@ const AppointmentForm = ({
             </option>
           ))}
         </select>
-      </div>
-
-      {/* Form for selecting a patient */}
-      <div className="form-group">
         <h2>Select a Patient</h2>
         <select
           className="patient-select"
-          value={selectedPatientId || ""}
+          value={defaultValue ? defaultValue.patientId : selectedPatientId || ""}
           onChange={(event) => handleSelectPatient(event.target.value)}
         >
           <option value="">Select a patient...</option>
@@ -168,7 +164,7 @@ const AppointmentForm = ({
         <h2>Select an Appointment Time</h2>
         <select
           className="time-select"
-          value={appointmentTime}
+          value={defaultValue ? defaultValue.appointmentDateTime : appointmentTime || ""}
           onChange={(event) => setAppointmentTime(event.target.value)}
         >
           <option value="">Select a time...</option>
@@ -178,6 +174,7 @@ const AppointmentForm = ({
             </option>
           ))}
         </select>
+
       </div>
 
       {/* Form for marking a reason */}

@@ -77,10 +77,19 @@ const Appointment = () => {
     setIsPopupOpen(false);
   };
 
-  // Open the appointment popup
-  const openAppointmentPopup = () => {
-    setIsPopupOpen(true);
-  };
+// Open the appointment popup
+const openAppointmentPopup = (defaultValue) => {
+  // Set defaultValue to null when adding a new appointment
+  const popupDefaultValue = defaultValue ? defaultValue : null;
+  setIsPopupOpen(true);
+  setRowToEdit(null); // Clear the rowToEdit
+  setSelectedPatientId(null); // Clear selectedPatientId
+  setSelectedDoctorId(null); // Clear selectedDoctorId
+  setAppointmentDate(new Date()); // Reset appointmentDate to today
+  setAppointmentTime(""); // Reset appointmentTime
+  setSelectedAppointment(popupDefaultValue); // Set selectedAppointment to defaultValue
+};
+
 
   // Update the table data based on appointment data
   const updateTableData = (appointmentData) => {
@@ -102,6 +111,12 @@ const Appointment = () => {
   const handleEditRow = (idx) => {
     setRowToEdit(idx);
     setIsPopupOpen(true);
+  };
+
+  // Define a function to select an appointment by appointmentId
+  const selectAppointmentById = (appointmentId) => {
+    const selectedAppointment = appointments.find((appointment) => appointment.appointmentId === appointmentId);
+    return selectedAppointment;
   };
 
   // Handle selecting an appointment time
@@ -194,30 +209,6 @@ const Appointment = () => {
             Add Appointment
           </button>
         </div>
-        {isPopupOpen && (
-          <div className="popup" onClick={(e) => {
-            if (e.target.className === "popup") closeAppointmentPopup();
-          }}>
-            <div className="popup-content">
-              <AppointmentForm
-                patients={patients}
-                selectedPatientId={selectedPatientId}
-                setSelectedPatientId={setSelectedPatientId}
-                doctors={doctors}
-                appointmentDate={appointmentDate}
-                setAppointmentDate={setAppointmentDate}
-                appointmentTime={appointmentTime}
-                setAppointmentTime={setAppointmentTime}
-                selectedDoctorId={selectedDoctorId}
-                setSelectedDoctorId={setSelectedDoctorId}
-                handleSelectAppointmentTime={handleSelectAppointmentTime}
-                onSubmit={handleSubmitAppointmentForm}
-                closeModal={closeAppointmentPopup}
-                defaultValue={rowToEdit !== null && selectedAppointment[rowToEdit]}
-              />
-            </div>
-          </div>
-        )}
         <div className="appointment-list-container">
           <div className="calendar-container">
             <h1>Book an Appointment</h1>
@@ -243,7 +234,6 @@ const Appointment = () => {
               }}
             />
           </div>
-
           {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
             <div className="selected-appointment-details">
               <AppointmentTable
@@ -253,6 +243,33 @@ const Appointment = () => {
                 editRow={handleEditRow}
                 deleteRow={handleDeleteRow}
               />
+            </div>
+          )}
+          {isPopupOpen && (
+            <div className="popup" onClick={(e) => {
+              if (e.target.className === "popup") closeAppointmentPopup();
+            }}>
+              <div className="popup-content">
+                <AppointmentForm
+                  patients={patients}
+                  selectedPatientId={selectedPatientId}
+                  setSelectedPatientId={setSelectedPatientId}
+                  doctors={doctors}
+                  appointmentDate={appointmentDate}
+                  setAppointmentDate={setAppointmentDate}
+                  appointmentTime={appointmentTime}
+                  setAppointmentTime={setAppointmentTime}
+                  selectedDoctorId={selectedDoctorId}
+                  setSelectedDoctorId={setSelectedDoctorId}
+                  handleSelectAppointmentTime={handleSelectAppointmentTime}
+                  onSubmit={handleSubmitAppointmentForm}
+                  closeModal={() => {
+                    setIsPopupOpen(false);
+                    setRowToEdit(null);
+                  }}
+                  defaultValue={rowToEdit !== null && selectAppointmentById(rowToEdit)}
+                />
+              </div>
             </div>
           )}
         </div>
