@@ -1,21 +1,23 @@
-// Import necessary dependencies and components
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import 'react-calendar/dist/Calendar.css';
+import "react-calendar/dist/Calendar.css";
 import { isSameDay } from "date-fns";
 import AppointmentForm from "../components/Appointment/AppointmentForm";
 import AppointmentTable from "../components/Appointment/AppointmentTable";
-import Sidebar from '../components/Sidebar/Sidebar';
-import { fetchAppointmentDataFromAPI, addAppointment } from "../api/appointment";
+import Sidebar from "../components/Sidebar/Sidebar";
+import {
+  fetchAppointmentDataFromAPI,
+  addAppointment,
+  editAppointment,
+  deleteAppointment,
+} from "../api/appointment";
 import { fetchDoctorDataFromAPI } from "../api/doctor";
 import { fetchPatientDataFromAPI } from "../api/patient";
 
+import "./Appointment.css";
 
-import './Appointment.css';
-
-// Define the main Appointment component
 const Appointment = () => {
-  // Define state variables using useState
+  // State variables
   const [appointments, setAppointments] = useState(null);
   const [doctors, setDoctors] = useState([]);
   const [patients, setPatients] = useState([]);
@@ -26,13 +28,7 @@ const Appointment = () => {
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [rowToEdit, setRowToEdit] = useState(null);
-
-
-  const handleEditRow = (idx) => {
-    setRowToEdit(idx); // Corrected assignment
-    setIsPopupOpen(true);
-  }
-  
+  const [tableData, setTableData] = useState([]);
 
   // useEffect to fetch initial data when the component mounts
   useEffect(() => {
@@ -52,42 +48,64 @@ const Appointment = () => {
 
         const patientsResponse = await fetchPatientDataFromAPI();
         setPatients(patientsResponse);
+
+        // Initialize the table data
+        updateTableData(appointmentData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [appointmentDate]); // Include appointmentDate in the dependency array
 
-  useEffect(() => {
-    fetchDataAndUpdate();
-  }, []);
-
-  const fetchDataAndUpdate = async () => {
-    const accessToken = sessionStorage.getItem("accessToken");
-
-    if (!accessToken) return;
-
+  // Function to fetch updated appointment data in calendar and table
+  const fetchUpdatedAppointmentDataTable = async () => {
     try {
       const appointmentData = await fetchAppointmentDataFromAPI();
       setAppointments(appointmentData);
+
+      // Update the selectedAppointment based on the new appointment data
+      updateTableData(appointmentData);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching updated data:", error);
     }
   };
 
-  // Define functions for handling appointment-related actions
-  const openAppointmentPopup = () => {
-    setIsPopupOpen(true);
-  };
-
+  // Close the appointment popup
   const closeAppointmentPopup = () => {
     setIsPopupOpen(false);
   };
 
+  // Open the appointment popup
+  const openAppointmentPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  // Update the table data based on appointment data
+  const updateTableData = (appointmentData) => {
+    const appointmentsForDay = appointmentData.filter((appointment) =>
+      isSameDay(new Date(appointment.appointmentDateTime), appointmentDate)
+    );
+
+    const appointmentsWithNames = appointmentsForDay.map((appointment) => ({
+      ...appointment,
+      doctor: getDoctorNameById(appointment.employeeId),
+      patient: getPatientNameById(appointment.patientId),
+    }));
+
+    setTableData(appointmentsWithNames);
+    setSelectedAppointment(appointmentsWithNames);
+  };
+
+  // Handle editing a row in the table
+  const handleEditRow = (idx) => {
+    setRowToEdit(idx);
+    setIsPopupOpen(true);
+  };
+
+  // Handle selecting an appointment time
   const handleSelectAppointmentTime = () => {
-    // Create an appointment object
     const doctorName = getDoctorNameById(selectedDoctorId);
     const patientName = getPatientNameById(selectedPatientId);
     const appointment = {
@@ -108,10 +126,8 @@ const Appointment = () => {
     closeAppointmentPopup();
   };
 
-  // Edit appointment should go here. 
-  // use if(rowToEdit === null) to check if it is a new appointment or an existing one.
+  // Handle submitting the appointment form
   const handleSubmitAppointmentForm = async (formData) => {
-
     const appointmentDateTime = new Date(appointmentDate);
     const [hours, minutes] = appointmentTime.split(":");
     appointmentDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
@@ -126,15 +142,18 @@ const Appointment = () => {
     };
 
     addAppointment(requestData);
-    await fetchDataAndUpdate();
+    await fetchUpdatedAppointmentDataTable();
     closeAppointmentPopup();
   };
 
-  // Need to modify handle delete row here with API
-  const handleDeleteRow = (targetIndex) => {
-    setAppointments(appointments.filter((_, idx) => idx !== targetIndex));
+  // Handle deleting a row from the table
+  const handleDeleteRow = async (targetIndex) => {
+    console.log(targetIndex);
+    deleteAppointment(targetIndex);
+    await fetchUpdatedAppointmentDataTable();
   };
 
+  // Handle calendar click event
   const handleCalendarClick = (value) => {
     const appointmentsForDay = appointments.filter((appointment) =>
       isSameDay(new Date(appointment.appointmentDateTime), value)
@@ -149,11 +168,13 @@ const Appointment = () => {
     setSelectedAppointment(appointmentsWithNames);
   };
 
+  // Get doctor name by ID
   const getDoctorNameById = (employeeID) => {
     const doctor = doctors.find((d) => d.employeeId.toString() === employeeID.toString());
     return doctor ? `${doctor.firstName} ${doctor.lastName}` : "Unknown Doctor";
   };
 
+  // Get patient name by ID
   const getPatientNameById = (patientID) => {
     const patient = patients.find((p) => p.patientId.toString() === patientID.toString());
     return patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient";
@@ -174,44 +195,40 @@ const Appointment = () => {
           </button>
         </div>
         {isPopupOpen && (
-            // Render a popup for adding appointments
-            <div className="popup" onClick={(e) => {
-              if (e.target.className === "popup") closeAppointmentPopup();
-            }}>
-              <div className="popup-content">
-                <AppointmentForm
-                  // Pass props to the AppointmentForm component
-                  patients={patients}
-                  selectedPatientId={selectedPatientId}
-                  setSelectedPatientId={setSelectedPatientId}
-                  doctors={doctors}
-                  appointmentDate={appointmentDate}
-                  setAppointmentDate={setAppointmentDate}
-                  appointmentTime={appointmentTime}
-                  setAppointmentTime={setAppointmentTime}
-                  selectedDoctorId={selectedDoctorId}
-                  setSelectedDoctorId={setSelectedDoctorId}
-                  handleSelectAppointmentTime={handleSelectAppointmentTime}
-                  onSubmit={handleSubmitAppointmentForm}
-                  closeModal={closeAppointmentPopup}
-                  defaultValue={rowToEdit !== null && selectedAppointment[rowToEdit]}
-                />
-              </div>
+          <div className="popup" onClick={(e) => {
+            if (e.target.className === "popup") closeAppointmentPopup();
+          }}>
+            <div className="popup-content">
+              <AppointmentForm
+                patients={patients}
+                selectedPatientId={selectedPatientId}
+                setSelectedPatientId={setSelectedPatientId}
+                doctors={doctors}
+                appointmentDate={appointmentDate}
+                setAppointmentDate={setAppointmentDate}
+                appointmentTime={appointmentTime}
+                setAppointmentTime={setAppointmentTime}
+                selectedDoctorId={selectedDoctorId}
+                setSelectedDoctorId={setSelectedDoctorId}
+                handleSelectAppointmentTime={handleSelectAppointmentTime}
+                onSubmit={handleSubmitAppointmentForm}
+                closeModal={closeAppointmentPopup}
+                defaultValue={rowToEdit !== null && selectedAppointment[rowToEdit]}
+              />
             </div>
-          )}
+          </div>
+        )}
         <div className="appointment-list-container">
           <div className="calendar-container">
             <h1>Book an Appointment</h1>
             <h2>Select a Date</h2>
             <Calendar
-              // Render a calendar for selecting dates
               value={appointmentDate}
               onChange={(date) => setAppointmentDate(date)}
               onClickDay={handleCalendarClick}
               tileContent={({ date, view }) => {
-                // Render appointment count indicators on the calendar
-                if (view === 'month') {
-                  const appointmentsForDay = appointments.filter(appointment =>
+                if (view === "month") {
+                  const appointmentsForDay = appointments.filter((appointment) =>
                     isSameDay(new Date(appointment.appointmentDateTime), date)
                   );
                   const appointmentCount = appointmentsForDay.length;
@@ -228,11 +245,14 @@ const Appointment = () => {
           </div>
 
           {Array.isArray(selectedAppointment) && selectedAppointment.length > 0 && (
-            // Render appointment details in a table
             <div className="selected-appointment-details">
-              <AppointmentTable appointments={selectedAppointment} doctors={doctors} patients={patients} 
-              editRow = {handleEditRow}
-              deleteRow={handleDeleteRow} />
+              <AppointmentTable
+                appointments={selectedAppointment}
+                doctors={doctors}
+                patients={patients}
+                editRow={handleEditRow}
+                deleteRow={handleDeleteRow}
+              />
             </div>
           )}
         </div>

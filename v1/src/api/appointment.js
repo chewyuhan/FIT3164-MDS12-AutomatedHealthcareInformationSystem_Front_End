@@ -103,14 +103,20 @@ export const deleteAppointment = async (appointmentId) => {
         return;
     }
 
+    if (!appointmentId) {
+        // Handle the case where there's no appointment ID
+        console.error("No appointment ID found");
+        return;
+    }
+
     axios.delete(`https://mds12-dev.cyclic.cloud/appointments/${appointmentId}`, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
     })
-        .then((response) => {
+        .then(() => {
             // Handle the success response if needed
-            console.log("Deleted appointment successfully:", response.data);
+            console.log("Deleted appointment successfully:", appointmentId);
             // You can update your state or take any other action here
         })
         .catch((error) => {
