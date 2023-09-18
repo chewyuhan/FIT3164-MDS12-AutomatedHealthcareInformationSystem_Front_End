@@ -38,11 +38,14 @@
   .table thead {
     background-color: #ccc;
     color: #222;
+    border-bottom: 2px solid black; /* Add a bottom border for header row */
+
   }
   
   .table th,
   .table td {
     padding: 0.8rem;
+    
   }
   
   .table td {

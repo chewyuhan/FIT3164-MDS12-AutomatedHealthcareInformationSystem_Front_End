@@ -37,7 +37,7 @@
 .table thead {
   background-color: #ccc;
   color: #222;
-  border-bottom: 2px solid #ddd; /* Add a bottom border for header row */
+  border-bottom: 2px solid black; /* Add a bottom border for header row */
 
 }
 

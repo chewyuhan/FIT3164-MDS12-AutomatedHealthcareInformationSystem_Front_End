@@ -8,6 +8,8 @@
   align-items: center;
   position: relative; /* Use absolute positioning */
   right: -69%; /* Adjust left right position */
+  height: 40px; /* Adjust the height as needed */
+
 }
 
 /* Can also put the searchresultlist.css here and it will work */
@@ -20,6 +22,8 @@ input {
   font-size: 1.25rem;
   width: 100%;
   margin-left: 5px;
+  padding: 10px 5px; /* Adjust the padding to match the new height */
+
 }
 
 input:focus {
