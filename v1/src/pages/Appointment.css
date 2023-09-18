@@ -5,12 +5,20 @@
     /* Change to column direction */
     /* align-items: center; Center horizontally */
     margin-top: 0px;
+    column-gap: 100px;
+    /* Adjust the top margin as needed */
+    width: 100%;
+    /* Make the button width 100% */
+    border-radius: 5px;
+    
 }
 .appointment-list-container {
     display: flex;
     flex-direction: row;
     /* Change to column direction */
-    row-gap: 2px;
+    /* align-items: center; Center horizontally */
+    margin-top: 0px;
+
 }
 .add-appointment-button {
     background-color: #1d4ed8;
@@ -29,7 +37,11 @@
 
 .calendar-container {
     margin-bottom: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
 }
+
+
 
 .add-appointment-button:hover {
     background-color: #0056b3;

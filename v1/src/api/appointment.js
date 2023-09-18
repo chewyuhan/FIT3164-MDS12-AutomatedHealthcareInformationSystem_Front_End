@@ -71,7 +71,8 @@ export const fetchAppointmentsbyPatient = async (patientId) => {
 
 export const editAppointment = async (appointmentId, updatedAppointment) => {
     const accessToken = sessionStorage.getItem("accessToken");
-
+    console.log("updateappointmetn",updatedAppointment)
+    console.log("appointmentId",appointmentId)
     if (!accessToken) {
         // Handle the case where there's no access token (authentication failed)
         console.error("No access token found");
