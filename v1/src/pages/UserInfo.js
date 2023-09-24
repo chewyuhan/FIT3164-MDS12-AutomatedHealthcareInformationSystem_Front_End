@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Sidebar from '../components/Sidebar/Sidebar';
+import './userinfo.css'
 
 function UserInfo() {
 
@@ -36,9 +37,9 @@ function UserInfo() {
   return (
     <div className='userinfo-container'>
       <Sidebar />
-      <div className='userinfo-content bg-slate-400'>
+      <div className='userinfo-content'>
         <h1>User Information</h1>
-        <p className='p-10'><strong>Employee ID:</strong> {userData.employeeId}</p>
+        <p><strong>Employee ID:</strong> {userData.employeeId}</p>
         <p><strong>Name:</strong> {userData.firstName} {userData.lastName}</p>
         <p><strong>Gender:</strong> {userData.gender}</p>
         <p><strong>Identification Number:</strong> {userData.ic}</p>
