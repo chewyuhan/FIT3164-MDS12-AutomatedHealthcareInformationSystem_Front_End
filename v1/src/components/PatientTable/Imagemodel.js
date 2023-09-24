@@ -1,19 +1,19 @@
 import React from 'react';
+import './Imagemodel.css';
 
-const ImagePreviewDialog = ({ imageUrl, onClose }) => {
+function ImageDialog({ imageUrl, onClose }) {
   return (
-    <div className="image-preview-dialog">
-      <div className="image-preview-content">
-        <img src={imageUrl} alt="Uploaded" />
-        <div className="button-group">
-          <button className="button close-button" onClick={onClose}>
-            Close
-          </button>
-          {/* Add a submit button here if needed */}
-        </div>
+    <div className="image-dialog-overlay">
+      <div className="image-dialog">
+        <h1>Uploaded Image</h1>
+        <img className = 'image' src={imageUrl} alt="Uploaded Image" />
+        <button className="close-button" onClick={onClose}>
+          Close
+        </button>
       </div>
+      
     </div>
   );
-};
+}
 
-export default ImagePreviewDialog;
+export default ImageDialog;

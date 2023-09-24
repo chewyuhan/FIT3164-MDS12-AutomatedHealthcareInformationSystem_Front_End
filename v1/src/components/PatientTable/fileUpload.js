@@ -1,36 +1,38 @@
-import React, {useState} from 'react';
+import React, { useState, useRef } from 'react';
 
-function FileUploadPage(){
-	const [selectedFile, setSelectedFile] = useState();
-	const [isFilePicked, setIsFilePicked] = useState(false);
+function ImageUpload({ onImageUpload }) {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const fileInputRef = useRef(null);
 
-	const changeHandler = (event) => {
-		setSelectedFile(event.target.files[0]);
-		setIsSelected(true);
-	};
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setSelectedImage(event.target.result);
+        onImageUpload(event.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
-	const handleSubmission = () => {
-	};
-
-	return(
-   <div>
-			<input type="file" name="file" onChange={changeHandler} />
-			{isSelected ? (
-				<div>
-					<p>Filename: {selectedFile.name}</p>
-					<p>Filetype: {selectedFile.type}</p>
-					<p>Size in bytes: {selectedFile.size}</p>
-					<p>
-						lastModifiedDate:{' '}
-						{selectedFile.lastModifiedDate.toLocaleDateString()}
-					</p>
-				</div>
-			) : (
-				<p>Select a file to show details</p>
-			)}
-			<div>
-				<button onClick={handleSubmission}>Submit</button>
-			</div>
-		</div>
-	)
+  return (
+    <div className="image-upload">
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        style={{ display: 'none' }}
+        ref={fileInputRef}
+      />
+      <button
+        className="button upload-button"
+        onClick={() => fileInputRef.current.click()}
+      >
+        Upload Image
+      </button>
+    </div>
+  );
 }
+
+export default ImageUpload;
