@@ -74,3 +74,28 @@ export const editDiagnosis = (diagnosisId, updatedDiagnosis) => {
             console.error("Error updating patient:", error);
         });
 };
+
+export const deleteDiagnosis = (diagnosisId) => {
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    if (!accessToken) {
+        // Handle the case where there's no access token (authentication failed)
+        console.error("No access token found");
+        return;
+    }
+
+    axios.delete(`https://mds12-dev.cyclic.cloud/diagnoses/${diagnosisId}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    })
+        .then((response) => {
+            // Handle the success response if needed
+            console.log("Delete patient successfully:", response.data);
+            // You can update your state or take any other action here
+        })
+        .catch((error) => {
+            // Handle the error if the request fails
+            console.error("Error deleting patient:", error);
+        });
+};
