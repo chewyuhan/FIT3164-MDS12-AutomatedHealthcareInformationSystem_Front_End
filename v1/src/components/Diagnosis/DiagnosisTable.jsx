@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import moment from 'moment'; // Import moment
-import "./Table.css";
+import "./DiagTable.css";
 import InfoModal from './DiagnosisinfoModal';
 
 export const Table = ({ patients }) => {

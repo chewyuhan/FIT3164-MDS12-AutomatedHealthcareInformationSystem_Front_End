@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import './Modal.css';
-import { BsFillPencilFill } from 'react-icons/bs';
-import { fetchDiagnosisDataFromAPI, editDiagnosis } from '../../api/diagnosis';
+import './DiagModal.css';
+import { BsFillPencilFill, BsFillTrashFill } from 'react-icons/bs';
+import { fetchDiagnosisDataFromAPI, editDiagnosis, deleteDiagnosis } from '../../api/diagnosis';
 
 // Component to display diagnosis information in a modal
 const InfoModal = ({ onClose, patientId }) => {
@@ -38,6 +38,17 @@ const InfoModal = ({ onClose, patientId }) => {
   const handleEditClick = (diagnosis) => {
     setEditingDiagnosis(diagnosis);
     setEditedDiagnosis({ ...diagnosis });
+  };
+
+  // Function to handle the delete button click
+  const deleteRow = async (diagnosisId) => {
+    try {
+      await deleteDiagnosis(diagnosisId);
+      await refreshDiagnosisData(patientId);
+    } catch (error) {
+      console.error('Error deleting diagnosis data:', error);
+      // Handle error
+    }
   };
 
   // Function to handle input changes in the edit form
@@ -112,8 +123,18 @@ const InfoModal = ({ onClose, patientId }) => {
                   <div className="action-icons">
                     <BsFillPencilFill
                       className="edit-btn"
-                      onClick={() => handleEditClick(diagnosis)}
+                      onClick={(e) => {                      
+                        e.stopPropagation();
+                        handleEditClick(diagnosis)}}
                     />
+                    <BsFillTrashFill
+                    className="delete-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onClose();
+                      deleteRow(diagnosis.diagnosisId)
+                    }}
+                  />
                   </div>
                 </div>
                 {editingDiagnosis === diagnosis ? (

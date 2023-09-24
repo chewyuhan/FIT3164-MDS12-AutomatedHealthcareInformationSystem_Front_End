@@ -1,0 +1,161 @@
+.table-wrapper {
+    width: 100%;
+  }
+
+  .table {
+    display: block;
+    overflow: hidden;
+    table-layout: fixed;
+    border-collapse: collapse;
+    box-shadow: 0px 10px 10px #ccc;
+    border-radius: 10px;
+    white-space: nowrap;
+    width: 100em;
+    max-width: 80%;
+    margin: auto;
+    table-layout: auto;
+    overflow-x: auto;
+    position: relative;
+
+  }
+  .button {
+    position: relative;
+    bottom: 10px;
+    left: 45%;
+    margin-top: 1rem;
+    border: none;
+    background-color: #1d4ed8;
+    color: #fff;
+    padding: 0.5rem ;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 5px 5px #ccc;
+    margin: auto;
+    
+  }
+
+  
+  .table thead {
+    background-color: #ccc;
+    color: #222;
+    border-bottom: 2px solid black; /* Add a bottom border for header row */
+
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.8rem;
+    
+  }
+  
+  .table td {
+    border-top: 0.5px solid #ddd;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .table td.expand {
+    white-space: normal; /* Allow text to wrap */
+    max-width: none; /* Remove maximum width */
+  }
+  
+  /* Adjust the padding for better readability */
+  .table td.expand {
+    padding: 0.8rem;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #eee;
+    
+  }
+  .thread{
+    text-align: left;
+
+  }
+  .expand {
+    width: 100%;
+  }
+  
+  .label {
+    border-radius: 3px;
+    padding: 0.3rem;
+    color: white;
+  }
+  
+  .label-Stable {
+    background-color: #777;
+  }
+  
+  .label-Healthy {
+    background-color: #42a942;
+  }
+  
+  .label-Critical {
+    background-color: #d9534f;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-between; /* This will add space between the icons */
+    justify-content: flex-start; /* Start from the left edge */
+    align-items: center; /* Vertically center the icons */
+  }
+  .action-icons {
+    display: flex;
+    gap: 10px; /* Adjust the gap to control spacing between icons */
+    justify-content: flex-start; /* Start from the left edge */
+    align-items: center; /* Vertically center the icons */
+  }
+
+
+  .actions svg {
+    cursor: pointer;
+    margin: 2px; /* Add margin to the icons */
+  }
+
+  
+  
+  .delete-btn {
+    color: #e10d05;
+  }
+
+  .clickable-text {
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 10px;
+    color: black;
+    text-decoration: none;
+  }
+  
+  .clickable-text:hover {
+    background-color: #f5f5f5; /* Brighter grey color for the hover background */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .clickable-row {
+    /* Your existing styles for the rows */
+    position: relative;
+  }
+
+  .tooltip-box {
+    display: none;
+    position: absolute;
+    top: -30px; /* Adjust the distance above the cursor */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 12px;
+    pointer-events: none;
+  }
+
+  .clickable-row:hover .tooltip-box {
+    display: block;
+  }
+
+  .whatsapp-btn{
+    color:green;
+  }
+  
