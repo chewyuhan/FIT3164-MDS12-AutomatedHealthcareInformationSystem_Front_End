@@ -1,6 +1,8 @@
 .table-wrapper {
-    width: 100%;
-  }
+  margin: 100px auto;
+  width: 100%;
+  overflow-x: auto;
+  position: relative;  }
 
   .table {
     display: block;
@@ -36,26 +38,43 @@
   }
 
   
-  .table thead {
-    background-color: #ccc;
-    color: #222;
-  }
-  
-  .table th,
-  .table td {
-    padding: 0.8rem;
-  }
-  
-  .table td {
-    border-top: 0.5px solid #ddd;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .table tbody tr:hover {
-    background-color: #eee;
-  }
-  
+/* Style for table header */
+.table thead {
+  background-color: #ccc;
+  color: #222;
+  border-bottom: 2px solid black;
+}
+
+.table thead th {
+  font-weight: bold;
+  text-align: left;
+}
+
+.table th,
+.table td {
+  padding: 0.8rem;
+  border: 1px solid black;
+}
+
+.table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table td:last-child,
+.table th:last-child {
+  border-right: none;
+}
+
+.table tbody tr:hover {
+  background-color: #eee;
+}
+
+/* Style for clickable rows */
+.clickable-row {
+  cursor: pointer;
+}
+
   .expand {
     width: 100%;
   }
@@ -143,4 +162,3 @@
     color:green;
   }
   
-/*Modal css*/
