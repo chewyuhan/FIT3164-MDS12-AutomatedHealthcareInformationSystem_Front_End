@@ -5,10 +5,8 @@ import SearchBar from '../components/SearchBar/Searchbar';
 import { Table } from '../components/PatientTable/Table';
 import { Modal } from '../components/PatientTable/Modal';
 import { addPatient, editPatient, fetchPatientDataFromAPI } from '../api/patient';
-import  ImageDialog  from '../components/PatientTable/Imagemodel';
-import  ImageUpload  from '../components/PatientTable/fileUpload';
+import ImageDialog from '../components/PatientTable/Imagemodel';
 import './PatientInfo.css';
-import { BsDisplay } from 'react-icons/bs';
 
 function PatientInfo() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -16,8 +14,9 @@ function PatientInfo() {
   const [rows, setRows] = useState(null);
   const [filteredRows, setFilteredRows] = useState([]);
   const [rowToEdit, setRowToEdit] = useState(null);
-  const [uploadedImage, setUploadedImage] = useState(null); // Track the uploaded image
   const [showImageDialog, setShowImageDialog] = useState(false); // Control the visibility of the image dialog
+  const [uploadedImage, setUploadedImage] = useState(null); // Store the uploaded image
+
 
 
 
@@ -49,16 +48,7 @@ function PatientInfo() {
     setModalOpen(true);
   };
 
-  const handleImageUpload = (image) => {
-    setUploadedImage(image);
-    setShowImageDialog(true);
-  };
 
-  const handleCloseImageDialog = () => {
-    setShowImageDialog(false);
-    // Reset the uploaded image when the dialog is closed
-    setUploadedImage(null);
-  };
 
   // Function to handle form submission (add or edit patient)
   const handleSubmit = async (newRow) => {
@@ -77,6 +67,38 @@ function PatientInfo() {
     }
   };
 
+  const handleImageButtonClick = () => {
+    // Trigger the file input element when the button is clicked
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*'; // Allow only image files
+    fileInput.style.display = 'none';
+
+    fileInput.addEventListener('change', (e) => {
+      const selectedFile = e.target.files[0];
+      if (selectedFile) {
+        const imageUrl = URL.createObjectURL(selectedFile);
+        handleImageUpload(imageUrl);
+      }
+    });
+
+    // Trigger a click event on the hidden file input
+    fileInput.click();
+  };
+
+  const handleImageUpload = (imageUrl) => {
+    setUploadedImage(imageUrl);
+    setShowImageDialog(true);
+  };
+
+  // Function to handle closing the image dialog
+  const handleCloseImageDialog = () => {
+    setShowImageDialog(false);
+    // Reset the uploaded image when the dialog is closed
+    setUploadedImage(null);
+  };
+
+
   // Render loading message if patient data is not yet available
   if (!rows) {
     return <p>Loading patient data...</p>;
@@ -89,16 +111,20 @@ function PatientInfo() {
       <div className="header">
         <h1>PatientInfo</h1>
       </div>
-      <div className="search-bar-container">
-        {/* SearchBar component */}
-        <SearchBar setResults={setResults} rows={rows} setFilteredRows={setFilteredRows} />
-        {results && results.length > 0}
-      </div>
-      <div className='add-upload'>
-          <button onClick={() => setModalOpen(true)} className="button add-button">
+      <div className='search-add-container' >
+      {/* <div className="search-bar-container" > */}
+          {/* SearchBar component */}
+
+        {/* </div> */}
+        {/* <div className='add-upload-button' > */}
+          <button onClick={() => setModalOpen(true)} className="button">
             Add New Patient
           </button>
-          <ImageUpload onImageUpload={handleImageUpload} />
+          <button onClick={handleImageButtonClick} className="button" style={{zIndex: '1'}}>
+            Upload Image
+          </button>
+          <SearchBar setResults={setResults} rows={rows} setFilteredRows={setFilteredRows} />
+          {results && results.length > 0}
       </div>
       {/* Table component */}
       <Table rows={filteredRows.length > 0 ? filteredRows : rows} editRow={handleEditRow} />
@@ -113,7 +139,7 @@ function PatientInfo() {
           defaultValue={rowToEdit !== null && rows[rowToEdit]}
         />
       )}
-       {showImageDialog && (
+      {showImageDialog && (
         // ImageDialog component for displaying the uploaded image
         <ImageDialog className="image-dialog"
           imageUrl={uploadedImage}

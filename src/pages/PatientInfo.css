@@ -1,12 +1,58 @@
-.button{
+.button {
     border: none;
     width: 100px;
+    height: 50px;
     background-color: #1d4ed8;
     color: #fff;
     padding: 0.5rem 1rem;
     cursor: pointer;
 }
 
-.button:hover{
+.button:hover {
     background-color: #0056b3;
 }
+
+.patientinfo {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0%;
+}
+.search-add-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0%;
+  }
+  
+
+  
+  
+/* 
+.search_add_container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-upload-button {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.search-bar-container {
+    flex-grow: 1;
+    justify-content: flex-start;
+} */
