@@ -5,7 +5,7 @@ import './Modal.css';
 
 const InfoModal = ({ modalInfo, onClose }) => {
   const modalRef = useRef(null);
-  
+
   // Function to handle clicks outside of the modal
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -23,30 +23,45 @@ const InfoModal = ({ modalInfo, onClose }) => {
 
   // Translations for key names in the modal
   const translations = {
+    doctor: 'Doctor Name',
+    patient: 'Patient Name',
     appointmentId: 'Appointment ID',
     registrationDateTime: 'Registration Date/Time',
     appointmentDateTime: 'Appointment Date/Time',
-    doctor: 'Doctor Name',
-    patient: 'Patient Name',
     reason: 'Reason',
     remarks: 'Remarks',
     completed: 'Completed',
   };
 
+  // Define the desired order of keys
+  const order = [
+    'appointmentId',
+    'registrationDateTime',
+    'appointmentDateTime',
+    'doctor',
+    'patient',
+    'reason',
+    'remarks',
+    'completed',
+  ];
+
   return (
     <div className="modal">
       <div className="modal-content" ref={modalRef}>
         <div className="modal-header">
-          <h2> Additional Patient Appointment Info</h2>
+          <h2>Additional Patient Appointment Info</h2>
         </div>
         <div className="modal-body scrollable">
-          {Object.entries(modalInfo)
-            .filter(([key]) => key !== 'patientId' && key !== 'employeeId') // Filter out patientId and employeeId
-            .map(([key, value]) => (
-              <p key={key}>
-                {translations[key] || key}: {key === 'registrationDateTime' || key === 'appointmentDateTime' ? moment(value).format('DD-MM-YYYY h:mm:ss a') : value}
-              </p>
-            ))}
+          {order.map((key) => (
+            <p key={key}>
+              {translations[key] || key}:
+              {key === 'registrationDateTime' || key === 'appointmentDateTime'
+                ? moment(modalInfo[key]).format('DD-MM-YYYY h:mm:ss a')
+                : key === 'completed'
+                  ? modalInfo[key] ? 'Yes' : 'No'
+                  : modalInfo[key]}
+            </p>
+          ))}
         </div>
         <div className="modal-footer">
           <button className="btn" onClick={onClose}>
@@ -57,6 +72,7 @@ const InfoModal = ({ modalInfo, onClose }) => {
     </div>
   );
 };
+
 
 InfoModal.propTypes = {
   modalInfo: PropTypes.object.isRequired, // Expected object for modalInfo

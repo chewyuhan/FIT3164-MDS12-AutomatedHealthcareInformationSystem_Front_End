@@ -220,6 +220,9 @@ const Appointment = () => {
   return (
     <div className="appointment-page">
       <Sidebar />
+      <div className="header">
+        <h1>Appointment Page</h1>
+      </div>
       <div className="appointment-container">
         <div className="add-appointment-content">
           <button onClick={openAppointmentPopup} className="add-appointment-button">

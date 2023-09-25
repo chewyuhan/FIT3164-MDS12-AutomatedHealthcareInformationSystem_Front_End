@@ -35,9 +35,9 @@ const AppointmentForm = ({
     if (defaultValue) {
       console.log("Setting form data with defaultValue:", defaultValue);
       setFormData(defaultValue);
-          // Set selectedDoctorId and selectedPatientId based on formData
-    setSelectedDoctorId(defaultValue.employeeId);
-    setSelectedPatientId(defaultValue.patientId);
+      // Set selectedDoctorId and selectedPatientId based on formData
+      setSelectedDoctorId(defaultValue.employeeId);
+      setSelectedPatientId(defaultValue.patientId);
     }
   }, [defaultValue]);
 
@@ -57,33 +57,38 @@ const AppointmentForm = ({
   };
   // Array of appointment times for the selected doctor
   const doctorAppointmentTimes = generateTimeRange();
-  // Function to handle form field changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+// Function to handle form field changes
+const handleChange = (e) => {
+  const { name, value, type, checked } = e.target;
 
+  // Check if the input type is a checkbox and update the value accordingly
+  const newValue = type === "checkbox" ? checked : value;
 
-// Function to handle form submission
-const handleSubmit = (e) => {
-  e.preventDefault(); // Prevent page refresh
-  
-  // Check if required fields are selected
-  if (!selectedPatientId || !selectedDoctorId || !appointmentTime) {
-    const errorMessage = "Patient, doctor, and appointment time must be selected.";
-    console.error(selectedPatientId); // Log the error message
-    setErrors(errorMessage);
-  } else {
-    // Clear any previous errors
-    setErrors("");
-
-    // Handle the appointment booking here
-    handleSelectAppointmentTime();
-
-    // Close the modal
-    closeModal();
-  }
+  setFormData({ ...formData, [name]: newValue });
 };
+
+
+
+  // Function to handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent page refresh
+
+    // Check if required fields are selected
+    if (!selectedPatientId || !selectedDoctorId || !appointmentTime) {
+      const errorMessage = "Patient, doctor, and appointment time must be selected.";
+      console.error(selectedPatientId); // Log the error message
+      setErrors(errorMessage);
+    } else {
+      // Clear any previous errors
+      setErrors("");
+
+      // Handle the appointment booking here
+      handleSelectAppointmentTime();
+
+      // Close the modal
+      closeModal();
+    }
+  };
 
 
   // Function to handle doctor selection
@@ -98,19 +103,22 @@ const handleSubmit = (e) => {
   const handleSelectAppointmentTime = () => {
     const doctorName = getDoctorNameById(formData.employeeId);
     const patientName = getPatientNameById(formData.patientId);
+    const completed = formData.completed === true || formData.completed === "true";
+
     const appointment = {
       patientId: formData.patientId,
       employeeId: formData.employeeId,
-      date: new Date(), // You may want to set the correct date here
+      date: new Date(),
       time: appointmentTime,
       remarks: formData.remarks,
       reason: formData.reason,
-      completed: formData.completed,
+      completed: completed,
       doctor: doctorName,
       patient: patientName,
     };
     // You can handle the appointment data as needed
     // For example, you can submit it to an API using onSubmit
+    console.log("Appointment:", appointment);
     onSubmit(appointment);
   };
   // Function to get the doctor's full name by ID
@@ -123,15 +131,17 @@ const handleSubmit = (e) => {
     const patient = patients.find((p) => p.patientId.toString() === patientID.toString());
     return patient ? `${patient.firstName} ${patient.lastName}` : "Unknown Patient";
   };
+
   return (
     <div className="appointment-form">
       <h1>Book an Appointment</h1>
+
       {/* Form for selecting a doctor */}
       <div className="form-group">
         <h2>Select a Doctor</h2>
         <select
           className="doctor-select"
-          value = {selectedDoctorId || formData.employeeId || ""}
+          value={defaultValue ? defaultValue.employeeId : selectedDoctorId || ""}
           onChange={(event) => handleSelectDoctor(event.target.value)}
         >
           <option value="">Select a doctor...</option>
@@ -141,13 +151,10 @@ const handleSubmit = (e) => {
             </option>
           ))}
         </select>
-      </div>
-      {/* Form for selecting a patient */}
-      <div className="form-group">
         <h2>Select a Patient</h2>
         <select
           className="patient-select"
-          value={ selectedPatientId || formData.patientId || ""  }
+          value={defaultValue ? defaultValue.patientId : selectedPatientId || ""}
           onChange={(event) => handleSelectPatient(event.target.value)}
         >
           <option value="">Select a patient...</option>
@@ -158,6 +165,7 @@ const handleSubmit = (e) => {
           ))}
         </select>
       </div>
+
       {/* Form for selecting an appointment time */}
       <div className="form-group">
         <h2>Select an Appointment Time</h2>
@@ -174,6 +182,7 @@ const handleSubmit = (e) => {
           ))}
         </select>
       </div>
+
       {/* Form for marking a reason */}
       <div className="form-group">
         <h2>Mark a Reason</h2>
@@ -185,6 +194,7 @@ const handleSubmit = (e) => {
           onChange={handleChange}
         />
       </div>
+
       {/* Form for additional remarks */}
       <div className="form-group">
         <h2>Additional Remarks</h2>
@@ -196,6 +206,7 @@ const handleSubmit = (e) => {
           onChange={handleChange}
         />
       </div>
+
       {/* Form for marking appointment status */}
       <div className="form-group">
         <h2>Status</h2>
@@ -209,8 +220,10 @@ const handleSubmit = (e) => {
           />
         </div>
       </div>
+
       {/* Display errors if any */}
       {errors && <p className="error">{errors}</p>}
+
       {/* Submit button */}
       <button type="submit" className="book-button" onClick={handleSubmit}>
         Book Appointment
@@ -218,4 +231,5 @@ const handleSubmit = (e) => {
     </div>
   );
 };
+
 export default AppointmentForm;
