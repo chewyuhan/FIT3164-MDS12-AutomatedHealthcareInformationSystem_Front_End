@@ -1,6 +1,22 @@
+/* Style for the main content container */
+.main-content {
+    flex-grow: 1;
+    /* Allow content to expand and fill remaining space */
+    box-sizing: border-box;
+}
+
+/* Style for the header */
+.header {
+    text-align: center;
+    background-color: #060b59;
+    color: #fff;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
 .button {
-    border: none;
-    width: 100px;
+    width: 150px;
     height: 50px;
     background-color: #1d4ed8;
     color: #fff;
@@ -12,47 +28,20 @@
     background-color: #0056b3;
 }
 
-.patientinfo {
+/* Style for the button container */
+.add-upload {
+    /* Display buttons side by side */
+    /* Arrange buttons horizontally */
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    margin: 0 auto;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0%;
-}
-.search-add-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    margin: 0 auto;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0%;
-  }
-  
-
-  
-  
-/* 
-.search_add_container {
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
     row-gap: 10px;
-    justify-content: space-between;
-    align-items: center;
 }
 
-.add-upload-button {
+/* Style for the search container */
+.search-container {
     display: flex;
-    flex-direction: column;
-    row-gap: 10px;
-    justify-content: space-between;
-    align-items: center;
+    width: 100%;
+    justify-content: center;
 }
-
-
-.search-bar-container {
-    flex-grow: 1;
-    justify-content: flex-start;
-} */

@@ -9,7 +9,10 @@ function Home() {
     <div className='homepage'>
       {/* UserProfilePicture */}
       <Sidebar />
+      <div className='header'>
       <h1>Dashboard</h1>
+      </div>
+      {/* Dashboard */}
 
       <div className="dashboard-container">
         <div className="dashboard-column">

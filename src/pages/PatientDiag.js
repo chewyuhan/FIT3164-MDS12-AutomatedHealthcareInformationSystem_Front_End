@@ -69,16 +69,23 @@ function PatientDiag() {
   return (
     <div className='patientinfo'>
       {/* Sidebar component */}
+      <Sidebar />
+
       <div className="header">
-        <Sidebar />
+        <h1>Patient Diagnosis</h1>
+
       </div>
-      <h1>Patient Diagnosis</h1>
-      <div className="search-bar-container">
-        {/* Pass patients and setFilteredRows to the SearchBar component */}
-        <SearchBar rows={patients} setFilteredRows={setFilteredRows} />
+      <div className="add-search">
+        <div className="add-upload">
+        <div className="add">
         <button onClick={() => setModalOpen(true)} className="button">
           Add New Diagnosis
         </button>
+        </div>
+          <div className="search-container">
+          <SearchBar rows={patients} setFilteredRows={setFilteredRows} />
+          </div>
+        </div>
         {/* Display the Table component with filtered or unfiltered patients */}
         {filteredRows && filteredRows.length > 0 && (
           <Table patients={filteredRows} />

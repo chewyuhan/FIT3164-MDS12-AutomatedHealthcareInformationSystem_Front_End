@@ -108,44 +108,55 @@ function PatientInfo() {
     <div className='patientinfo'>
       {/* Sidebar component */}
       <Sidebar />
-      <div className="header">
-        <h1>PatientInfo</h1>
-      </div>
-      <div className='search-add-container' >
-      {/* <div className="search-bar-container" > */}
-          {/* SearchBar component */}
 
-        {/* </div> */}
-        {/* <div className='add-upload-button' > */}
+      <div className="main-content">
+        <div className="header">
+          <h1>Patient Info Page</h1>
+        </div>
+        <div className="add-search">
+        <div className="add-upload">
+        <div className="add">
           <button onClick={() => setModalOpen(true)} className="button">
-            Add New Patient
-          </button>
-          <button onClick={handleImageButtonClick} className="button" style={{zIndex: '1'}}>
-            Upload Image
-          </button>
-          <SearchBar setResults={setResults} rows={rows} setFilteredRows={setFilteredRows} />
-          {results && results.length > 0}
+              Add New Patient
+            </button>
+        </div>
+        <div className="upload">
+        <button onClick={handleImageButtonClick} className="button">
+              Upload Image
+            </button>
+        </div>
+        </div>
+          <div className="search-container">
+            <SearchBar setResults={setResults} rows={rows} setFilteredRows={setFilteredRows} />
+          </div>
+        </div>
+
+        {results && results.length > 0 && (
+          <p>Displaying {results.length} results.</p>
+        )}
+
+        <Table rows={filteredRows.length > 0 ? filteredRows : rows} editRow={handleEditRow} />
+
+        {modalOpen && (
+          // Modal component for adding/editing patient
+          <Modal
+            closeModal={() => {
+              setModalOpen(false);
+              setRowToEdit(null);
+            }}
+            onSubmit={handleSubmit}
+            defaultValue={rowToEdit !== null && rows[rowToEdit]}
+          />
+        )}
+
+        {showImageDialog && (
+          // ImageDialog component for displaying the uploaded image
+          <ImageDialog className="image-dialog"
+            imageUrl={uploadedImage}
+            onClose={() => handleCloseImageDialog()}
+          />
+        )}
       </div>
-      {/* Table component */}
-      <Table rows={filteredRows.length > 0 ? filteredRows : rows} editRow={handleEditRow} />
-      {modalOpen && (
-        // Modal component for adding/editing patient
-        <Modal
-          closeModal={() => {
-            setModalOpen(false);
-            setRowToEdit(null);
-          }}
-          onSubmit={handleSubmit}
-          defaultValue={rowToEdit !== null && rows[rowToEdit]}
-        />
-      )}
-      {showImageDialog && (
-        // ImageDialog component for displaying the uploaded image
-        <ImageDialog className="image-dialog"
-          imageUrl={uploadedImage}
-          onClose={() => handleCloseImageDialog()}
-        />
-      )}
     </div>
   );
 }
