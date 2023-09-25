@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const LoginPage = () => {
   // React States
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const navigate = useNavigate(); // React Router's navigate function
 
@@ -17,7 +16,6 @@ const LoginPage = () => {
     const { uname, pass } = event.target.elements;
 
     if (uname.value !== "" && pass.value !== "") {
-      setIsSubmitted(true);
       // Call the postLogin function to send login credentials
       postLogin({
         email: uname.value,
