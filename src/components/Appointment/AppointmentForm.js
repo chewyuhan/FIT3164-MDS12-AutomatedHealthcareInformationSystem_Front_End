@@ -57,15 +57,17 @@ const AppointmentForm = ({
   };
   // Array of appointment times for the selected doctor
   const doctorAppointmentTimes = generateTimeRange();
-// Function to handle form field changes
-const handleChange = (e) => {
-  const { name, value, type, checked } = e.target;
 
-  // Check if the input type is a checkbox and update the value accordingly
-  const newValue = type === "checkbox" ? checked : value;
 
-  setFormData({ ...formData, [name]: newValue });
-};
+  // Function to handle form field changes
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    // Check if the input type is a checkbox and update the value accordingly
+    const newValue = type === "checkbox" ? checked : value;
+
+    setFormData({ ...formData, [name]: newValue });
+  };
 
 
 
