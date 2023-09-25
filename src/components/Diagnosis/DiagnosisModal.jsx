@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './DiagModal.css';
 import { fetchPatientDataFromAPI } from '../../api/patient';
-import {fetchDoctorDataFromAPI} from '../../api/doctor';
+import { fetchDoctorDataFromAPI } from '../../api/doctor';
 import { fetchAppointmentsbyPatient } from '../../api/appointment';
 
 export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
@@ -124,71 +124,71 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     }
   };
 
-    // State for speech recognition
-    const [isListeningIcd, setIsListeningIcd] = useState(false);
-    const [isListeningRemarks, setIsListeningRemarks] = useState(false);
-    const [isListeningSymptoms, setIsListeningSymptoms] = useState(false);
-  
-    // State for speech recognition results
-    const [speechResultIcd, setSpeechResultIcd] = useState('');
-    const [speechResultRemarks, setSpeechResultRemarks] = useState('');
-    const [speechResultSymptoms, setSpeechResultSymptoms] = useState('');
-  
-// Function to handle real-time speech recognition
-const handleRealTimeSpeechRecognition = (field, transcript) => {
-  setFormState({ ...formState, [field]: transcript });
-};
+  // State for speech recognition
+  const [isListeningIcd, setIsListeningIcd] = useState(false);
+  const [isListeningRemarks, setIsListeningRemarks] = useState(false);
+  const [isListeningSymptoms, setIsListeningSymptoms] = useState(false);
 
-// Initialize speech recognition instances
-const recognitionIcd = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-const recognitionRemarks = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-const recognitionSymptoms = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  // State for speech recognition results
+  const [speechResultIcd, setSpeechResultIcd] = useState('');
+  const [speechResultRemarks, setSpeechResultRemarks] = useState('');
+  const [speechResultSymptoms, setSpeechResultSymptoms] = useState('');
 
-recognitionIcd.onresult = (event) => {
-  const transcript = event.results[0][0].transcript;
-  setSpeechResultIcd(transcript);
-  handleRealTimeSpeechRecognition('icd', transcript);
-};
+  // Function to handle real-time speech recognition
+  const handleRealTimeSpeechRecognition = (field, transcript) => {
+    setFormState({ ...formState, [field]: transcript });
+  };
 
-recognitionRemarks.onresult = (event) => {
-  const transcript = event.results[0][0].transcript;
-  setSpeechResultRemarks(transcript);
-  handleRealTimeSpeechRecognition('remarks', transcript);
-};
+  // Initialize speech recognition instances
+  const recognitionIcd = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  const recognitionRemarks = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  const recognitionSymptoms = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 
-recognitionSymptoms.onresult = (event) => {
-  const transcript = event.results[0][0].transcript;
-  setSpeechResultSymptoms(transcript);
-  handleRealTimeSpeechRecognition('symptoms', transcript);
-};
-  
-    // Function to start speech recognition
-    const startListening = (field) => {
-      if (field === 'icd') {
-        setIsListeningIcd(true);
-        recognitionIcd.start();
-      } else if (field === 'remarks') {
-        setIsListeningRemarks(true);
-        recognitionRemarks.start();
-      } else if (field === 'symptoms') {
-        setIsListeningSymptoms(true);
-        recognitionSymptoms.start();
-      }
-    };
-  
-    // Function to stop speech recognition
-    const stopListening = (field) => {
-      if (field === 'icd') {
-        setIsListeningIcd(false);
-        recognitionIcd.stop();
-      } else if (field === 'remarks') {
-        setIsListeningRemarks(false);
-        recognitionRemarks.stop();
-      } else if (field === 'symptoms') {
-        setIsListeningSymptoms(false);
-        recognitionSymptoms.stop();
-      }
-    };
+  recognitionIcd.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    setSpeechResultIcd(transcript);
+    handleRealTimeSpeechRecognition('icd', transcript);
+  };
+
+  recognitionRemarks.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    setSpeechResultRemarks(transcript);
+    handleRealTimeSpeechRecognition('remarks', transcript);
+  };
+
+  recognitionSymptoms.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    setSpeechResultSymptoms(transcript);
+    handleRealTimeSpeechRecognition('symptoms', transcript);
+  };
+
+  // Function to start speech recognition
+  const startListening = (field) => {
+    if (field === 'icd') {
+      setIsListeningIcd(true);
+      recognitionIcd.start();
+    } else if (field === 'remarks') {
+      setIsListeningRemarks(true);
+      recognitionRemarks.start();
+    } else if (field === 'symptoms') {
+      setIsListeningSymptoms(true);
+      recognitionSymptoms.start();
+    }
+  };
+
+  // Function to stop speech recognition
+  const stopListening = (field) => {
+    if (field === 'icd') {
+      setIsListeningIcd(false);
+      recognitionIcd.stop();
+    } else if (field === 'remarks') {
+      setIsListeningRemarks(false);
+      recognitionRemarks.stop();
+    } else if (field === 'symptoms') {
+      setIsListeningSymptoms(false);
+      recognitionSymptoms.stop();
+    }
+  };
 
   return (
     <div className="modal-container" onClick={(e) => { if (e.target.className === 'modal-container') closeModal(); }}>
@@ -257,8 +257,8 @@ recognitionSymptoms.onresult = (event) => {
               </select>
             </div>
 
-         {/* ICD Input */}
-         <div className="form-group">
+            {/* ICD Input */}
+            <div className="form-group">
               <label htmlFor="icd">ICD</label>
               <input
                 name="icd"
