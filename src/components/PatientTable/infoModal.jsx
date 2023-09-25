@@ -52,7 +52,7 @@ const InfoModal = ({ modalInfo, onClose }) => {
           {Object.entries(modalInfo).map(([key, value]) => (
             <p key={key}>
               {/* Display translations for known keys and format dates */}
-              {translations[key] || key}: {key === 'dob' || key === 'createdAt' || key === 'updatedAt' ? moment(value).format('DD/MM/YYYY') : value}
+              {key === 'patientId' ? 'Patient ID' : translations[key] || key}: {key === 'dob' || key === 'createdAt' || key === 'updatedAt' ? moment(value).format('DD/MM/YYYY') : value}
             </p>
           ))}
         </div>
