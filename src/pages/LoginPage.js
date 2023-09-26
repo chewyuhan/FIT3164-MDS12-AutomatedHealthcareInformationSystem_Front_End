@@ -83,7 +83,8 @@ const LoginPage = () => {
   return (
     <div className="app">
       <div className="login-form">
-        <h1>Login</h1>
+        <h1>Patient Infomation System</h1>
+        <h2>Login</h2>
         {renderForm}
       </div>
     </div>
