@@ -108,8 +108,8 @@ const AppointmentForm = ({
     const completed = formData.completed === true || formData.completed === "true";
 
     const appointment = {
-      patientId: formData.patientId,
-      employeeId: formData.employeeId,
+      patientId: selectedPatientId,
+      employeeId: selectedDoctorId,
       date: new Date(),
       time: appointmentTime,
       remarks: formData.remarks,
@@ -143,7 +143,7 @@ const AppointmentForm = ({
         <h2>Select a Doctor</h2>
         <select
           className="doctor-select"
-          value={defaultValue ? defaultValue.employeeId : selectedDoctorId || ""}
+          value={defaultValue ? defaultValue.employeeId : selectedDoctorId || ""}          
           onChange={(event) => handleSelectDoctor(event.target.value)}
         >
           <option value="">Select a doctor...</option>
@@ -156,7 +156,7 @@ const AppointmentForm = ({
         <h2>Select a Patient</h2>
         <select
           className="patient-select"
-          value={defaultValue ? defaultValue.patientId : selectedPatientId || ""}
+          value={defaultValue ? defaultValue.patientId : selectedPatientId || ""}          
           onChange={(event) => handleSelectPatient(event.target.value)}
         >
           <option value="">Select a patient...</option>
