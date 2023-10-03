@@ -27,8 +27,8 @@ const AppointmentTable = ({ appointments, deleteRow, editRow }) => {
       <table className="table">
         <thead>
           <tr>
-            <th>Doctor</th>
-            <th>Patient</th>
+            <th>Doctor Name</th>
+            <th>Patient Name</th>
             <th>Time</th>
             <th className="expand">Reason</th>
             <th className="expand">Remarks</th>

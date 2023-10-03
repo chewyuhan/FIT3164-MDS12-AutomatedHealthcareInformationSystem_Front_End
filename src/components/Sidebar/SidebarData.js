@@ -9,36 +9,42 @@ import * as FiIcons from 'react-icons/fi';
 export const SidebarData = [
   {
     title: 'Dashboard',
+    header: 'Dashboard',
     path: '/home',
     icon: <RxIcons.RxDashboard />,
     cName: 'nav-text'
   },
   {
     title: 'Patients',
+    header: 'Patients Infomation',
     path: '/patientinfo',
     icon: <MdIcons.MdOutlinePeople />,
     cName: 'nav-text'
   },
   {
     title: 'Appointment',
+    header: 'Patients Appointment',
     path: '/appointment',
     icon: <SlIcons.SlCalender />,
     cName: 'nav-text'
   },
   {
     title: 'Diagnosis',
+    header: 'Patients Diagnosis',
     path: '/patientdiag',
     icon: <BsIcons.BsFileMedical />,
     cName: 'nav-text'
   },
   {
     title: 'User Info',
+    header: 'User Information',
     path: '/userinfo',
     icon: <BiIcons.BiUser />,
     cName: 'nav-text'
   },
   {
     title: 'Logout',
+    header: 'Logout',
     path: '/',
     icon: <FiIcons.FiLogOut />,
     cName: 'nav-text'

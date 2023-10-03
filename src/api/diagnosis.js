@@ -1,7 +1,6 @@
 import axios from "axios";
 
 // Function to fetch diagnosis data from the API
-
 export const fetchDiagnosisDataFromAPI = async (patientId) => {
     const accessToken = sessionStorage.getItem("accessToken");
 
@@ -23,6 +22,30 @@ export const fetchDiagnosisDataFromAPI = async (patientId) => {
         return [];
     }
 };
+
+//Function to fetch all diagnosis data from the API
+export const fetchAllDiagnosisDataFromAPI = async () => {
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    if (!accessToken) {
+        // Handle the case where there's no access token (authentication failed)
+        console.error("No access token found");
+        return;
+    }
+    
+    try {
+        const response = await axios.get(`https://mds12-dev.cyclic.cloud/diagnoses/all`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        console.log(response.data)
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching data from the API:", error);
+        return [];
+    }
+}
 
 
 export const addDiagnosis = (newDiagnosis) => {

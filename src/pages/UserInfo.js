@@ -38,9 +38,6 @@ function UserInfo() {
     <div className='userinfo-container'>
       <Sidebar />
       <div className='userinfo-content'>
-        <div className='header'>
-          <h1>User Information</h1>
-        </div>
         <p><strong>Employee ID:</strong> {userData.employeeId}</p>
         <p><strong>Name:</strong> {userData.firstName} {userData.lastName}</p>
         <p><strong>Gender:</strong> {userData.gender}</p>

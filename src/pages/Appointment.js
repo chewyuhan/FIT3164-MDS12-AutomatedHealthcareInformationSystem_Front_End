@@ -33,9 +33,6 @@ const Appointment = () => {
 
   // useEffect to fetch initial data when the component mounts
   useEffect(() => {
-    const accessToken = sessionStorage.getItem("accessToken");
-
-    if (!accessToken) return;
 
     const fetchData = async () => {
       try {
@@ -60,6 +57,8 @@ const Appointment = () => {
 
     fetchData();
   }, [appointmentDate]); // Include appointmentDate in the dependency array
+
+
 
   // Function to fetch updated appointment data in calendar and table
   const fetchUpdatedAppointmentDataTable = async () => {
@@ -220,9 +219,6 @@ const Appointment = () => {
   return (
     <div className="appointment-page">
       <Sidebar />
-      <div className="header">
-        <h1>Appointment Page</h1>
-      </div>
       <div className="appointment-container">
         <div className="add-appointment-content">
           <button onClick={openAppointmentPopup} className="add-appointment-button">

@@ -16,6 +16,7 @@ function PatientInfo() {
   const [rowToEdit, setRowToEdit] = useState(null);
   const [showImageDialog, setShowImageDialog] = useState(false); // Control the visibility of the image dialog
   const [uploadedImage, setUploadedImage] = useState(null); // Store the uploaded image
+  const [imageFile, setImageFile] = useState(null)
 
 
 
@@ -77,8 +78,9 @@ function PatientInfo() {
     fileInput.addEventListener('change', (e) => {
       const selectedFile = e.target.files[0];
       if (selectedFile) {
+        const imageLink = selectedFile
         const imageUrl = URL.createObjectURL(selectedFile);
-        handleImageUpload(imageUrl);
+        handleImageUpload(imageUrl, imageLink);
       }
     });
 
@@ -86,8 +88,9 @@ function PatientInfo() {
     fileInput.click();
   };
 
-  const handleImageUpload = (imageUrl) => {
+  const handleImageUpload = (imageUrl, imageLink) => {
     setUploadedImage(imageUrl);
+    setImageFile(imageLink)
     setShowImageDialog(true);
   };
 
@@ -98,6 +101,12 @@ function PatientInfo() {
     setUploadedImage(null);
   };
 
+  const handleImageSubmit = () => {
+    setUploadedImage(null);
+    setModalOpen(true);
+    setRowToEdit(null);
+
+  };
 
   // Render loading message if patient data is not yet available
   if (!rows) {
@@ -110,9 +119,6 @@ function PatientInfo() {
       <Sidebar />
 
       <div className="main-content">
-        <div className="header">
-          <h1>Patient Info Page</h1>
-        </div>
         <div className="add-search">
         <div className="add-upload">
         <div className="add">
@@ -153,7 +159,9 @@ function PatientInfo() {
           // ImageDialog component for displaying the uploaded image
           <ImageDialog className="image-dialog"
             imageUrl={uploadedImage}
+            imageDir = {imageFile}
             onClose={() => handleCloseImageDialog()}
+            onSubmit={handleImageSubmit}
           />
         )}
       </div>

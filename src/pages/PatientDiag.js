@@ -70,11 +70,6 @@ function PatientDiag() {
     <div className='patientinfo'>
       {/* Sidebar component */}
       <Sidebar />
-
-      <div className="header">
-        <h1>Patient Diagnosis</h1>
-
-      </div>
       <div className="add-search">
         <div className="add-upload">
         <div className="add">
