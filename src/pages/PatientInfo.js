@@ -5,7 +5,7 @@ import SearchBar from '../components/SearchBar/Searchbar';
 import { Table } from '../components/PatientTable/Table';
 import { Modal } from '../components/PatientTable/Modal';
 import { addPatient, editPatient, fetchPatientDataFromAPI } from '../api/patient';
-import ImageDialog from '../components/PatientTable/Imagemodel';
+import ImageDialog from '../components/PatientTable/ImagemodelNEW';
 import './PatientInfo.css';
 
 function PatientInfo() {
