@@ -1,25 +1,44 @@
 import React from 'react';
 import Sidebar from '../components/Sidebar/Sidebar';
-import DashboardLeft from '../components/Dashboard/Dashboard1';
-import DashboardRight from '../components/Dashboard/Dashboard2';
-import './pages.css'; // Import the CSS file for styling
+import PatientCreationHistory from '../components/Dashboard/PatientCreationHistory';
+import FutureAppointmentsTable from '../components/Dashboard/FutureAppointment';
+import TotalAppointmentsCount from '../components/Dashboard/CountAppointment';
+import TotalPatient from '../components/Dashboard/CountPatient';
+import Completed from '../components/Dashboard/Completed';
+import NotCompleted from '../components/Dashboard/NotCompleted';
+import './dashboardpages.css'; // Import the CSS file for styling
 
 function Home() {
   return (
     <div className='homepage'>
       {/* UserProfilePicture */}
       <Sidebar />
-      <div className='header'>
-      <h1>Dashboard</h1>
-      </div>
       {/* Dashboard */}
 
       <div className="dashboard-container">
-        <div className="dashboard-column">
-          <DashboardLeft />
+        <div className="dashboard-upper">
+          <div className="dashboard-item">
+            <TotalAppointmentsCount />
+          </div>
+          <div className="dashboard-item">
+            <TotalPatient />
+          </div>
+          <div className="dashboard-item">
+            <Completed />
+          </div>
+          <div className="dashboard-item">
+            <NotCompleted />
+          </div>
         </div>
-        <div className="dashboard-column">
-          <DashboardRight />
+        <div className="dashboard-lower">
+          <div className="dashboard-column">
+            <PatientCreationHistory />
+          </div>
+          <div className="dashboard-column">
+            <div className="dashboard-table">
+            <FutureAppointmentsTable />
+            </div>
+          </div>
         </div>
       </div>
 

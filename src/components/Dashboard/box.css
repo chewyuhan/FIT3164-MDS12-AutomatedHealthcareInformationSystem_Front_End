@@ -1,0 +1,33 @@
+/* TotalAppointmentsCount.css */
+/* Adjust styles as needed */
+
+.box {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer; /* Set the cursor to pointer */
+}
+
+.box:hover {
+  background-color: #f0f0f0; /* Optional: Change background color on hover */
+}
+  
+  h2 {
+    color: black;
+  }
+  
+  .numbers {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007bff; /* You can change the color to your preference */
+  }
+  
+
+  .link {
+    background: none;
+    color: inherit; /* You can change the color to your preference */
+
+
+  }

@@ -1,0 +1,35 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  /* Take remaining space */
+}
+
+.dashboard-upper {
+  display: flex;
+  flex: 1;
+  /* Take remaining space */
+  justify-content: center;
+  gap: 5px;
+}
+
+.dashboard-lower {
+  display: flex;
+  flex: 1;
+  /* Take remaining space */
+}
+
+.dashboard-column {
+  flex: 1;
+  /* Equal width for both columns */
+  margin: 10px;
+}
+
+.dashboard-item {
+  width: 100%; /* Adjust as needed */
+  margin-bottom: 10px; /* Add spacing between items if desired */
+}
+
+.dashboard-table{
+  overflow-y: scroll;
+}
