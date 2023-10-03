@@ -5,8 +5,9 @@ import SearchBar from '../components/SearchBar/Searchbar';
 import { Table } from '../components/PatientTable/Table';
 import { Modal } from '../components/PatientTable/Modal';
 import { addPatient, editPatient, fetchPatientDataFromAPI } from '../api/patient';
-import ImageDialog from '../components/PatientTable/ImagemodelNEW';
+import ImageDialog from '../components/PatientTable/Imagemodel';
 import './PatientInfo.css';
+import Loading from '../components/Loading/Loading';
 
 function PatientInfo() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -17,6 +18,8 @@ function PatientInfo() {
   const [showImageDialog, setShowImageDialog] = useState(false); // Control the visibility of the image dialog
   const [uploadedImage, setUploadedImage] = useState(null); // Store the uploaded image
   const [imageFile, setImageFile] = useState(null)
+  const [defaultValues, setDefaultValues] = useState({}); // Default values for the modal
+
 
 
 
@@ -101,16 +104,32 @@ function PatientInfo() {
     setUploadedImage(null);
   };
 
-  const handleImageSubmit = () => {
+
+  const handleImageDialogResponse = (responseData) => {
+    // console.log('Response data from ImageDialog:', responseData);
     setUploadedImage(null);
+    setRowToEdit(null);
+    setShowImageDialog(false);
+
+    const dataKeys = Object.keys(responseData);
+    const defaultValues = {};
+    dataKeys.forEach((key) => {
+      defaultValues[key] = responseData[key] || '';
+    });
+
+    // Set the default values for the modal
+    setDefaultValues(defaultValues);
+    // console.log('defaultValues', defaultValues)
     setModalOpen(true);
     setRowToEdit(null);
+
+
 
   };
 
   // Render loading message if patient data is not yet available
   if (!rows) {
-    return <p>Loading patient data...</p>;
+    return <Loading />
   }
 
   return (
@@ -120,18 +139,18 @@ function PatientInfo() {
 
       <div className="main-content">
         <div className="add-search">
-        <div className="add-upload">
-        <div className="add">
-          <button onClick={() => setModalOpen(true)} className="button">
-              Add New Patient
-            </button>
-        </div>
-        <div className="upload">
-        <button onClick={handleImageButtonClick} className="button">
-              Upload Image
-            </button>
-        </div>
-        </div>
+          <div className="add-upload">
+            <div className="add">
+              <button onClick={() => setModalOpen(true)} className="button">
+                Add New Patient
+              </button>
+            </div>
+            <div className="upload">
+              <button onClick={handleImageButtonClick} className="button">
+                Upload Image
+              </button>
+            </div>
+          </div>
           <div className="search-container">
             <SearchBar setResults={setResults} rows={rows} setFilteredRows={setFilteredRows} />
           </div>
@@ -149,19 +168,21 @@ function PatientInfo() {
             closeModal={() => {
               setModalOpen(false);
               setRowToEdit(null);
+              setDefaultValues({}); // Reset default values when closing the modal
+
             }}
             onSubmit={handleSubmit}
-            defaultValue={rowToEdit !== null && rows[rowToEdit]}
-          />
+            defaultValue={rowToEdit !== null ? (rows[rowToEdit] || {}) : defaultValues}
+            />
         )}
 
         {showImageDialog && (
           // ImageDialog component for displaying the uploaded image
           <ImageDialog className="image-dialog"
             imageUrl={uploadedImage}
-            imageDir = {imageFile}
+            imageDir={imageFile}
             onClose={() => handleCloseImageDialog()}
-            onSubmit={handleImageSubmit}
+            onResponseData={handleImageDialogResponse}
           />
         )}
       </div>
