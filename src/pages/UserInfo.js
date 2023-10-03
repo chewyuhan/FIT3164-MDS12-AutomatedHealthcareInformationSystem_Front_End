@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Sidebar from '../components/Sidebar/Sidebar';
 import './userinfo.css'
+import Loading from '../components/Loading/Loading';
 
 function UserInfo() {
 
@@ -20,7 +21,7 @@ function UserInfo() {
       })
         .then((response) => {
           // Handle the response and update the user data state
-          console.log("API call response:", response.data)
+          // console.log("API call response:", response.data)
           setUserData(response.data);
         })
         .catch((error) => {
@@ -31,7 +32,7 @@ function UserInfo() {
 
 
   if (!userData) {
-    return <p>Loading user data...</p>;
+    return <Loading />
   }
 
   return (

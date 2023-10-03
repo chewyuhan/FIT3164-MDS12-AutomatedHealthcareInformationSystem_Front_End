@@ -7,6 +7,7 @@ import { Modal } from '../components/Diagnosis/DiagnosisModal';
 import { addDiagnosis } from '../api/diagnosis';
 import { fetchPatientDataFromAPI } from '../api/patient';
 import { fetchAppointmentsbyPatient } from '../api/appointment';
+import Loading from '../components/Loading/Loading';
 
 function PatientDiag() {
   // State variables
@@ -63,7 +64,7 @@ function PatientDiag() {
 
   // Render loading message if patient data is not yet available
   if (!patients) {
-    return <p>Loading Diagnosis data...</p>;
+    return <Loading />
   }
 
   return (

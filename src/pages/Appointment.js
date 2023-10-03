@@ -13,6 +13,7 @@ import {
 } from "../api/appointment";
 import { fetchDoctorDataFromAPI } from "../api/doctor";
 import { fetchPatientDataFromAPI } from "../api/patient";
+import Loading from "../components/Loading/Loading";
 
 import "./Appointment.css";
 
@@ -212,7 +213,8 @@ const Appointment = () => {
 
   // Render JSX content based on the state
   if (!appointments) {
-    return <p>Loading Appointment data...</p>;
+    return <Loading />
+
   }
 
 
