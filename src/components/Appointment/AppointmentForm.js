@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./AppointmentForm.css";
 import 'react-calendar/dist/Calendar.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AppointmentForm = ({
   closeModal,
@@ -74,23 +76,39 @@ const AppointmentForm = ({
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent page refresh
-
-    // Check if required fields are selected
-    if (!selectedPatientId || !selectedDoctorId || !appointmentTime) {
-      const errorMessage = "Patient, doctor, and appointment time must be selected.";
-      console.error(selectedPatientId); // Log the error message
-      setErrors(errorMessage);
+  
+    let error = false;
+  
+    // Check if patient is selected
+    if (!selectedPatientId) {
+      toast.error("Patient must be selected.");
+      error = true;
+    }
+    // Check if doctor is selected
+    if (!selectedDoctorId) {
+      toast.error("Doctor must be selected.");
+      error = true;
+    }
+    // Check if appointment time is selected
+    if (!appointmentTime) {
+      toast.error("Appointment time must be selected.");
+      error = true;
+    }
+  
+    if (error) {
+      // Display an error toast
     } else {
       // Clear any previous errors
-      setErrors("");
-
+  
       // Handle the appointment booking here
       handleSelectAppointmentTime();
-
+  
       // Close the modal
       closeModal();
     }
   };
+  
+  
 
 
   // Function to handle doctor selection

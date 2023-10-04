@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import moment from 'moment';
 import "./Modal.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   const initialFormState = {
@@ -20,48 +22,63 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   const [formState, setFormState] = useState(defaultValue || initialFormState);
   const [errors, setErrors] = useState("");
 
-  // Function to validate the form
-  const validateForm = () => {
-    const {
-      firstName,
-      lastName,
-      dob,
-      gender,
-      ic,
-      nationality,
-      phoneNo,
-      email,
-      emergencyNo,
-    } = formState;
+// Function to validate the form
+const validateForm = () => {
+  const {
+    firstName,
+    lastName,
+    dob,
+    gender,
+    ic,
+    nationality,
+    phoneNo,
+    email,
+    emergencyNo,
+  } = formState;
 
-    if (
-      firstName &&
-      lastName &&
-      dob &&
-      gender &&
-      ic &&
-      nationality &&
-      phoneNo &&
-      email
-    ) {
-      if (!isNaN(phoneNo) && !isNaN(emergencyNo)) {
-        if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-          setErrors("");
-          return true;
-        } else {
-          setErrors("Please enter a valid email address.");
-        }
-      } else {
-        setErrors("Please enter a valid numeric value for contact info.");
-      }
-    } else {
-      const errorFields = Object.entries(formState)
-        .filter(([key, value]) => !value)
-        .map(([key]) => key);
-      setErrors(errorFields.join(", "));
-    }
+  if (!firstName) {
+    toast.error("Please enter a valid first name.");
+  }
+
+  if (!lastName) {
+    toast.error("Please enter a valid last name.");
+  }
+
+  if (!dob) {
+    toast.error("Please enter a valid date of birth.");
+  }
+
+  if (!gender) {
+    toast.error("Please select a valid gender.");
+  }
+
+  if (!ic) {
+    toast.error("Please enter a valid IC number.");
+  }
+
+  if (!nationality) {
+    toast.error("Please enter a valid nationality.");
+  }
+
+  if (!phoneNo || isNaN(phoneNo)) {
+    toast.error("Please enter a valid numeric value for phone number.");
+  }
+
+  if (!email || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+    toast.error("Please enter a valid email address.");
+  }
+
+  if (!emergencyNo || isNaN(emergencyNo)) {
+    toast.error("Please enter a valid numeric value for emergency contact number.");
+  }
+
+  if (firstName && lastName && dob && gender && ic && nationality && phoneNo && email) {
+    return true;
+  } else {
     return false;
-  };
+  }
+};
+
 
   // Function to handle input changes
   const handleChange = (e) => {
@@ -72,7 +89,6 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent page refresh
-
     // Check if form passes validation test
     if (validateForm()) {
       // If yes then update form details to rows in table

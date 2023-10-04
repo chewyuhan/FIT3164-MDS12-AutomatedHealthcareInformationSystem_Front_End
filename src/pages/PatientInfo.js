@@ -56,6 +56,7 @@ function PatientInfo() {
 
   // Function to handle form submission (add or edit patient)
   const handleSubmit = async (newRow) => {
+    console.log("Submitting form data:", newRow);
     try {
       if (rowToEdit === null) {
         // Adding a new patient

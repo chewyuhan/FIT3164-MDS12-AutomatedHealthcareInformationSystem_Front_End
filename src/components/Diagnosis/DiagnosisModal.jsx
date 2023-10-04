@@ -3,6 +3,8 @@ import './DiagModal.css';
 import { fetchPatientDataFromAPI } from '../../api/patient';
 import { fetchDoctorDataFromAPI } from '../../api/doctor';
 import { fetchAppointmentsbyPatient } from '../../api/appointment';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   // State for form data
@@ -88,24 +90,46 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
       appointmentId,
       icd,
       symptoms,
-      remarks
     } = formState;
 
-    if (
-      !isNaN(appointmentId) &&
-      /^\d+$/.test(appointmentId) &&
-      typeof selectedPatientId === 'number' &&
-      typeof selectedEmployeeId === 'number' &&
-      typeof icd === 'string' &&
-      typeof symptoms === 'string'
-    ) {
-      setErrors('');
+    let error = false
+
+    // Check if selectedPatientId and selectedEmployeeId are numbers
+    if (typeof selectedPatientId !== 'number') {
+      toast.error("Please select a patient.");
+      error = true;
+    }
+
+    if (typeof selectedEmployeeId !== 'number') {
+      toast.error("Please select an doctor.");
+      error = true;
+    }
+
+    // Check if appointmentId is a number
+    if (isNaN(appointmentId) || !(/^\d+$/.test(appointmentId))) {
+      toast.error("Please select a valid appointment ID.");
+      error = true;
+
+    }
+
+    // Check if icd and symptoms are strings
+    if (typeof icd !== 'string') {
+      toast.error("Please enter a valid ICD code.");
+      error = true;
+    }
+
+    if (typeof symptoms !== 'string') {
+      toast.error("Please enter valid symptoms.");
+      error = true;
+    }
+
+    if (errors) {
       return true;
     } else {
-      setErrors('Please enter valid data for all fields.');
       return false;
     }
   };
+
 
   // Function to handle form input changes
   const handleChange = (e) => {
