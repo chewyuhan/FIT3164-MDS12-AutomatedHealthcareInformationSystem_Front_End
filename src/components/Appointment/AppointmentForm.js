@@ -158,7 +158,7 @@ const AppointmentForm = ({
 
       {/* Form for selecting a doctor */}
       <div className="form-group">
-        <h2>Select a Doctor</h2>
+        <h2>Select a Doctor (Compulsory)</h2>
         <select
           className="doctor-select"
           value={defaultValue ? defaultValue.employeeId : selectedDoctorId || ""}          
@@ -171,7 +171,7 @@ const AppointmentForm = ({
             </option>
           ))}
         </select>
-        <h2>Select a Patient</h2>
+        <h2>Select a Patient (Compulsory)</h2>
         <select
           className="patient-select"
           value={defaultValue ? defaultValue.patientId : selectedPatientId || ""}          
@@ -188,7 +188,7 @@ const AppointmentForm = ({
 
       {/* Form for selecting an appointment time */}
       <div className="form-group">
-        <h2>Select an Appointment Time</h2>
+        <h2>Select an Appointment Time (Compulsory)</h2>
         <select
           className="time-select"
           value={appointmentTime}

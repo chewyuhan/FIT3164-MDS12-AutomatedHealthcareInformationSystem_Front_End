@@ -222,13 +222,13 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           <form>
             {/* Select Employee */}
             <div className="form-group">
-              <label htmlFor="employeeId">Select Employee</label>
+              <h2 htmlFor="employeeId">Select Employee</h2>
               <select
                 name="employeeId"
                 value={selectedEmployeeId}
                 onChange={(e) => setSelectedEmployeeId(Number(e.target.value))}
               >
-                <option value="">Select an employee</option>
+                <option value="">Select an Doctor (Compulsory)</option>
                 {employees.map((employee) => (
                   <option key={employee.employeeId} value={employee.employeeId}>
                     {employee.firstName} {employee.lastName}
@@ -239,7 +239,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
 
             {/* Select Patient */}
             <div className="form-group">
-              <label htmlFor="patientId">Select Patient</label>
+              <h2 htmlFor="patientId">Select Patient (Compulsory)</h2>
               <select
                 name="patientId"
                 value={selectedPatientId}
@@ -259,7 +259,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
 
             {/* Select Appointment */}
             <div className="form-group">
-              <label htmlFor="appointmentId">Select Appointment</label>
+              <h2 htmlFor="appointmentId">Select Appointment (Compulsory)</h2>
               <select
                 name="appointmentId"
                 value={formState.appointmentId}
@@ -283,7 +283,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
 
             {/* ICD Input */}
             <div className="form-group">
-              <label htmlFor="icd">ICD</label>
+              <h2 htmlFor="icd">ICD</h2>
               <input
                 name="icd"
                 onChange={handleChange}
@@ -306,7 +306,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
 
             {/* Remarks Input */}
             <div className="form-group">
-              <label htmlFor="remarks">Remarks (Optional)</label>
+              <h2 htmlFor="remarks">Remarks (Optional)</h2>
               <input
                 name="remarks"
                 onChange={handleChange}
@@ -329,7 +329,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
 
             {/* Symptoms Input */}
             <div className="form-group">
-              <label htmlFor="symptoms">Symptoms</label>
+              <h2 htmlFor="symptoms">Symptoms</h2>
               <input
                 name="symptoms"
                 onChange={handleChange}

@@ -110,7 +110,7 @@ const validateForm = () => {
           <h1 className="modal-title">Patient Details</h1>
           <form>
             <div className="form-group">
-              <label htmlFor="firstName">First Name</label>
+              <h2 htmlFor="firstName">First Name (Compulsory)</h2>
               <input
                 name="firstName"
                 onChange={handleChange}
@@ -119,7 +119,7 @@ const validateForm = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="lastName">Last Name</label>
+              <h2 htmlFor="lastName">Last Name (Compulsory)</h2>
               <input
                 name="lastName"
                 onChange={handleChange}
@@ -128,7 +128,7 @@ const validateForm = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="dob">Date of Birth</label>
+              <h2 htmlFor="dob">Date of Birth (Compulsory)</h2>
               <input
                 name="dob"
                 type="date"
@@ -141,13 +141,13 @@ const validateForm = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="gender">Gender</label>
+              <h2 htmlFor="gender">Gender (Compulsory)</h2>
               <select
                 name="gender"
                 value={formState.gender}
                 onChange={handleChange}
               >
-                <option value="" disabled>
+                <option value="">
                   Select gender
                 </option>
                 <option value="Male">Male</option>
@@ -156,7 +156,7 @@ const validateForm = () => {
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="nationality">Nationality</label>
+              <h2 htmlFor="nationality">Nationality (Compulsory)</h2>
               <input
                 name="nationality"
                 onChange={handleChange}
@@ -165,7 +165,7 @@ const validateForm = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="ic">Identification Number</label>
+              <h2 htmlFor="ic">Identification Number (Compulsory)</h2>
               <input
                 name="ic"
                 onChange={handleChange}
@@ -174,7 +174,7 @@ const validateForm = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="phoneNo">Phone Number</label>
+              <h2 htmlFor="phoneNo">Phone Number (Compulsory)</h2>
               <input
                 name="phoneNo"
                 onChange={handleChange}
@@ -183,7 +183,7 @@ const validateForm = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <h2 htmlFor="email">Email (Compulsory)</h2>
               <input
                 name="email"
                 onChange={handleChange}
@@ -192,7 +192,7 @@ const validateForm = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="emergencyNo">Emergency Number</label>
+              <h2 htmlFor="emergencyNo">Emergency Number (Compulsory)</h2>
               <input
                 name="emergencyNo"
                 onChange={handleChange}
@@ -201,7 +201,7 @@ const validateForm = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="emergencyRemarks">Emergency Remarks</label>
+              <h2 htmlFor="emergencyRemarks">Emergency Remarks (Compulsory)</h2>
               <input
                 name="emergencyRemarks"
                 onChange={handleChange}
@@ -210,7 +210,7 @@ const validateForm = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="remarks">Remarks</label>
+              <h2 htmlFor="remarks">Remarks</h2>
               <textarea
                 name="remarks"
                 placeholder="Optional remarks"
