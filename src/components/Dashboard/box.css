@@ -8,6 +8,8 @@
   border-radius: 8px;
   text-align: center;
   cursor: pointer; /* Set the cursor to pointer */
+  height: 100%;
+  width: 100%;
 }
 
 .box:hover {
