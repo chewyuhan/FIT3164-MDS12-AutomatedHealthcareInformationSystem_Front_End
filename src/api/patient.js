@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const addPatient = (newPatient) => {
     const accessToken = sessionStorage.getItem("accessToken");
@@ -17,11 +19,13 @@ export const addPatient = (newPatient) => {
         .then((response) => {
             // Handle the success response if needed
             console.log("Added patient successfully:", response.data);
+            toast.success('Patient Added Successfully !')
             // You can update your state or take any other action here
         })
         .catch((error) => {
             // Handle the error if the request fails
             console.error("Error adding patient:", error);
+            toast.error('Patient Added Unsuccessful !')
         });
 };
 
@@ -42,11 +46,13 @@ export const editPatient = (patientId, updatedPatient) => {
         .then((response) => {
             // Handle the success response if needed
             console.log("Updated patient successfully:", response.data);
+            toast.success('Patient Updated Successfully !')
             // You can update your state or take any other action here
         })
         .catch((error) => {
             // Handle the error if the request fails
             console.error("Error updating patient:", error);
+            toast.error('Patient Updated Unsuccessful !')
         });
 };
 

@@ -1,4 +1,7 @@
 import axios from "axios";
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export const fetchAppointmentDataFromAPI = async () => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -40,11 +43,13 @@ export const addAppointment = async (newAppointment) => {
         .then((response) => {
             // Handle the success response if needed
             console.log("Added patient successfully:", response.data);
+            toast.success('Appointment Added Successfully !')
             // You can update your state or take any other action here
         })
         .catch((error) => {
             // Handle the error if the request fails
             console.error("Error adding patient:", error);
+            toast.error('Appointment Added Unsuccessful !')
         });
 };
 
@@ -87,11 +92,13 @@ export const editAppointment = async (appointmentId, updatedAppointment) => {
         .then((response) => {
             // Handle the success response if needed
             console.log("Updated appointment successfully:", response.data);
+            toast.success('Appointment Edited Successfully !')
             // You can update your state or take any other action here
         })
         .catch((error) => {
             // Handle the error if the request fails
             console.error("Error updating appointment:", error);
+            toast.error('Appointmetn Edit Unsuccessful !')
         });
 }
 
@@ -118,10 +125,12 @@ export const deleteAppointment = async (appointmentId) => {
         .then(() => {
             // Handle the success response if needed
             console.log("Deleted appointment successfully:", appointmentId);
+            toast.success('Appointment Deleted Successfully !')
             // You can update your state or take any other action here
         })
         .catch((error) => {
             // Handle the error if the request fails
             console.error("Error deleting appointment:", error);
+            toast.error('Appointment Deletion Unsuccessful !')
         });
 }

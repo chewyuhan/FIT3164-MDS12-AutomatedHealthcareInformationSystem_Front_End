@@ -9,6 +9,8 @@ import ImageDialog from '../components/PatientTable/Imagemodel';
 import './PatientInfo.css';
 import Loading from '../components/Loading/Loading';
 
+
+
 function PatientInfo() {
   const [modalOpen, setModalOpen] = useState(false);
   const [results, setResults] = useState([]);

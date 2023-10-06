@@ -17,6 +17,7 @@ import Loading from "../components/Loading/Loading";
 
 import "./Appointment.css";
 
+
 const Appointment = () => {
   // State variables
   const [appointments, setAppointments] = useState(null);
@@ -167,6 +168,7 @@ const Appointment = () => {
         // Editing an existing appointment
         const appointmentId = tableData.find((appointment) => appointment.appointmentId === rowToEdit).appointmentId;
         await editAppointment(appointmentId, requestData);
+
       }
       fetchUpdatedAppointmentDataTable();
       closeAppointmentPopup();
@@ -182,6 +184,7 @@ const Appointment = () => {
     console.log(targetIndex);
     deleteAppointment(targetIndex);
     await fetchUpdatedAppointmentDataTable();
+
   };
 
   // Handle calendar click event

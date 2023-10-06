@@ -56,7 +56,6 @@ function PatientDiag() {
       console.log("Adding new diagnosis:", newRow);
       // Adding a new diagnosis
       await addDiagnosis(newRow);
-      console.log("Added new diagnosis");
     } catch (error) {
       console.error("Error:", error);
     }

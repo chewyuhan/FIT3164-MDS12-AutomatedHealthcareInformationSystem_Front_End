@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Function to fetch diagnosis data from the API
 export const fetchDiagnosisDataFromAPI = async (patientId) => {
@@ -65,11 +67,13 @@ export const addDiagnosis = (newDiagnosis) => {
         .then((response) => {
             // Handle the success response if needed
             console.log("Added patient successfully:", response.data);
+            toast.success('Diagnosis Added Successfully !')
             // You can update your state or take any other action here
         })
         .catch((error) => {
             // Handle the error if the request fails
             console.error("Error adding patient:", error);
+            toast.error('Diagnosis Added Unsuccessful !')
         });
 };
 
@@ -90,11 +94,13 @@ export const editDiagnosis = (diagnosisId, updatedDiagnosis) => {
         .then((response) => {
             // Handle the success response if needed
             console.log("Updated patient successfully:", response.data);
+            toast.success('Diagnosis Updated Successfully !')
             // You can update your state or take any other action here
         })
         .catch((error) => {
             // Handle the error if the request fails
             console.error("Error updating patient:", error);
+            toast.error('Diagnosis Updated Unsuccessful !')
         });
 };
 
@@ -115,10 +121,12 @@ export const deleteDiagnosis = (diagnosisId) => {
         .then((response) => {
             // Handle the success response if needed
             console.log("Delete patient successfully:", response.data);
+            toast.success('Diagnosis Deleted Successfully !')
             // You can update your state or take any other action here
         })
         .catch((error) => {
             // Handle the error if the request fails
             console.error("Error deleting patient:", error);
+            toast.error('Diagnosis Deleted Unsuccessful !')
         });
 };
