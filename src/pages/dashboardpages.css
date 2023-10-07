@@ -23,6 +23,7 @@
   flex: 1;
   /* Equal width for both columns */
   margin: 10px;
+  width:50%;
 }
 
 .dashboard-item {

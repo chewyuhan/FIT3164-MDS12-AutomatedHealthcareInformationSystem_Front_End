@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import CanvasJSReact from '@canvasjs/react-charts';
-import { fetchPatientDataFromAPI } from '../../api/patient';
+import { fetchAppointmentDataFromAPI } from '../../api/appointment';
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-function PatientCreationHistory() {
-  const [patientData, setPatientData] = useState([]);
+function AppointmentHistory() {
+  const [appointmentData, setAppointmentData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchPatientDataFromAPI();
-        setPatientData(data);
+        const data = await fetchAppointmentDataFromAPI();
+        setAppointmentData(data);
       } catch (error) {
-        console.error('Error fetching patient data:', error);
+        console.error('Error fetching appointment data:', error);
       }
     };
 
     fetchData();
   }, []);
 
-  const countPatientsByDate = () => {
+  const countAppointmentsByDate = () => {
     const countMap = {};
 
-    patientData.forEach((patient) => {
-      const date = new Date(patient.createdAt).toLocaleDateString();
+    appointmentData.forEach((appointment) => {
+      const date = new Date(appointment.appointmentDateTime).toLocaleDateString();
 
       if (countMap[date]) {
         countMap[date]++;
@@ -47,24 +47,30 @@ function PatientCreationHistory() {
     exportEnabled: true,
     axisX: {
       title: 'Date',
+      valueFormatString: 'DD MMM, YYYY', // Format date on X-axis
     },
     axisY: {
-      title: 'Patient Count',
+      title: 'Appointment Count',
+    },
+    toolTip: {
+      content: '{x}: {y} Appointments',
     },
     data: [
       {
-        type: 'line',
-        dataPoints: countPatientsByDate(),
+        type: 'column',
+        name: 'Appointments',
+        showInLegend: true,
+        dataPoints: countAppointmentsByDate(),
       },
     ],
   };
 
   return (
     <div>
-      <h2>Patient Creation History</h2>
+      <h2>Appointment History</h2>
       <CanvasJSChart options={options} />
     </div>
   );
 }
 
-export default PatientCreationHistory;
+export default AppointmentHistory;

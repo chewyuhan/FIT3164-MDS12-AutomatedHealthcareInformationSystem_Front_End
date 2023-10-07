@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 
 function TotalAppointmentsCount() {
-  const [totalAppointments, setTotalAppointments] = useState(0);
   const [percentageChange, setPercentageChange] = useState(0);
 
   useEffect(() => {
@@ -20,8 +19,6 @@ function TotalAppointmentsCount() {
           const registrationDateTimeMonth = new Date(appointment.appointmentDateTime).getMonth();
           return registrationDateTimeMonth === currentMonth - 1;
         }).length;
-
-        setTotalAppointments(allAppointments.length);
 
         if (lastMonthTotal !== 0) {
           const changePercentage = (((allAppointments.length - lastMonthTotal) / lastMonthTotal) - allAppointments.length);
