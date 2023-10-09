@@ -29,9 +29,6 @@ const AppointmentForm = ({
     }
   );
 
-
-  const [errors, setErrors] = useState("");
-
   // Set form data if a default value is provided
   useEffect(() => {
     if (defaultValue) {
@@ -43,7 +40,7 @@ const AppointmentForm = ({
     }
   }, [defaultValue]);
 
-
+  
   // Function to generate a time range for appointments
   const generateTimeRange = () => {
     const timeRange = [];
@@ -109,8 +106,6 @@ const AppointmentForm = ({
   };
   
   
-
-
   // Function to handle doctor selection
   const handleSelectDoctor = (doctorId) => {
     setSelectedDoctorId(doctorId);
@@ -240,9 +235,6 @@ const AppointmentForm = ({
           />
         </div>
       </div>
-
-      {/* Display errors if any */}
-      {errors && <p className="error">{errors}</p>}
 
       {/* Submit button */}
       <button type="submit" className="book-button" onClick={handleSubmit}>
