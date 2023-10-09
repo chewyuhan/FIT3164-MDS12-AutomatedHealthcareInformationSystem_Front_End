@@ -13,7 +13,7 @@ export const fetchDiagnosisDataFromAPI = async (patientId) => {
     }
     
     try {
-        const response = await axios.get(`https://mds12-dev.cyclic.cloud/diagnoses/patient/${patientId}`, {
+        const response = await axios.get(`https://mds12.cyclic.cloud/diagnoses/patient/${patientId}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -36,7 +36,7 @@ export const fetchAllDiagnosisDataFromAPI = async () => {
     }
     
     try {
-        const response = await axios.get(`https://mds12-dev.cyclic.cloud/diagnoses/all`, {
+        const response = await axios.get(`https://mds12.cyclic.cloud/diagnoses/all`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -59,7 +59,7 @@ export const addDiagnosis = (newDiagnosis) => {
         return;
     }
 
-    axios.post("https://mds12-dev.cyclic.cloud/diagnoses/", newDiagnosis, {
+    axios.post("https://mds12.cyclic.cloud/diagnoses/", newDiagnosis, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -86,7 +86,7 @@ export const editDiagnosis = (diagnosisId, updatedDiagnosis) => {
         return;
     }
 
-    axios.patch(`https://mds12-dev.cyclic.cloud/diagnoses/${diagnosisId}`, updatedDiagnosis, {
+    axios.patch(`https://mds12.cyclic.cloud/diagnoses/${diagnosisId}`, updatedDiagnosis, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -113,7 +113,7 @@ export const deleteDiagnosis = (diagnosisId) => {
         return;
     }
 
-    axios.delete(`https://mds12-dev.cyclic.cloud/diagnoses/${diagnosisId}`, {
+    axios.delete(`https://mds12.cyclic.cloud/diagnoses/${diagnosisId}`, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },

@@ -14,7 +14,7 @@ export const fetchAppointmentDataFromAPI = async () => {
     }
     
     try {
-        const response = await axios.get("https://mds12-dev.cyclic.cloud/appointments/all", {
+        const response = await axios.get("https://mds12.cyclic.cloud/appointments/all", {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -35,7 +35,7 @@ export const addAppointment = async (newAppointment) => {
         return;
     }
 
-    axios.post("https://mds12-dev.cyclic.cloud/appointments/", newAppointment, {
+    axios.post("https://mds12.cyclic.cloud/appointments/", newAppointment, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -62,7 +62,7 @@ export const fetchAppointmentsbyPatient = async (patientId) => {
         return [];
     }
     try {
-        const response = await axios.get(`https://mds12-dev.cyclic.cloud/appointments/patient/${patientId}`, {
+        const response = await axios.get(`https://mds12.cyclic.cloud/appointments/patient/${patientId}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -84,7 +84,7 @@ export const editAppointment = async (appointmentId, updatedAppointment) => {
         return;
     }
 
-    axios.patch(`https://mds12-dev.cyclic.cloud/appointments/${appointmentId}`, updatedAppointment, {
+    axios.patch(`https://mds12.cyclic.cloud/appointments/${appointmentId}`, updatedAppointment, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -117,7 +117,7 @@ export const deleteAppointment = async (appointmentId) => {
         return;
     }
 
-    axios.delete(`https://mds12-dev.cyclic.cloud/appointments/${appointmentId}`, {
+    axios.delete(`https://mds12.cyclic.cloud/appointments/${appointmentId}`, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },

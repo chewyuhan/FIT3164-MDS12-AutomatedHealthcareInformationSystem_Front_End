@@ -11,7 +11,7 @@ export const addPatient = (newPatient) => {
         return;
     }
 
-    axios.post("https://mds12-dev.cyclic.cloud/patients/", newPatient, {
+    axios.post("https://mds12.cyclic.cloud/patients/", newPatient, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -38,7 +38,7 @@ export const editPatient = (patientId, updatedPatient) => {
         return;
     }
 
-    axios.patch(`https://mds12-dev.cyclic.cloud/patients/${patientId}`, updatedPatient, {
+    axios.patch(`https://mds12.cyclic.cloud/patients/${patientId}`, updatedPatient, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -67,7 +67,7 @@ export const fetchPatientDataFromAPI = async () => {
     }
     
     try {
-        const response = await axios.get("https://mds12-dev.cyclic.cloud/patients/all", {
+        const response = await axios.get("https://mds12.cyclic.cloud/patients/all", {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
