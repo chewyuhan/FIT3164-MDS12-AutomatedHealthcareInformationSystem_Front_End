@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ApptTable.css"
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import InfoModal from './AppointmentinfoModal';
@@ -18,6 +18,10 @@ const AppointmentTable = ({ appointments, deleteRow, editRow }) => {
     setModalInfo(row);
     setShowModal(true); // Show the modal when a row is clicked
   };
+  useEffect(() => {
+    console.log("appointmentDate", appointments);
+  }
+    , [appointments]);
 
 
   return (
@@ -45,7 +49,7 @@ const AppointmentTable = ({ appointments, deleteRow, editRow }) => {
             <tr key={appointment.appointmentId} className="clickable-row" onClick={() => handleRowClick(appointment)}>
               <td>{appointment.doctor}</td>
               <td>{appointment.patient}</td>
-              <td>{format(new Date(appointment.appointmentDateTime), "dd-MM-yyyy hh:mm a")}</td>
+              <td>{format(new Date(appointment.appointmentDateTime), "dd-MM-yyyy HH:mm a")}</td>
               <td>{appointment.reason || "N/A"}</td>
               <td>{appointment.remarks || "N/A"}</td>
               <td className="fit">

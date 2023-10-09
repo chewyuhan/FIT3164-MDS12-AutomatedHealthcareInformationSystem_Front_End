@@ -88,8 +88,6 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   const validateForm = () => {
     const {
       appointmentId,
-      icd,
-      symptoms,
     } = formState;
 
     let error = false
@@ -111,42 +109,33 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
       error = true;
 
     }
-
-    // Check if icd and symptoms are strings
-    if (typeof icd !== 'string') {
-      toast.error("Please enter a valid ICD code.");
-      error = true;
-    }
-
-    if (typeof symptoms !== 'string') {
-      toast.error("Please enter valid symptoms.");
-      error = true;
-    }
-
-    if (errors) {
-      return true;
-    } else {
+    if (error) {
       return false;
+    } else {
+      return true;
     }
   };
 
 
   // Function to handle form input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormState({ ...formState, [name]: value });
-  };
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setFormState((prevFormState) => ({ ...prevFormState, [name]: value }));
+};
 
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     const parsedAppointmentId = parseInt(formState.appointmentId, 10);
-
+    console.log(parsedAppointmentId);
     if (validateForm()) {
+      console.log("asasasas", formState);
+      setFormState({ ...formState, appointmentId: parsedAppointmentId });
       onSubmit({ ...formState, appointmentId: parsedAppointmentId });
       closeModal();
     }
   };
+  
 
   // State for speech recognition
   const [isListeningIcd, setIsListeningIcd] = useState(false);

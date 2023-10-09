@@ -33,7 +33,7 @@
 .image {
     max-width: 100%;
     /* Ensure the image fits within the dialog width */
-    max-height: 80vh;
+    max-height: 60vh; /* Adjust the maximum height as needed */
     /* Set a maximum height for the image */
     display: block;
     margin: 0 auto;
@@ -64,4 +64,8 @@
     border-radius: 10px;
     cursor: pointer;
     box-shadow: 0px 5px 5px #ccc;
+}
+
+.disclaimer{
+    color: red;
 }

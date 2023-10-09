@@ -32,6 +32,10 @@ function ImageDialog({ imageUrl, imageDir, onClose, onResponseData}) {
     <div className="image-dialog-overlay">
       <div className="image-dialog">
         <h1>Uploaded Image</h1>
+        <p className='disclaimer'>
+          "Disclaimer: Due to hosting limits, the online version uses a less accurate 
+          handwriting recognition <br></br>model than the local version and only one image can be sent every minute"
+          </p>
         <img className="image" src={imageUrl} alt="Uploaded Image" />
         {loading && <Loading />} {/* Show the Loading component when loading is true */}
         <button className="close-button" onClick={onClose}>
