@@ -49,7 +49,7 @@ const AppointmentTable = ({ appointments, deleteRow, editRow }) => {
             <tr key={appointment.appointmentId} className="clickable-row" onClick={() => handleRowClick(appointment)}>
               <td>{appointment.doctor}</td>
               <td>{appointment.patient}</td>
-              <td>{format(new Date(appointment.appointmentDateTime), "dd-MM-yyyy HH:mm a")}</td>
+              <td>{format(new Date(appointment.appointmentDateTime), "dd-MM-yyyy hh:mm a")}</td>
               <td>{appointment.reason || "N/A"}</td>
               <td>{appointment.remarks || "N/A"}</td>
               <td className="fit">

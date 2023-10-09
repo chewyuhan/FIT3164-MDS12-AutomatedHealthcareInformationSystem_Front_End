@@ -28,7 +28,6 @@ export const fetchAppointmentDataFromAPI = async () => {
 
 export const addAppointment = async (newAppointment) => {
     const accessToken = sessionStorage.getItem("accessToken");
-    console.log(newAppointment)
     if (!accessToken) {
         // Handle the case where there's no access token (authentication failed)
         console.error("No access token found");

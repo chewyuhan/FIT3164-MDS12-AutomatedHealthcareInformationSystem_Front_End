@@ -192,7 +192,7 @@ const AppointmentForm = ({
         <select
           className="time-select"
           value={appointmentTime}
-          onChange={(event) => setAppointmentTime(event.target.value)}
+            onChange={(event) => {setAppointmentTime(event.target.value)}}
         >
           <option value="">Select a time...</option>
           {doctorAppointmentTimes.map(({ time }) => (

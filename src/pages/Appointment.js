@@ -149,7 +149,14 @@ const Appointment = () => {
   const handleSubmitAppointmentForm = async (formData) => {
     const appointmentDateTime = new Date(appointmentDate);
     const [hours, minutes] = appointmentTime.split(":");
-    appointmentDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
+    if(appointmentTime.includes('AM')){
+      appointmentDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
+    }
+    else{
+      appointmentDateTime.setHours(parseInt(hours)+12, parseInt(minutes), 0);
+    }
+
+    console.log(appointmentDateTime,'appointmentDateTimeappointmentDateTime')
 
     const requestData = {
       patientId: parseInt(formData.patientId),

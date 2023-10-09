@@ -56,7 +56,7 @@ const InfoModal = ({ modalInfo, onClose }) => {
             <p key={key}>
               {translations[key] || key}:
               {key === 'registrationDateTime' || key === 'appointmentDateTime'
-                ? moment(modalInfo[key]).format('DD-MM-YYYY h:mm:ss a')
+                ? moment(modalInfo[key]).format('DD-MM-YYYY hh:mm A')
                 : key === 'completed'
                   ? modalInfo[key] ? 'Yes' : 'No'
                   : modalInfo[key]}
