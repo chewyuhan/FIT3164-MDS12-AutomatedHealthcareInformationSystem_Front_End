@@ -222,13 +222,13 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           <form>
             {/* Select Employee */}
             <div className="form-group">
-              <h2 htmlFor="employeeId">Select Employee</h2>
+              <h2 htmlFor="employeeId">Select Employee (Compulsory)</h2>
               <select
                 name="employeeId"
                 value={selectedEmployeeId}
                 onChange={(e) => setSelectedEmployeeId(Number(e.target.value))}
               >
-                <option value="">Select an Doctor (Compulsory)</option>
+                <option value="">Select an Doctor</option>
                 {employees.map((employee) => (
                   <option key={employee.employeeId} value={employee.employeeId}>
                     {employee.firstName} {employee.lastName}
@@ -303,30 +303,6 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                 {isListeningIcd ? 'Stop' : 'Start'} Listening
               </button>
             </div>
-
-            {/* Remarks Input */}
-            <div className="form-group">
-              <h2 htmlFor="remarks">Remarks (Optional)</h2>
-              <input
-                name="remarks"
-                onChange={handleChange}
-                value={formState.remarks}
-                placeholder="Remarks"
-              />
-              <button
-                type="button"
-                onClick={() => {
-                  if (isListeningRemarks) {
-                    stopListening('remarks');
-                  } else {
-                    startListening('remarks');
-                  }
-                }}
-              >
-                {isListeningRemarks ? 'Stop' : 'Start'} Listening
-              </button>
-            </div>
-
             {/* Symptoms Input */}
             <div className="form-group">
               <h2 htmlFor="symptoms">Symptoms</h2>
@@ -347,6 +323,29 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                 }}
               >
                 {isListeningSymptoms ? 'Stop' : 'Start'} Listening
+              </button>
+            </div>
+
+                        {/* Remarks Input */}
+                        <div className="form-group">
+              <h2 htmlFor="remarks">Remarks (Optional)</h2>
+              <input
+                name="remarks"
+                onChange={handleChange}
+                value={formState.remarks}
+                placeholder="Remarks"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  if (isListeningRemarks) {
+                    stopListening('remarks');
+                  } else {
+                    startListening('remarks');
+                  }
+                }}
+              >
+                {isListeningRemarks ? 'Stop' : 'Start'} Listening
               </button>
             </div>
 

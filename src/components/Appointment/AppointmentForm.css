@@ -79,15 +79,13 @@ body {
 }
 
 /* Form styles */
-/* Form styles */
 .appointment-form {
+  background-color: white;
   border-radius: 5px;
   padding: 3rem;
-  background-color: white;
-  width: 25em;
-  max-height: 70vh; /* Set the maximum height for the modal body */
+  max-height: 60vh; /* Set the maximum height for the modal body */
+  overflow-y: auto; /* Add vertical scroll if content exceeds max height */
 }
-
 
 .appointment-form h1 {
   font-size: 24px;
@@ -95,7 +93,6 @@ body {
 
 .appointment-form h2 {
   font-size: 18px;
-  margin-top: 10px;
 }
 
 .appointment-form input[type="text"],
@@ -114,13 +111,4 @@ body {
 
 .appointment-form .checkbox {
   margin-top: 10px;
-}
-
-/* Add more form styling as needed */
-
-/* Error message styles */
-.error {
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
 }
