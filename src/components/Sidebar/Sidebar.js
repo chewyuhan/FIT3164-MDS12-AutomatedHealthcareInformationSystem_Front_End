@@ -19,7 +19,7 @@ function Sidebar() {
     const accessToken =  sessionStorage.getItem("accessToken");
 
     if (accessToken) {
-      axios.get("https://mds12-dev.cyclic.cloud/employees/myinfo", {
+      axios.get("https://mds12.cyclic.cloud/employees/myinfo", {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
