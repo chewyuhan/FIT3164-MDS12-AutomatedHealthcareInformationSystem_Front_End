@@ -1,29 +1,30 @@
+/* dashboard.css */
+
 .dashboard-container {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  /* Take remaining space */
+  flex: 1; /* Take remaining space */
 }
 
 .dashboard-upper {
   display: flex;
-  flex: 1;
-  /* Take remaining space */
+  flex: 1; /* Take remaining space */
   justify-content: center;
   gap: 5px;
+  margin: 10px;
 }
 
 .dashboard-lower {
   display: flex;
-  flex: 1;
-  /* Take remaining space */
+  margin: 10px;
+  max-height: 510px;
 }
 
 .dashboard-column {
   flex: 1;
   /* Equal width for both columns */
   margin: 10px;
-  width:50%;
+  overflow-y: auto; /* Add vertical scroll if needed */
 }
 
 .dashboard-item {
@@ -31,6 +32,9 @@
   margin-bottom: 10px; /* Add spacing between items if desired */
 }
 
-.dashboard-table{
-  overflow-y: scroll;
+.dashboard-table {
+  overflow-y: auto; /* Enable vertical scroll */
+  max-height: 100%; /* Adjust as needed */
 }
+
+/* Add any additional styling as needed */
