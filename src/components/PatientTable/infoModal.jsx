@@ -47,7 +47,6 @@ const InfoModal = ({ modalInfo, onClose }) => {
         <div className="modal-header">
           <h2>Additional Patient Info</h2>
         </div>
-        <div className="modal-body scrollable">
           {/* Map over modalInfo object and display key-value pairs */}
           {Object.entries(modalInfo).map(([key, value]) => (
             <p key={key}>
@@ -55,7 +54,6 @@ const InfoModal = ({ modalInfo, onClose }) => {
               {key === 'patientId' ? 'Patient ID' : translations[key] || key}: {key === 'dob' || key === 'createdAt' || key === 'updatedAt' ? moment(value).format('DD/MM/YYYY') : value}
             </p>
           ))}
-        </div>
         <div className="modal-footer">
           <button className="btn" onClick={onClose}>
             Close

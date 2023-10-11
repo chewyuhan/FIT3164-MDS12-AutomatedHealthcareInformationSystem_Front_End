@@ -16,6 +16,7 @@
     border-radius: 5px;
     padding: 3rem;
     max-height: 70vh; /* Set the maximum height for the modal body */
+    overflow-y: auto; /* Add vertical scroll if content exceeds max height */
   }
   
   .modal {
@@ -24,6 +25,7 @@
     background-color: white;
     width: 25em;
     max-height: 70vh; /* Set the maximum height for the modal body */
+    
   }
   
   .modal .btn {
@@ -37,6 +39,7 @@
     border-radius: 10px;
     cursor: pointer;
     box-shadow: 0px 5px 5px #ccc;
+    
 
 
 
@@ -74,5 +77,9 @@
 
   .modal-body {
     max-height: 60vh; /* Set the maximum height for the modal body */
+    
+  }
+  .scrollable{
+    overflow-y: hidden;
   }
   

@@ -114,7 +114,6 @@ const InfoModal = ({ onClose, patientId }) => {
         <div className="modal-header">
           <h2>Diagnosis Info</h2>
         </div>
-        <div className="modal-body scrollable">
           {diagnosisData.length > 0 ? (
             diagnosisData.map((diagnosis, index) => (
               <div key={index}>
@@ -185,7 +184,6 @@ const InfoModal = ({ onClose, patientId }) => {
           ) : (
             <p>No diagnosis data recorded.</p>
           )}
-        </div>
         <div className="modal-footer">
           <button className="btn" onClick={onClose}>
             Close
