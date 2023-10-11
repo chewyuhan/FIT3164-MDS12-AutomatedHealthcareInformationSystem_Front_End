@@ -23,13 +23,11 @@
 .dashboard-column {
   flex: 1;
   /* Equal width for both columns */
-  margin: 10px;
   overflow-y: auto; /* Add vertical scroll if needed */
 }
 
 .dashboard-item {
   width: 100%; /* Adjust as needed */
-  margin-bottom: 10px; /* Add spacing between items if desired */
 }
 
 .dashboard-table {

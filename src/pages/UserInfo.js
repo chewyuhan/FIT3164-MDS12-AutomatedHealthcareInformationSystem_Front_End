@@ -14,7 +14,7 @@ function UserInfo() {
     // If the access token exists, you can use it for authenticated API calls
     if (accessToken) {
       // Make an authenticated API call using the access token
-      axios.get("https://mds12-dev.cyclic.cloud/employees/myinfo", {
+      axios.get("https://mds12.cyclic.cloud/employees/myinfo", {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
