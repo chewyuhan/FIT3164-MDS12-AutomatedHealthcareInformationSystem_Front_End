@@ -62,12 +62,26 @@ function PatientCreationHistory() {
     return dataPoints;
   };
 
+  // Function to format X-axis based on selected interval
+const formatXAxis = (interval) => {
+  switch (interval) {
+    case 'weekly':
+      return 'DD MMM';
+    case 'monthly':
+      return 'MMM YYYY';
+    case 'yearly':
+      return 'YYYY';
+    default:
+      return 'DD MMM, YYYY';
+  }
+};
   const options = {
     theme: 'light2',
     animationEnabled: true,
     exportEnabled: true,
     axisX: {
       title: 'Date',
+      valueFormatString: formatXAxis(selectedInterval), // Format date on X-axis based on selected interval
     },
     axisY: {
       title: 'Patient Count',

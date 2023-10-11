@@ -61,7 +61,7 @@ function DiagnosisHistory() {
 
   return (
     <div>
-      <h2>Diagnosis History</h2>
+      <h2>Top 10 Diagnosis</h2>
       <CanvasJSChart options={options} />
     </div>
   );

@@ -6,6 +6,7 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function AppointmentHistory() {
   const [appointmentData, setAppointmentData] = useState([]);
+  const [selectedInterval, setSelectedInterval] = useState('daily');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +25,27 @@ function AppointmentHistory() {
     const countMap = {};
 
     appointmentData.forEach((appointment) => {
-      const date = new Date(appointment.appointmentDateTime).toLocaleDateString();
+      let date;
+
+      switch (selectedInterval) {
+        case 'weekly':
+          date = new Date(appointment.appointmentDateTime);
+          date.setHours(0, 0, 0, 0);
+          date.setDate(date.getDate() - date.getDay()); // Start of the week
+          break;
+        case 'monthly':
+          date = new Date(appointment.appointmentDateTime);
+          date.setHours(0, 0, 0, 0);
+          date.setDate(1); // Start of the month
+          break;
+        case 'yearly':
+          date = new Date(appointment.appointmentDateTime);
+          date.setHours(0, 0, 0, 0);
+          date.setMonth(0, 1); // Start of the year
+          break;
+        default:
+          date = new Date(appointment.appointmentDateTime).toLocaleDateString();
+      }
 
       if (countMap[date]) {
         countMap[date]++;
@@ -40,14 +61,26 @@ function AppointmentHistory() {
 
     return dataPoints;
   };
-
+// Function to format X-axis based on selected interval
+const formatXAxis = (interval) => {
+  switch (interval) {
+    case 'weekly':
+      return 'DD MMM';
+    case 'monthly':
+      return 'MMM YYYY';
+    case 'yearly':
+      return 'YYYY';
+    default:
+      return 'DD MMM, YYYY';
+  }
+};
   const options = {
     theme: 'light2',
     animationEnabled: true,
     exportEnabled: true,
     axisX: {
       title: 'Date',
-      valueFormatString: 'DD MMM, YYYY', // Format date on X-axis
+      valueFormatString: formatXAxis(selectedInterval), // Format date on X-axis based on selected interval
     },
     axisY: {
       title: 'Appointment Count',
@@ -65,9 +98,22 @@ function AppointmentHistory() {
     ],
   };
 
+  const handleIntervalChange = (event) => {
+    setSelectedInterval(event.target.value);
+  };
+
   return (
     <div>
       <h2>Appointment History</h2>
+      <div>
+        <label htmlFor="interval">Select Interval: </label>
+        <select id="interval" value={selectedInterval} onChange={handleIntervalChange}>
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </select>
+      </div>
       <CanvasJSChart options={options} />
     </div>
   );
