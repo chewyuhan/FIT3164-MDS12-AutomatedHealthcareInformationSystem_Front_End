@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import './sidebar.css';
 import { IconContext } from 'react-icons';
-import axios from "axios";
+import { fetchUserData } from "../../api/employee";
 
 function Sidebar() {
   const [sidebar, setSidebar] = useState(false);
@@ -16,20 +16,13 @@ function Sidebar() {
   const showSidebar = () => setSidebar(!sidebar);
 
   useEffect(() => {
-    const accessToken =  sessionStorage.getItem("accessToken");
-
+    const accessToken = sessionStorage.getItem("accessToken");
+  
     if (accessToken) {
-      axios.get("https://mds12.cyclic.cloud/employees/myinfo", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
-      .then((response) => {
-        setUserData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-      });
+      fetchUserData(accessToken, setUserData)
+        .catch(() => {
+          // Handle error if needed
+        });
     }
   }, []);
 

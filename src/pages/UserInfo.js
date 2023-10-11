@@ -1,35 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Sidebar from '../components/Sidebar/Sidebar';
 import './userinfo.css'
 import Loading from '../components/Loading/Loading';
+import { fetchUserData } from "../api/employee";
 
 function UserInfo() {
 
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    // Retrieve the access token from sessionStorage
     const accessToken = sessionStorage.getItem("accessToken");
-    // If the access token exists, you can use it for authenticated API calls
+  
     if (accessToken) {
-      // Make an authenticated API call using the access token
-      axios.get("https://mds12.cyclic.cloud/employees/myinfo", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
-        .then((response) => {
-          // Handle the response and update the user data state
-          // console.log("API call response:", response.data)
-          setUserData(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
+      fetchUserData(accessToken, setUserData)
+        .catch(() => {
+          // Handle error if needed
         });
     }
   }, []);
-
 
   if (!userData) {
     return <Loading />
