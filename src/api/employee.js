@@ -1,9 +1,9 @@
 import axios from "axios";
-
+import { EMPLOYEES_API } from "./apiConfig";
 
 export const fetchUserData = async (accessToken, setUserData) => {
     try {
-        const response = await axios.get("https://mds12.cyclic.cloud/employees/myinfo", {
+        const response = await axios.get(EMPLOYEES_API.MY_INFO, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }

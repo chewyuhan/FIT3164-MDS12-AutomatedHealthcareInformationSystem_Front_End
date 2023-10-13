@@ -1,17 +1,16 @@
 import axios from "axios";
-
-// Function to fetch diagnosis data from the API
+import { EMPLOYEES_API } from "./apiConfig";
 
 export const fetchDoctorDataFromAPI = async () => {
     const accessToken = sessionStorage.getItem("accessToken");
 
     if (!accessToken) {
-        // Handle the case where there's no access token (authentication failed)
         console.error("No access token found");
-        return;
+        return [];
     }
+
     try {
-        const response = await axios.get(`https://mds12.cyclic.cloud/employees/doctors`, {
+        const response = await axios.get(EMPLOYEES_API.DOCTORS, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }

@@ -1,22 +1,23 @@
-import axios from 'axios'
+import axios from 'axios';
+import { AUTH_API } from "./apiConfig";
 
 export const postLogin = async (credential) => {
-    console.log(credential,"check credential")
     try {
-        const data = await axios({
-            url: "https://mds12.cyclic.cloud/auth/signin",
-            headers: {
-                'Access-Control-Allow-Origin' : '*',
-                'Content-Type': "application/json",
-                "Accept": 'application/json'
-            },
+        const response = await axios({
+            url: AUTH_API.SIGNIN,
             method: "post",
-            data: credential
-        })
-        console.log(data, "check data")
-        return data
+            data: credential,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        });
+
+        console.log(response.data, "check data");
+        return response.data;
     } catch (error) {
-        console.log(error, "what ist the error")
-        return error.response
+        console.error(error, "what is the error");
+        return error.response;
     }
-}
+};

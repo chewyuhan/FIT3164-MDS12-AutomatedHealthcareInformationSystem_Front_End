@@ -1,19 +1,18 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { DIAGNOSES_API } from "./apiConfig";
 
-// Function to fetch diagnosis data from the API
 export const fetchDiagnosisDataFromAPI = async (patientId) => {
     const accessToken = sessionStorage.getItem("accessToken");
 
     if (!accessToken) {
-        // Handle the case where there's no access token (authentication failed)
         console.error("No access token found");
-        return;
+        return [];
     }
-    
+
     try {
-        const response = await axios.get(`https://mds12.cyclic.cloud/diagnoses/patient/${patientId}`, {
+        const response = await axios.get(DIAGNOSES_API.BY_PATIENT(patientId), {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -25,55 +24,47 @@ export const fetchDiagnosisDataFromAPI = async (patientId) => {
     }
 };
 
-//Function to fetch all diagnosis data from the API
 export const fetchAllDiagnosisDataFromAPI = async () => {
     const accessToken = sessionStorage.getItem("accessToken");
 
     if (!accessToken) {
-        // Handle the case where there's no access token (authentication failed)
         console.error("No access token found");
-        return;
+        return [];
     }
-    
+
     try {
-        const response = await axios.get(`https://mds12.cyclic.cloud/diagnoses/all`, {
+        const response = await axios.get(DIAGNOSES_API.ALL, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
         });
-        console.log(response.data)
         return response.data;
     } catch (error) {
         console.error("Error fetching data from the API:", error);
         return [];
     }
-}
-
+};
 
 export const addDiagnosis = (newDiagnosis) => {
     const accessToken = sessionStorage.getItem("accessToken");
-    console.log(newDiagnosis)
+
     if (!accessToken) {
-        // Handle the case where there's no access token (authentication failed)
         console.error("No access token found");
         return;
     }
 
-    axios.post("https://mds12.cyclic.cloud/diagnoses/", newDiagnosis, {
+    axios.post(DIAGNOSES_API.ADD, newDiagnosis, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
     })
         .then((response) => {
-            // Handle the success response if needed
-            console.log("Added patient successfully:", response.data);
-            toast.success('Diagnosis Added Successfully !')
-            // You can update your state or take any other action here
+            console.log("Added diagnosis successfully:", response.data);
+            toast.success('Diagnosis Added Successfully !');
         })
         .catch((error) => {
-            // Handle the error if the request fails
-            console.error("Error adding patient:", error);
-            toast.error('Diagnosis Added Unsuccessful !')
+            console.error("Error adding diagnosis:", error);
+            toast.error('Diagnosis Added Unsuccessful !');
         });
 };
 
@@ -81,26 +72,22 @@ export const editDiagnosis = (diagnosisId, updatedDiagnosis) => {
     const accessToken = sessionStorage.getItem("accessToken");
 
     if (!accessToken) {
-        // Handle the case where there's no access token (authentication failed)
         console.error("No access token found");
         return;
     }
 
-    axios.patch(`https://mds12.cyclic.cloud/diagnoses/${diagnosisId}`, updatedDiagnosis, {
+    axios.patch(DIAGNOSES_API.EDIT(diagnosisId), updatedDiagnosis, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
     })
         .then((response) => {
-            // Handle the success response if needed
-            console.log("Updated patient successfully:", response.data);
-            toast.success('Diagnosis Updated Successfully !')
-            // You can update your state or take any other action here
+            console.log("Updated diagnosis successfully:", response.data);
+            toast.success('Diagnosis Updated Successfully !');
         })
         .catch((error) => {
-            // Handle the error if the request fails
-            console.error("Error updating patient:", error);
-            toast.error('Diagnosis Updated Unsuccessful !')
+            console.error("Error updating diagnosis:", error);
+            toast.error('Diagnosis Updated Unsuccessful !');
         });
 };
 
@@ -108,25 +95,21 @@ export const deleteDiagnosis = (diagnosisId) => {
     const accessToken = sessionStorage.getItem("accessToken");
 
     if (!accessToken) {
-        // Handle the case where there's no access token (authentication failed)
         console.error("No access token found");
         return;
     }
 
-    axios.delete(`https://mds12.cyclic.cloud/diagnoses/${diagnosisId}`, {
+    axios.delete(DIAGNOSES_API.DELETE(diagnosisId), {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
     })
-        .then((response) => {
-            // Handle the success response if needed
-            console.log("Delete patient successfully:", response.data);
-            toast.success('Diagnosis Deleted Successfully !')
-            // You can update your state or take any other action here
+        .then(() => {
+            console.log("Deleted diagnosis successfully:", diagnosisId);
+            toast.success('Diagnosis Deleted Successfully !');
         })
         .catch((error) => {
-            // Handle the error if the request fails
-            console.error("Error deleting patient:", error);
-            toast.error('Diagnosis Deleted Unsuccessful !')
+            console.error("Error deleting diagnosis:", error);
+            toast.error('Diagnosis Deletion Unsuccessful !');
         });
 };
