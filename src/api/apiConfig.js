@@ -1,4 +1,4 @@
-const local = "http://localhost:3000";
+const local = "http://localhost:3333";
 const host = "https://mds12.cyclic.cloud";
 
 // Change this to local if you want to run the app locally
