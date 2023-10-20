@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const LoginPage = () => {
-  // React States
   const [loginSuccess, setLoginSuccess] = useState(false);
   const navigate = useNavigate(); // React Router's navigate function
 

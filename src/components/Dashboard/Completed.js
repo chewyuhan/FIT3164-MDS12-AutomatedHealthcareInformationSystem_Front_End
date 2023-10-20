@@ -1,8 +1,7 @@
-// Completed.js
 import React, { useEffect, useState } from 'react';
 import { fetchAppointmentDataFromAPI } from '../../api/appointment';
-import './box.css'; // Import the CSS file
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import './box.css';
+import { Link } from 'react-router-dom';
 
 function Completed() {
   const [completedAppointments, setCompletedAppointments] = useState(0);
@@ -10,9 +9,8 @@ function Completed() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const allAppointments = await fetchAppointmentDataFromAPI(); // Replace with your actual API call
+        const allAppointments = await fetchAppointmentDataFromAPI();
 
-        // Assuming appointmentDateTime is a date field in each appointment record
         const currentMonth = new Date().getMonth();
         const completedCount = allAppointments.filter(appointment => {
           const appointmentMonth = new Date(appointment.appointmentDateTime).getMonth();

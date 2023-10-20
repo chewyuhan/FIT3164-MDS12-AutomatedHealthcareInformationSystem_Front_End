@@ -1,8 +1,7 @@
-// NotCompleted.js
 import React, { useEffect, useState } from 'react';
 import { fetchAppointmentDataFromAPI } from '../../api/appointment';
-import './box.css'; // Import the CSS file
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import './box.css';
+import { Link } from 'react-router-dom';
 
 function NotCompleted() {
   const [notCompletedAppointments, setNotCompletedAppointments] = useState(0);
@@ -10,7 +9,7 @@ function NotCompleted() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const allAppointments = await fetchAppointmentDataFromAPI(); // Replace with your actual API call
+        const allAppointments = await fetchAppointmentDataFromAPI();
 
         // Assuming appointmentDateTime is a date field in each appointment record
         const currentMonth = new Date().getMonth();
@@ -30,10 +29,10 @@ function NotCompleted() {
 
   return (
     <Link to='/appointment' className='link'>
-    <button className='box'>
-      <h2>Not Completed Appointments for Current Month</h2>
-      <p className='numbers'>{notCompletedAppointments}</p>
-    </button>
+      <button className='box'>
+        <h2>Not Completed Appointments for Current Month</h2>
+        <p className='numbers'>{notCompletedAppointments}</p>
+      </button>
     </Link>
   );
 }

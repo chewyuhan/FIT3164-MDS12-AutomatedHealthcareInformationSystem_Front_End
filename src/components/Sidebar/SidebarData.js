@@ -49,5 +49,5 @@ export const SidebarData = [
     icon: <FiIcons.FiLogOut />,
     cName: 'nav-text'
   }
-  
+
 ];

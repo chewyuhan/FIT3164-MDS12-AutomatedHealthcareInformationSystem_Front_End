@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 const local = "http://localhost:3333";
 const host = "https://mds12.cyclic.cloud";
 
@@ -21,16 +23,17 @@ export const DIAGNOSES_API = {
 };
 
 export const AUTH_API = {
-    SIGNIN: `${BASE_URL}/auth/signin`,
+  SIGNIN: `${BASE_URL}/auth/signin`,
+
 };
 
 export const EMPLOYEES_API = {
-    DOCTORS: `${BASE_URL}/employees/doctors`,
-    MY_INFO: `${BASE_URL}/employees/myinfo`,
+  DOCTORS: `${BASE_URL}/employees/doctors`,
+  MY_INFO: `${BASE_URL}/employees/myinfo`,
 };
 
 export const PATIENTS_API = {
-    ADD: `${BASE_URL}/patients/`,
-    EDIT: (patientId) => `${BASE_URL}/patients/${patientId}`,
-    ALL: `${BASE_URL}/patients/all`,
+  ADD: `${BASE_URL}/patients/`,
+  EDIT: (patientId) => `${BASE_URL}/patients/${patientId}`,
+  ALL: `${BASE_URL}/patients/all`,
 };

@@ -49,7 +49,7 @@ export const Table = ({ patients }) => {
                 <td>{row.gender}</td>
                 <td>{row.phoneNo}</td>
                 <td className="expand">{row.remarks}</td>
-                <td>{formattedAppointmentDateTime}</td> {/* Display formatted latest appointment */}
+                <td>{formattedAppointmentDateTime}</td>
               </tr>
             );
           })}

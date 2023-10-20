@@ -1,8 +1,7 @@
-// TotalAppointmentsCount.js
 import React, { useEffect, useState } from 'react';
 import { fetchAppointmentDataFromAPI } from '../../api/appointment';
-import './box.css'; // Import the CSS file
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import './box.css';
+import { Link } from 'react-router-dom';
 
 
 function TotalAppointmentsCount() {
@@ -11,9 +10,8 @@ function TotalAppointmentsCount() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const allAppointments = await fetchAppointmentDataFromAPI(); // Replace with your actual API call
+        const allAppointments = await fetchAppointmentDataFromAPI();
 
-        // Assuming appointmentDateTime is a date field in each appointment record
         const currentMonth = new Date().getMonth();
         const lastMonthTotal = allAppointments.filter(appointment => {
           const registrationDateTimeMonth = new Date(appointment.appointmentDateTime).getMonth();
@@ -25,7 +23,7 @@ function TotalAppointmentsCount() {
           setPercentageChange(changePercentage.toFixed(2));
         } else {
           // Handle the case where last month's total is 0 to avoid division by zero
-          setPercentageChange(100); // Assuming a 100% increase if last month had no appointments
+          setPercentageChange(100);
         }
       } catch (error) {
         console.error('Error fetching appointments:', error);
@@ -40,10 +38,10 @@ function TotalAppointmentsCount() {
 
   return (
     <Link to='/appointment' className='link'>
-    <button className='box'>
-      <h2>Appointment Count Change from Last Month</h2>
-      <p className='numbers' style={colorStyle}>{percentageChange}%</p>
-    </button>
+      <button className='box'>
+        <h2>Appointment Count Change from Last Month</h2>
+        <p className='numbers' style={colorStyle}>{percentageChange}%</p>
+      </button>
     </Link>
   );
 }

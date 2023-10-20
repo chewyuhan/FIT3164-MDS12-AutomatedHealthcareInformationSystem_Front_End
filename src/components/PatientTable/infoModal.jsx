@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment'; // Import moment for date formatting
+import moment from 'moment';
 import './Modal.css';
 
 const InfoModal = ({ modalInfo, onClose }) => {
@@ -47,13 +47,13 @@ const InfoModal = ({ modalInfo, onClose }) => {
         <div className="modal-header">
           <h2>Additional Patient Info</h2>
         </div>
-          {/* Map over modalInfo object and display key-value pairs */}
-          {Object.entries(modalInfo).map(([key, value]) => (
-            <p key={key}>
-              {/* Display translations for known keys and format dates */}
-              {key === 'patientId' ? 'Patient ID' : translations[key] || key}: {key === 'dob' || key === 'createdAt' || key === 'updatedAt' ? moment(value).format('DD/MM/YYYY') : value}
-            </p>
-          ))}
+        {/* Map over modalInfo object and display key-value pairs */}
+        {Object.entries(modalInfo).map(([key, value]) => (
+          <p key={key}>
+            {/* Display translations for known keys and format dates */}
+            {key === 'patientId' ? 'Patient ID' : translations[key] || key}: {key === 'dob' || key === 'createdAt' || key === 'updatedAt' ? moment(value).format('DD/MM/YYYY') : value}
+          </p>
+        ))}
         <div className="modal-footer">
           <button className="btn" onClick={onClose}>
             Close

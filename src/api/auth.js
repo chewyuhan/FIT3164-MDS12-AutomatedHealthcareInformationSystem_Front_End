@@ -14,8 +14,8 @@ export const postLogin = async (credential) => {
             },
         });
 
-        console.log(response.data, "check data");
-        return response.data;
+        console.log("Check response data", response);
+        return response;
     } catch (error) {
         console.error(error, "what is the error");
         return error.response;

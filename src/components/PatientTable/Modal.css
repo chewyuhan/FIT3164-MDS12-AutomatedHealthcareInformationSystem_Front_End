@@ -1,85 +1,82 @@
 .modal-container {
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .modal-container .modal {
-    background-color: white;
-    border-radius: 5px;
-    padding: 3rem;
-    max-height: 70vh; /* Set the maximum height for the modal body */
-    overflow-y: auto; /* Add vertical scroll if content exceeds max height */
-  }
-  
-  .modal {
-    border-radius: 5px;
-    padding: 3rem;
-    background-color: white;
-    width: 25em;
-    max-height: 70vh; /* Set the maximum height for the modal body */
-    
-  }
-  
-  .modal .btn {
-    display: block;
-    margin: auto;
-    margin-top: 1rem;
-    border: none;
-    background-color: #1d4ed8;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0px 5px 5px #ccc;
-    
+.modal-container .modal {
+  background-color: white;
+  border-radius: 5px;
+  padding: 3rem;
+  max-height: 70vh;
+  /* Set the maximum height for the modal body */
+  overflow-y: auto;
+}
 
+.modal {
+  border-radius: 5px;
+  padding: 3rem;
+  background-color: white;
+  width: 25em;
+  max-height: 70vh;
+}
 
+.modal .btn {
+  display: block;
+  margin: auto;
+  margin-top: 1rem;
+  border: none;
+  background-color: #1d4ed8;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0px 5px 5px #ccc;
+}
 
-  }
-  
 .form-group {
-    display: flex;
-    margin-left: auto;
-    flex-direction: column;
-    margin-bottom: 1rem;
-    
-  }
-  
-  .form-group input,
-  .form-group textarea,
-  .form-group select {
-    width: 100%; /* Set the width to 100% for all input fields within .form-group */
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  
-  .form-group h2 {
-    font-size: 18px;
-    margin-top: 10px;  }
-  
-  .error {
-    background-color: #f8d7da;
-    color: #df4759;
-    padding: 0.5rem;
-    border-radius: 0.3rem;
-    margin-bottom: 1rem;
-  }
+  display: flex;
+  margin-left: auto;
+  flex-direction: column;
+  margin-bottom: 1rem;
 
-  .modal-body {
-    max-height: 60vh; /* Set the maximum height for the modal body */
-    
-  }
-  .scrollable{
-    overflow-y: hidden;
-  }
-  
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+.form-group h2 {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #df4759;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.modal-body {
+  max-height: 60vh;
+
+}
+
+.scrollable {
+  overflow-y: hidden;
+}

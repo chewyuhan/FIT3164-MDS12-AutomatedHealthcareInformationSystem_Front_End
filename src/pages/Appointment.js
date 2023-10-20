@@ -33,7 +33,6 @@ const Appointment = () => {
   const [tableData, setTableData] = useState([]);
 
 
-  // useEffect to fetch initial data when the component mounts
   useEffect(() => {
 
     const fetchData = async () => {
@@ -58,7 +57,7 @@ const Appointment = () => {
     };
 
     fetchData();
-  }, [appointmentDate]); // Include appointmentDate in the dependency array
+  }, [appointmentDate]);
 
 
 
@@ -149,14 +148,14 @@ const Appointment = () => {
   const handleSubmitAppointmentForm = async (formData) => {
     const appointmentDateTime = new Date(appointmentDate);
     const [hours, minutes] = appointmentTime.split(":");
-    if(appointmentTime.includes('AM')){
+    if (appointmentTime.includes('AM')) {
       appointmentDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
     }
-    else{
-      appointmentDateTime.setHours(parseInt(hours)+12, parseInt(minutes), 0);
+    else {
+      appointmentDateTime.setHours(parseInt(hours) + 12, parseInt(minutes), 0);
     }
 
-    console.log(appointmentDateTime,'appointmentDateTimeappointmentDateTime')
+    console.log(appointmentDateTime, 'appointmentDateTimeappointmentDateTime')
 
     const requestData = {
       patientId: parseInt(formData.patientId),

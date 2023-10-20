@@ -6,7 +6,7 @@ import TotalPatient from '../components/Dashboard/CountPatient';
 import Completed from '../components/Dashboard/Completed';
 import NotCompleted from '../components/Dashboard/NotCompleted';
 import SwiperComponent from '../components/Dashboard/swiperComponent';
-import './dashboardpages.css'; // Import the CSS file for styling
+import './dashboardpages.css';
 
 function Home() {
   return (

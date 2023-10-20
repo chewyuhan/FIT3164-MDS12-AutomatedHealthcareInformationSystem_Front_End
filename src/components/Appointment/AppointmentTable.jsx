@@ -5,7 +5,6 @@ import InfoModal from './AppointmentinfoModal';
 import { format } from "date-fns";
 
 const AppointmentTable = ({ appointments, deleteRow, editRow }) => {
-  // Assuming all appointments are for the same date, you can get the date from the first appointment
   const firstAppointment = appointments[0];
   const appointmentDate = firstAppointment
     ? new Date(firstAppointment.appointmentDateTime)
@@ -16,7 +15,7 @@ const AppointmentTable = ({ appointments, deleteRow, editRow }) => {
   // Function to handle clicking on a row to display the modal
   const handleRowClick = (row) => {
     setModalInfo(row);
-    setShowModal(true); // Show the modal when a row is clicked
+    setShowModal(true);
   };
   useEffect(() => {
     console.log("appointmentDate", appointments);

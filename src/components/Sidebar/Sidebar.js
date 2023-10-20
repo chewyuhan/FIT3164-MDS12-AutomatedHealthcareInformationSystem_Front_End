@@ -17,11 +17,10 @@ function Sidebar() {
 
   useEffect(() => {
     const accessToken = sessionStorage.getItem("accessToken");
-  
+
     if (accessToken) {
       fetchUserData(accessToken, setUserData)
         .catch(() => {
-          // Handle error if needed
         });
     }
   }, []);
@@ -33,7 +32,7 @@ function Sidebar() {
 
   return (
     <>
-  
+
       <IconContext.Provider value={{ color: '#fff' }}>
         <div className='navbar'>
           <Link to='#' className='open'>
@@ -41,7 +40,7 @@ function Sidebar() {
           </Link>
           <div className='navbar-title'>
             <h1>{currentPage}</h1>
-            </div>
+          </div>
           <div className='navbar-user'>
             <h1>Hi, Dr {userData?.firstName} </h1>
           </div>

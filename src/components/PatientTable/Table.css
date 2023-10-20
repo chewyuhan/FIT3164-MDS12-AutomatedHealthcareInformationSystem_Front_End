@@ -2,43 +2,43 @@
   margin: 100px auto;
   width: 100%;
   overflow-x: auto;
-  position: relative;  }
+  position: relative;
+}
 
-  .table {
-    display: block;
-    overflow: hidden;
-    table-layout: fixed;
-    border-collapse: collapse;
-    box-shadow: 0px 10px 10px #ccc;
-    border-radius: 10px;
-    white-space: nowrap;
-    width: 100em;
-    max-width: 80%;
-    margin: auto;
-    table-layout: auto;
-    overflow-x: auto;
-    position: relative;
+.table {
+  display: block;
+  overflow: hidden;
+  table-layout: fixed;
+  border-collapse: collapse;
+  box-shadow: 0px 10px 10px #ccc;
+  border-radius: 10px;
+  white-space: nowrap;
+  width: 100em;
+  max-width: 80%;
+  margin: auto;
+  table-layout: auto;
+  overflow-x: auto;
+  position: relative;
 
-  }
+}
 
-  .button {
-    position: relative;
-    bottom: 10px;
-    left: 45%;
-    margin-top: 1rem;
-    border: none;
-    background-color: #1d4ed8;
-    color: #fff;
-    padding: 0.5rem ;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0px 5px 5px #ccc;
-    margin: auto;
-    
-  }
+.button {
+  position: relative;
+  bottom: 10px;
+  left: 45%;
+  margin-top: 1rem;
+  border: none;
+  background-color: #1d4ed8;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0px 5px 5px #ccc;
+  margin: auto;
 
-  
-/* Style for table header */
+}
+
+
 .table thead {
   background-color: #ccc;
   color: #222;
@@ -70,95 +70,91 @@
   background-color: #eee;
 }
 
-/* Style for clickable rows */
 .clickable-row {
   cursor: pointer;
 }
 
-  .expand {
-    width: 100%;
-  }
-  
-  .label {
-    border-radius: 3px;
-    padding: 0.3rem;
-    color: white;
-  }
-  
-  .label-Stable {
-    background-color: #777;
-  }
-  
-  .label-Healthy {
-    background-color: #42a942;
-  }
-  
-  .label-Critical {
-    background-color: #d9534f;
-  }
-  
-  .actions {
-    display: flex;
-    justify-content: space-between; /* This will add space between the icons */
-    justify-content: flex-start; /* Start from the left edge */
-    align-items: center; /* Vertically center the icons */
-  }
-  .action-icons {
-    display: flex;
-    gap: 10px; /* Adjust the gap to control spacing between icons */
-    justify-content: flex-start; /* Start from the left edge */
-    align-items: center; /* Vertically center the icons */
-  }
+.expand {
+  width: 100%;
+}
+
+.label {
+  border-radius: 3px;
+  padding: 0.3rem;
+  color: white;
+}
+
+.label-Stable {
+  background-color: #777;
+}
+
+.label-Healthy {
+  background-color: #42a942;
+}
+
+.label-Critical {
+  background-color: #d9534f;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.action-icons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+}
 
 
-  .actions svg {
-    cursor: pointer;
-    margin: 2px; /* Add margin to the icons */
-  }
+.actions svg {
+  cursor: pointer;
+  margin: 2px;
+}
 
-  
-  
-  .delete-btn {
-    color: #e10d05;
-  }
+.delete-btn {
+  color: #e10d05;
+}
 
-  .clickable-text {
-    cursor: pointer;
-    display: inline-block;
-    padding: 5px 10px;
-    color: black;
-    text-decoration: none;
-  }
-  
-  .clickable-text:hover {
-    background-color: #f5f5f5; /* Brighter grey color for the hover background */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  }
+.clickable-text {
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 10px;
+  color: black;
+  text-decoration: none;
+}
 
-  .clickable-row {
-    /* Your existing styles for the rows */
-    position: relative;
-  }
+.clickable-text:hover {
+  background-color: #f5f5f5;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
 
-  .tooltip-box {
-    display: none;
-    position: absolute;
-    top: -30px; /* Adjust the distance above the cursor */
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #f0f0f0;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 12px;
-    pointer-events: none;
-  }
+.clickable-row {
+  position: relative;
+}
 
-  .clickable-row:hover .tooltip-box {
-    display: block;
-  }
+.tooltip-box {
+  display: none;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+}
 
-  .whatsapp-btn{
-    color:green;
-  }
-  
+.clickable-row:hover .tooltip-box {
+  display: block;
+}
+
+.whatsapp-btn {
+  color: green;
+}

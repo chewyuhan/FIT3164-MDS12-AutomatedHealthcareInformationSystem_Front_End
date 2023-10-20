@@ -1,11 +1,8 @@
-/* Style for the main content container */
 .main-content {
     flex-grow: 1;
-    /* Allow content to expand and fill remaining space */
     box-sizing: border-box;
 }
 
-/* Style for the header */
 .header {
     text-align: center;
     background-color: #060b59;
@@ -28,10 +25,7 @@
     background-color: #0056b3;
 }
 
-/* Style for the button container */
 .add-upload {
-    /* Display buttons side by side */
-    /* Arrange buttons horizontally */
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -39,7 +33,6 @@
     row-gap: 10px;
 }
 
-/* Style for the search container */
 .search-container {
     display: flex;
     width: 100%;

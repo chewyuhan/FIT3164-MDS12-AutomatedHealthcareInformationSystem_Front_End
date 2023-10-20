@@ -61,6 +61,7 @@ function AppointmentHistory() {
 
     return dataPoints;
   };
+
 // Function to format X-axis based on selected interval
 const formatXAxis = (interval) => {
   switch (interval) {
@@ -80,7 +81,7 @@ const formatXAxis = (interval) => {
     exportEnabled: true,
     axisX: {
       title: 'Date',
-      valueFormatString: formatXAxis(selectedInterval), // Format date on X-axis based on selected interval
+      valueFormatString: formatXAxis(selectedInterval), 
     },
     axisY: {
       title: 'Appointment Count',

@@ -9,7 +9,6 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
 
-// import required modules
 import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
 
 function SwiperComponent() {
@@ -23,7 +22,6 @@ function SwiperComponent() {
         keyboard={true}
         modules={[Navigation, Pagination, Mousewheel, Keyboard]}
       >
-        {/* Create multiple slides with PatientCreationHistory component */}
         <SwiperSlide>
           <PatientCreationHistory />
         </SwiperSlide>

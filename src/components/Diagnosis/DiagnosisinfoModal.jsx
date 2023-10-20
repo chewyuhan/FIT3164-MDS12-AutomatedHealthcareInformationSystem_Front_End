@@ -12,7 +12,7 @@ const InfoModal = ({ onClose, patientId }) => {
 
   // State for diagnosis data
   const [diagnosisData, setDiagnosisData] = useState([]);
-  
+
   // State for editing diagnosis
   const [editingDiagnosis, setEditingDiagnosis] = useState(null);
 
@@ -47,7 +47,6 @@ const InfoModal = ({ onClose, patientId }) => {
       await refreshDiagnosisData(patientId);
     } catch (error) {
       console.error('Error deleting diagnosis data:', error);
-      // Handle error
     }
   };
 
@@ -114,19 +113,20 @@ const InfoModal = ({ onClose, patientId }) => {
         <div className="modal-header">
           <h2>Diagnosis Info</h2>
         </div>
-          {diagnosisData.length > 0 ? (
-            diagnosisData.map((diagnosis, index) => (
-              <div key={index}>
-                <div className="diagnosisid-edit">
-                  <h3>{translations.diagnosisId}: {diagnosis.diagnosisId}</h3>
-                  <div className="action-icons">
-                    <BsFillPencilFill
-                      className="edit-btn"
-                      onClick={(e) => {                      
-                        e.stopPropagation();
-                        handleEditClick(diagnosis)}}
-                    />
-                    <BsFillTrashFill
+        {diagnosisData.length > 0 ? (
+          diagnosisData.map((diagnosis, index) => (
+            <div key={index}>
+              <div className="diagnosisid-edit">
+                <h3>{translations.diagnosisId}: {diagnosis.diagnosisId}</h3>
+                <div className="action-icons">
+                  <BsFillPencilFill
+                    className="edit-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditClick(diagnosis)
+                    }}
+                  />
+                  <BsFillTrashFill
                     className="delete-btn"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -134,56 +134,56 @@ const InfoModal = ({ onClose, patientId }) => {
                       deleteRow(diagnosis.diagnosisId)
                     }}
                   />
-                  </div>
                 </div>
-                {editingDiagnosis === diagnosis ? (
-                  <form onSubmit={handleEditSubmit}>
-                    <div className="form-group">
-                      <label htmlFor="icd">ICD</label>
-                      <input
-                        name="icd"
-                        onChange={handleInputChange}
-                        value={editedDiagnosis.icd}
-                        placeholder="ICD Code"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="symptoms">Symptoms</label>
-                      <input
-                        name="symptoms"
-                        onChange={handleInputChange}
-                        value={editedDiagnosis.symptoms}
-                        placeholder="Symptoms"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="remarks">Remarks (Optional)</label>
-                      <input
-                        name="remarks"
-                        onChange={handleInputChange}
-                        value={editedDiagnosis.remarks}
-                        placeholder="Remarks"
-                      />
-                    </div>
-                    <button type="submit" className="btn">
-                      Save
-                    </button>
-                  </form>
-                ) : (
-                  <>
-                    <p>{translations.createdAt}: {moment(diagnosis.createdAt).format('DD/MM/YYYY h:mm a')}</p>
-                    <p>{translations.updatedAt}: {moment(diagnosis.updatedAt).format('DD/MM/YYYY h:mm a')}</p>
-                    <p>{translations.appointmentId}: {diagnosis.appointmentId}</p>
-                    <p>{translations.icd}: {diagnosis.icd}</p>
-                    <p>{translations.symptoms}: {diagnosis.symptoms}</p>
-                    <p>{translations.remarks}: {diagnosis.remarks}</p>
-                  </>
-                )}
               </div>
-            ))
-          ) : (
-            <p>No diagnosis data recorded.</p>
-          )}
+              {editingDiagnosis === diagnosis ? (
+                <form onSubmit={handleEditSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="icd">ICD</label>
+                    <input
+                      name="icd"
+                      onChange={handleInputChange}
+                      value={editedDiagnosis.icd}
+                      placeholder="ICD Code"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="symptoms">Symptoms</label>
+                    <input
+                      name="symptoms"
+                      onChange={handleInputChange}
+                      value={editedDiagnosis.symptoms}
+                      placeholder="Symptoms"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="remarks">Remarks (Optional)</label>
+                    <input
+                      name="remarks"
+                      onChange={handleInputChange}
+                      value={editedDiagnosis.remarks}
+                      placeholder="Remarks"
+                    />
+                  </div>
+                  <button type="submit" className="btn">
+                    Save
+                  </button>
+                </form>
+              ) : (
+                <>
+                  <p>{translations.createdAt}: {moment(diagnosis.createdAt).format('DD/MM/YYYY h:mm a')}</p>
+                  <p>{translations.updatedAt}: {moment(diagnosis.updatedAt).format('DD/MM/YYYY h:mm a')}</p>
+                  <p>{translations.appointmentId}: {diagnosis.appointmentId}</p>
+                  <p>{translations.icd}: {diagnosis.icd}</p>
+                  <p>{translations.symptoms}: {diagnosis.symptoms}</p>
+                  <p>{translations.remarks}: {diagnosis.remarks}</p>
+                </>
+              )}
+            </div>
+          ))
+        ) : (
+          <p>No diagnosis data recorded.</p>
+        )}
         <div className="modal-footer">
           <button className="btn" onClick={onClose}>
             Close

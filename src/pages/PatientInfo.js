@@ -1,4 +1,3 @@
-// Import necessary dependencies and components
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar/Sidebar';
 import SearchBar from '../components/SearchBar/Searchbar';
@@ -23,9 +22,6 @@ function PatientInfo() {
   const [defaultValues, setDefaultValues] = useState({}); // Default values for the modal
 
 
-
-
-
   useEffect(() => {
     // Fetch patient data from the API when the component mounts
     fetchPatientDataFromAPI()
@@ -48,7 +44,6 @@ function PatientInfo() {
     }
   };
 
-  // Function to handle editing a row
   const handleEditRow = (idx) => {
     setRowToEdit(idx);
     setModalOpen(true);
@@ -75,7 +70,6 @@ function PatientInfo() {
   };
 
   const handleImageButtonClick = () => {
-    // Trigger the file input element when the button is clicked
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = 'image/*'; // Allow only image files
@@ -176,7 +170,7 @@ function PatientInfo() {
             }}
             onSubmit={handleSubmit}
             defaultValue={rowToEdit !== null ? (rows[rowToEdit] || {}) : defaultValues}
-            />
+          />
         )}
 
         {showImageDialog && (

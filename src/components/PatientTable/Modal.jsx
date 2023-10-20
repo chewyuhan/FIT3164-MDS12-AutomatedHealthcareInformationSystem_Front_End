@@ -20,64 +20,63 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   };
 
   const [formState, setFormState] = useState(defaultValue || initialFormState);
-  const [errors, setErrors] = useState("");
 
-// Function to validate the form
-const validateForm = () => {
-  const {
-    firstName,
-    lastName,
-    dob,
-    gender,
-    ic,
-    nationality,
-    phoneNo,
-    email,
-    emergencyNo,
-  } = formState;
+  // Function to validate the form
+  const validateForm = () => {
+    const {
+      firstName,
+      lastName,
+      dob,
+      gender,
+      ic,
+      nationality,
+      phoneNo,
+      email,
+      emergencyNo,
+    } = formState;
 
-  if (!firstName) {
-    toast.error("Please enter a valid first name.");
-  }
+    if (!firstName) {
+      toast.error("Please enter a valid first name.");
+    }
 
-  if (!lastName) {
-    toast.error("Please enter a valid last name.");
-  }
+    if (!lastName) {
+      toast.error("Please enter a valid last name.");
+    }
 
-  if (!dob) {
-    toast.error("Please enter a valid date of birth.");
-  }
+    if (!dob) {
+      toast.error("Please enter a valid date of birth.");
+    }
 
-  if (!gender) {
-    toast.error("Please select a valid gender.");
-  }
+    if (!gender) {
+      toast.error("Please select a valid gender.");
+    }
 
-  if (!ic) {
-    toast.error("Please enter a valid IC number.");
-  }
+    if (!ic) {
+      toast.error("Please enter a valid IC number.");
+    }
 
-  if (!nationality) {
-    toast.error("Please enter a valid nationality.");
-  }
+    if (!nationality) {
+      toast.error("Please enter a valid nationality.");
+    }
 
-  if (!phoneNo || isNaN(phoneNo)) {
-    toast.error("Please enter a valid numeric value for phone number.");
-  }
+    if (!phoneNo || isNaN(phoneNo)) {
+      toast.error("Please enter a valid numeric value for phone number.");
+    }
 
-  if (!email || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-    toast.error("Please enter a valid email address.");
-  }
+    if (!email || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      toast.error("Please enter a valid email address.");
+    }
 
-  if (!emergencyNo || isNaN(emergencyNo)) {
-    toast.error("Please enter a valid numeric value for emergency contact number.");
-  }
+    if (!emergencyNo || isNaN(emergencyNo)) {
+      toast.error("Please enter a valid numeric value for emergency contact number.");
+    }
 
-  if (firstName && lastName && dob && gender && ic && nationality && phoneNo && email) {
-    return true;
-  } else {
-    return false;
-  }
-};
+    if (firstName && lastName && dob && gender && ic && nationality && phoneNo && email) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
 
   // Function to handle input changes
@@ -137,7 +136,7 @@ const validateForm = () => {
                   formState.dob
                     ? moment(formState.dob).format("YYYY-MM-DD")
                     : ""
-                } // Format the date
+                }
               />
             </div>
             <div className="form-group">
@@ -218,7 +217,6 @@ const validateForm = () => {
                 value={formState.remarks}
               />
             </div>
-            {errors && <div className="error">{`Please include: ${errors}`}</div>}
             <button type="submit" className="btn" onClick={handleSubmit}>
               Submit
             </button>

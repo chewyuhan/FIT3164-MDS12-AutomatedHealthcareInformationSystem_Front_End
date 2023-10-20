@@ -118,10 +118,10 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
 
 
   // Function to handle form input changes
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  setFormState((prevFormState) => ({ ...prevFormState, [name]: value }));
-};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormState((prevFormState) => ({ ...prevFormState, [name]: value }));
+  };
 
   // Function to handle form submission
   const handleSubmit = (e) => {
@@ -135,17 +135,12 @@ const handleChange = (e) => {
       closeModal();
     }
   };
-  
+
 
   // State for speech recognition
   const [isListeningIcd, setIsListeningIcd] = useState(false);
   const [isListeningRemarks, setIsListeningRemarks] = useState(false);
   const [isListeningSymptoms, setIsListeningSymptoms] = useState(false);
-
-  // State for speech recognition results
-  const [speechResultIcd, setSpeechResultIcd] = useState('');
-  const [speechResultRemarks, setSpeechResultRemarks] = useState('');
-  const [speechResultSymptoms, setSpeechResultSymptoms] = useState('');
 
   // Function to handle real-time speech recognition
   const handleRealTimeSpeechRecognition = (field, transcript) => {
@@ -159,19 +154,16 @@ const handleChange = (e) => {
 
   recognitionIcd.onresult = (event) => {
     const transcript = event.results[0][0].transcript;
-    setSpeechResultIcd(transcript);
     handleRealTimeSpeechRecognition('icd', transcript);
   };
 
   recognitionRemarks.onresult = (event) => {
     const transcript = event.results[0][0].transcript;
-    setSpeechResultRemarks(transcript);
     handleRealTimeSpeechRecognition('remarks', transcript);
   };
 
   recognitionSymptoms.onresult = (event) => {
     const transcript = event.results[0][0].transcript;
-    setSpeechResultSymptoms(transcript);
     handleRealTimeSpeechRecognition('symptoms', transcript);
   };
 
@@ -209,7 +201,6 @@ const handleChange = (e) => {
         <div className="modal-header">
           <h1 className="modal-title">Diagnosis Details</h1>
           <form>
-            {/* Select Employee */}
             <div className="form-group">
               <h2 htmlFor="employeeId">Select Employee (Compulsory)</h2>
               <select
@@ -225,8 +216,6 @@ const handleChange = (e) => {
                 ))}
               </select>
             </div>
-
-            {/* Select Patient */}
             <div className="form-group">
               <h2 htmlFor="patientId">Select Patient (Compulsory)</h2>
               <select
@@ -234,7 +223,7 @@ const handleChange = (e) => {
                 value={selectedPatientId}
                 onChange={(e) => {
                   setSelectedPatientId(Number(e.target.value));
-                  setFormState({ ...formState, appointmentId: '' }); // Reset appointment ID when patient changes
+                  setFormState({ ...formState, appointmentId: '' });
                 }}
               >
                 <option value="">Select a patient</option>
@@ -246,7 +235,6 @@ const handleChange = (e) => {
               </select>
             </div>
 
-            {/* Select Appointment */}
             <div className="form-group">
               <h2 htmlFor="appointmentId">Select Appointment (Compulsory)</h2>
               <select
@@ -260,7 +248,6 @@ const handleChange = (e) => {
                   const formattedDate = `${appointmentDate.getFullYear()}-${(appointmentDate.getMonth() + 1).toString().padStart(2, '0')
                     }-${appointmentDate.getDate().toString().padStart(2, '0')}`;
                   const formattedTime = `${appointmentDate.getHours()}:${appointmentDate.getMinutes().toString().padStart(2, '0')}`;
-
                   return (
                     <option key={appointmentOption.id} value={parseInt(appointmentOption.id, 10)}>
                       {`${formattedDate} ${formattedTime} ${appointmentDate.getHours() >= 12 ? 'PM' : 'AM'}`}
@@ -269,8 +256,6 @@ const handleChange = (e) => {
                 })}
               </select>
             </div>
-
-            {/* ICD Input */}
             <div className="form-group">
               <h2 htmlFor="icd">ICD</h2>
               <input
@@ -292,7 +277,6 @@ const handleChange = (e) => {
                 {isListeningIcd ? 'Stop' : 'Start'} Listening
               </button>
             </div>
-            {/* Symptoms Input */}
             <div className="form-group">
               <h2 htmlFor="symptoms">Symptoms</h2>
               <input
@@ -314,9 +298,7 @@ const handleChange = (e) => {
                 {isListeningSymptoms ? 'Stop' : 'Start'} Listening
               </button>
             </div>
-
-                        {/* Remarks Input */}
-                        <div className="form-group">
+            <div className="form-group">
               <h2 htmlFor="remarks">Remarks (Optional)</h2>
               <input
                 name="remarks"
@@ -337,11 +319,6 @@ const handleChange = (e) => {
                 {isListeningRemarks ? 'Stop' : 'Start'} Listening
               </button>
             </div>
-
-            {/* Display Validation Errors */}
-            {errors && <div className="error">{errors}</div>}
-
-            {/* Submit Button */}
             <button type="submit" className="btn" onClick={handleSubmit}>
               Submit
             </button>

@@ -1,13 +1,8 @@
-/* Appointment.css */
 .appointment-container {
   display: flex;
   flex-direction: column;
-  /* Change to column direction */
-  /* align-items: center; Center horizontally */
   margin-top: 0px;
-  /* Adjust the top margin as needed */
   width: 100%;
-  /* Make the button width 100% */
   border-radius: 5px;
 
 
@@ -16,17 +11,13 @@
 .appointment-list-container {
   display: flex;
   flex-direction: row;
-  /* Change to column direction */
-  /* align-items: center; Center horizontally */
   margin-top: 0px;
 }
 
 .selected-appointment-details {
   width: 100%;
   height: auto;
-  /* Ensure the table takes the full width */
   overflow-x: auto;
-  /* Add horizontal scroll if needed */
 }
 
 
@@ -45,10 +36,8 @@
   border: none;
   padding: 10px 20px;
   margin-top: 10px;
-  /* Adjust the top margin as needed */
   cursor: pointer;
   width: 100%;
-  /* Make the button width 100% */
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 
@@ -75,7 +64,6 @@
 
 }
 
-/* Popup styles */
 .popup-content {
   background-color: white;
   padding: 20px;
@@ -85,7 +73,6 @@
   width: 80%;
   max-width: 500px;
   overflow-y: auto;
-  /* Add vertical scroll if needed */
   overflow-x: hidden;
 }
 
@@ -97,9 +84,7 @@
   cursor: pointer;
   position: absolute;
   top: 10px;
-  /* Adjust top position as needed */
   right: 10px;
-  /* Adjust right position as needed */
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }

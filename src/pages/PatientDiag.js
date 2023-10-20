@@ -13,13 +13,12 @@ function PatientDiag() {
   // State variables
   const [modalOpen, setModalOpen] = useState(false);
   const [patients, setPatients] = useState(null);
-  const [filteredRows, setFilteredRows] = useState([]); // Create state for filtered rows
+  const [filteredRows, setFilteredRows] = useState([]); 
 
   useEffect(() => {
     // Fetch patient data from the API when the component mounts
     fetchPatientDataFromAPI()
       .then(async (response) => {
-        // Handle the response and update the user data state
         console.log("API call response:", response);
         const patientsData = response;
 
@@ -89,7 +88,6 @@ function PatientDiag() {
           <Table patients={patients} />
         )}
       </div>
-      {/* Display the Modal for adding a new diagnosis if modalOpen is true */}
       {modalOpen && (
         <Modal
           closeModal={() => {

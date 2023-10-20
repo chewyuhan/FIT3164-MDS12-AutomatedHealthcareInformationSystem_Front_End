@@ -1,4 +1,3 @@
-// FutureAppointmentsTable.js
 import React, { useEffect, useState } from 'react';
 import { fetchAppointmentDataFromAPI} from '../../api/appointment';
 import { fetchDoctorDataFromAPI } from '../../api/doctor';

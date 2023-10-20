@@ -1,17 +1,14 @@
 .input-wrapper {
-  width: 20%; /*Change this to adjust the width of search bar*/
+  width: 20%;
   border-radius: 10px;
   padding: 0 15px;
   box-shadow: 0px 0px 8px #ddd;
   display: flex;
   align-items: center;
-  position: relative; /* Use absolute positioning */
-  height: 40px; /* Adjust the height as needed */
+  position: relative;
+  height: 40px;
 
 }
-
-/* Can also put the searchresultlist.css here and it will work */
-/* Remeber to change import correct css file in js if change */
 
 input {
   background-color: transparent;
@@ -20,7 +17,7 @@ input {
   font-size: 1.25rem;
   width: 100%;
   margin-left: 5px;
-  padding: 10px 5px; /* Adjust the padding to match the new height */
+  padding: 10px 5px;
 
 }
 
@@ -41,6 +38,3 @@ input:focus {
   position: relative;
   padding: 10px;
 }
-
-
-
