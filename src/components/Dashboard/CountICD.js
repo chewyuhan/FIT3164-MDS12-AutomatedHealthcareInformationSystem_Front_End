@@ -25,19 +25,25 @@ function DiagnosisHistory() {
 
     diagnosisData.forEach((diagnosis) => {
       const icd = diagnosis.icd;
-
+  
       if (countMap[icd]) {
         countMap[icd]++;
       } else {
         countMap[icd] = 1;
       }
     });
-
-    const dataPoints = Object.keys(countMap).map((icd) => ({
+  
+    // Sort the diagnoses by count in descending order
+    const sortedDiagnoses = Object.keys(countMap).sort((a, b) => countMap[b] - countMap[a]);
+  
+    // Take only the top 10 diagnoses
+    const top10Diagnoses = sortedDiagnoses.slice(0, 10);
+  
+    const dataPoints = top10Diagnoses.map((icd) => ({
       label: icd,
       y: countMap[icd],
     }));
-
+  
     return dataPoints;
   };
 
