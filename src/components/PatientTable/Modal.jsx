@@ -196,7 +196,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                 name="emergencyNo"
                 onChange={handleChange}
                 value={formState.emergencyNo}
-                placeholder="Optional Emergency Number"
+                placeholder="Emergency Number"
               />
             </div>
             <div className="form-group">
@@ -205,7 +205,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                 name="emergencyRemarks"
                 onChange={handleChange}
                 value={formState.emergencyRemarks}
-                placeholder="Optional Emergency Remarks"
+                placeholder="Emergency Remarks"
               />
             </div>
             <div className="form-group">
